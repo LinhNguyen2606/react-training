@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { TaskListProps } from './TaskList';
 
-interface TaskProps extends TaskListProps {
+type TaskProps = TaskListProps & {
     id: string;
     title: string;
     completed: boolean;
-}
+};
 
 const Task = ({
     id,
@@ -19,13 +19,10 @@ const Task = ({
     const [editTitle, setEditTitle] = useState('');
     const [error, setError] = useState<boolean | string>(false);
 
-    const handleDeleteTodo = () => {
-        onDelete(id);
-    };
+    const handleDeleteTodo = () => onDelete(id);
 
-    const handleOnChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
         onChangeTodo(id, e.target.checked);
-    };
 
     const handleEditTodo = () => {
         setEditId(id);

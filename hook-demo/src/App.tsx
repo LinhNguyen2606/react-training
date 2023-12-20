@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddTodo from './AddTodo';
 import TaskList from './TaskList';
 
@@ -9,7 +9,14 @@ export type Todo = {
 };
 
 const App = () => {
-    const [todos, setTodos] = useState<Todo[]>([]);
+    const [todos, setTodos] = useState<Todo[]>(() => {
+        const localValue = localStorage.getItem('ITEMS');
+        return localValue ? JSON.parse(localValue) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem('ITEMS', JSON.stringify(todos));
+    }, [todos]);
 
     const addTodo = (title: string) => {
         if (title === '') {
@@ -22,18 +29,16 @@ const App = () => {
         }
     };
 
-    const deleteTodo = (id: string) => {
+    const deleteTodo = (id: string) =>
         setTodos(todos.filter((todo) => todo.id !== id));
-    };
 
-    const onChangeTodo = (id: string, completed: boolean) => {
+    const onChangeTodo = (id: string, completed: boolean) =>
         setTodos(
             todos.map((todo) => {
                 if (todo.id === id) return { ...todo, completed };
                 return todo;
             })
         );
-    };
 
     return (
         <>
@@ -50,4 +55,3 @@ const App = () => {
 };
 
 export default App;
-

@@ -1,12 +1,12 @@
 import { Todo } from './App';
 import Task from './Task';
 
-export interface TaskListProps {
+export type TaskListProps = {
     todos: Todo[];
     setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
     onDelete: (id: string) => void;
     onChangeTodo: (id: string, completed: boolean) => void;
-}
+};
 
 const TaskList = ({
     todos,

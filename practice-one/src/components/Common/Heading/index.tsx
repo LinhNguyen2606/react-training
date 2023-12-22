@@ -1,5 +1,5 @@
 import { FC, ReactElement } from 'react';
-import './heading.scss';
+import './Heading.scss';
 
 export type HeadingProps = {
   className?: string;
@@ -7,7 +7,7 @@ export type HeadingProps = {
 };
 
 const Heading: FC<HeadingProps> = ({ className, children }): ReactElement => {
-  return <h1 className={className}>{children}</h1>;
+  return <h1 className={`${className} primary__text`}>{children}</h1>;
 };
 
 export default Heading;

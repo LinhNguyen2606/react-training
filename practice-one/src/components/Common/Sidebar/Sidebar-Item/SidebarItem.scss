@@ -1,0 +1,11 @@
+.sidebar__item {
+  display         : flex;
+  align-items     : center;
+  background-color: #3b3e46;
+  color           : $primary-color;
+  box-shadow      : inset 2px 0 $primary-color;
+  gap             : 10px;
+  margin-top      : 18px;
+  padding-left    : 12px;
+  min-height      : 44px;
+}

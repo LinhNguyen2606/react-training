@@ -1,5 +1,13 @@
-%common-text {
+.common-text {
   color      : $text-primary;
   font-size  : $fs-small;
   font-weight: $fw-medium;
+}
+
+.common-btn {
+  padding      : 0 30px;
+  font-size    : $fs-x-small;
+  outline      : none;
+  border       : none;
+  border-radius: 2px;
 }

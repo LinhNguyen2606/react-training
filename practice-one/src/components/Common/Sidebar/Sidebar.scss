@@ -1,0 +1,15 @@
+.sidebar {
+  min-width       : 210px;
+  background-color: #4a4e58;
+  border-color    : #4a4e58;
+
+  &__item--icon {
+    svg {
+      fill: $primary-color;
+    }
+  }
+
+  &__item--text {
+    font-size: 14px;
+  }
+}

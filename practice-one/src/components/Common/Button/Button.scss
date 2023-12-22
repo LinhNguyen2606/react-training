@@ -1,0 +1,40 @@
+.btn {
+  @extend .common-btn;
+
+  &--primary {
+    background-color: $primary-color;
+    color           : $secondary-color;
+    font-weight     : 500;
+
+    &:hover {
+      background-color: #1992af;
+    }
+  }
+
+  &--secondary {
+    background-color: #f4f5f9;
+    color           : $primary-color;
+
+    &:hover {
+      background-color: #e7e9f2;
+    }
+  }
+
+  &--size-lg {
+    padding: 6px 64px;
+  }
+
+  &--size-md {
+    padding: 8px 40px;
+  }
+
+  &__sidebar {
+    border: 1px solid $primary-color;
+    margin: 18px 0 0 20px
+  }
+
+  &__text {
+    font-size  : $fs-small;
+    font-weight: $fw-bold;
+  }
+}

@@ -1,4 +1,4 @@
-function App() {
+const App = () => {
   return (
     <>
       <header className="header">
@@ -6,6 +6,6 @@ function App() {
       </header>
     </>
   );
-}
+};
 
 export default App;

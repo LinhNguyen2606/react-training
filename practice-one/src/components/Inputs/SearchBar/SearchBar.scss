@@ -1,0 +1,42 @@
+.search {
+  display         : flex;
+  justify-content : space-between;
+  align-items     : center;
+  padding         : 12px;
+  background-color: $secondary-color;
+  margin-bottom   : 20px;
+  gap             : 20px;
+
+  &__magnifier--icon,
+  &__close--icon {
+    position: relative;
+
+    &:hover {
+      &::before {
+        @extend .hover-icon;
+      }
+    }
+
+    svg {
+      @extend .style-icon;
+
+      &:hover {
+        fill: $text-primary;
+      }
+    }
+  }
+
+  &__magnifier--icon {
+    margin-right: 10px;
+  }
+
+  &__close--icon {
+    svg {
+      font-size: $fs-medium;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+}

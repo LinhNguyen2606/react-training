@@ -1,4 +1,6 @@
 import { FC, ReactElement } from 'react';
+
+// SCSS
 import './Heading.scss';
 
 export type HeadingProps = {

@@ -1,5 +1,9 @@
 import { ButtonHTMLAttributes, FC, ReactElement, ReactNode } from 'react';
+
+// Types
 import { Variant } from '../../../types';
+
+// SCSS
 import './Button.scss';
 
 type TButtonSize = 'lg' | 'md';

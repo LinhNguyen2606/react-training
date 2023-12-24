@@ -11,3 +11,36 @@
   border       : none;
   border-radius: 2px;
 }
+
+.common-input {
+  width      : 100%;
+  min-height : 32px;
+  text-indent: 12px;
+  border     : 1px solid #CCD7E6;
+  outline    : none;
+
+  &:focus {
+    border: 1px solid #1CA1C1;
+  }
+}
+
+.hover-icon {
+  content         : '';
+  position        : absolute; //Position the pseudo element
+  top             : 50%;
+  left            : 50%;
+  transform       : translate(-50%, -50%); //Center it horizontally and vertically.
+  border-radius   : 50%;
+  background-color: #f4f5f9;
+  width           : 40px;
+  height          : 40px;
+  cursor          : pointer;
+}
+
+.style-icon {
+  font-size: $fs-x-small;
+  fill     : #94a1b3;
+  position : relative;
+  z-index  : 1;
+  cursor   : pointer;
+}

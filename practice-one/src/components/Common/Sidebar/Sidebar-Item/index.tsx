@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+
+// SCSS
 import './SidebarItem.scss';
 
 type SidebarItemProps = {

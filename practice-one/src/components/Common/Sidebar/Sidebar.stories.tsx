@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Sidebar from '.';
 
 export default {
-  title: 'Component/Sidebar',
+  title: 'Components/Sidebar',
   component: Sidebar,
 } as Meta;
 

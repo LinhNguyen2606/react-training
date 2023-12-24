@@ -1,6 +1,10 @@
 import { FC, ReactElement } from 'react';
+
+// Components
 import Button from '../Button';
 import SidebarItem from './Sidebar-Item';
+
+// SCSS
 import './Sidebar.scss';
 
 type SidebarProps = {

@@ -1,16 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-// Components
-import TextField from '.';
+// Component
+import SearchBar from '.';
 
 export default {
-  title: 'Components/TextField',
-  component: TextField,
+  title: 'Components/SearchBar',
+  component: SearchBar,
 } as Meta;
-type Story = StoryObj<typeof TextField>;
+type Story = StoryObj<typeof SearchBar>;
 
 export const Default: Story = {
   args: {
+    label: 'Users',
     placeholder: 'Search',
   },
 };

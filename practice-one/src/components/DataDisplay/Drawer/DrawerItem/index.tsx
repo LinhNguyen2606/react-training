@@ -1,15 +1,15 @@
 import { ReactNode } from 'react';
 
 // SCSS
-import './SidebarItem.scss';
+import './DrawerItem.scss';
 
-type SidebarItemProps = {
+type DrawerItemProps = {
   children: ReactNode;
   className?: string;
 };
 
-const SidebarItem = ({ children, className }: SidebarItemProps) => {
+const DrawerItem = ({ children, className }: DrawerItemProps) => {
   return <div className={className}>{children}</div>;
 };
 
-export default SidebarItem;
+export default DrawerItem;

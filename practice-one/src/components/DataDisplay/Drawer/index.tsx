@@ -1,33 +1,33 @@
 import { FC, ReactElement } from 'react';
 
 // Components
-import Button from '../Button';
-import SidebarItem from './Sidebar-Item';
+import Button from '../../Inputs/Button';
+import DrawerItem from './DrawerItem';
 
 // SCSS
-import './Sidebar.scss';
+import './Drawer.scss';
 
-type SidebarProps = {
+type DrawerProps = {
   width?: number;
   height?: number;
 };
 
-const Sidebar: FC<SidebarProps> = ({ width, height }): ReactElement => {
-  const widthSidebar = {
+const Drawer: FC<DrawerProps> = ({ width, height }): ReactElement => {
+  const widthDrawer = {
     width: `${width}px`,
   };
 
-  const heightSidebar = {
+  const heightDrawer = {
     height: `${height}px`,
   };
 
   return (
-    <aside className="sidebar" style={{ ...widthSidebar, ...heightSidebar }}>
-      <Button variants="primary" size="lg" className="sidebar">
+    <aside className="drawer" style={{ ...widthDrawer, ...heightDrawer }}>
+      <Button variants="primary" size="lg" className="drawer">
         <span className="btn__text">+ New</span>
       </Button>
-      <SidebarItem className="sidebar__item">
-        <div className="sidebar__item--icon">
+      <DrawerItem className="drawer__item">
+        <div className="drawer__item--icon">
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
             <path
               d="M96 128a128 128 0 1 1 256 0A128 128 
@@ -44,10 +44,10 @@ const Sidebar: FC<SidebarProps> = ({ width, height }): ReactElement => {
             />
           </svg>
         </div>
-        <span className="sidebar__item--text">Users</span>
-      </SidebarItem>
+        <span className="drawer__item--text">Users</span>
+      </DrawerItem>
     </aside>
   );
 };
 
-export default Sidebar;
+export default Drawer;

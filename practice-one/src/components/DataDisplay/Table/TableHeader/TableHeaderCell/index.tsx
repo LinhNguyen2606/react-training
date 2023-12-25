@@ -1,11 +1,9 @@
-import './TableHeaderCell.scss';
-
 type TableHeaderCellProps = {
   children?: string;
 };
 
 const TableHeaderCell = ({ children }: TableHeaderCellProps) => {
-  return <li className="table__header--info primary__text">{children}</li>;
+  return <th className="table__header--cell">{children}</th>;
 };
 
 export default TableHeaderCell;

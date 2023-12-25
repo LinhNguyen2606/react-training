@@ -1,0 +1,17 @@
+.table__header--info {
+  color    : $tertiary-color;
+  font-size: $fs-x-small;
+
+  &:first-child {
+    margin-left: 70px;
+    min-width  : 541px;
+  }
+
+  &:nth-child(2) {
+    min-width: 150px;
+  }
+
+  &:last-child {
+    min-width: 541px;
+  }
+}

@@ -1,4 +1,4 @@
-.sidebar {
+.drawer {
   min-width       : 210px;
   background-color: #4a4e58;
   border-color    : #4a4e58;
@@ -10,6 +10,6 @@
   }
 
   &__item--text {
-    font-size: 14px;
+    font-size: $fs-x-small;
   }
 }

@@ -1,1 +1,2 @@
-export { Heading, Button, Sidebar, SearchBar, TextField } from './Commons/index';
+export { Drawer } from './DataDisplay/index';
+export { Button, SearchBar, TextField } from './Inputs/index';

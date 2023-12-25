@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-// Components
+// Component
 import Button from '.';
 
 export default {
@@ -15,6 +15,6 @@ export const Default: Story = {
     variants: 'primary',
     children: '+ New',
     size: 'lg',
-    className: 'sidebar',
+    className: 'drawer',
   },
 };

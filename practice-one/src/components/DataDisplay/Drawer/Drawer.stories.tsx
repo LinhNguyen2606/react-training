@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Sidebar from '.';
+
+// Component
+import Drawer from '.';
 
 export default {
-  title: 'Components/Sidebar',
-  component: Sidebar,
+  title: 'Components/Drawer',
+  component: Drawer,
 } as Meta;
 
-type Story = StoryObj<typeof Sidebar>;
+type Story = StoryObj<typeof Drawer>;
 
 export const Default: Story = {
   args: {

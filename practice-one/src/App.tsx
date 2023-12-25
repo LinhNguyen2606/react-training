@@ -1,4 +1,4 @@
-import { Sidebar } from './components/Common';
+import Drawer from './components/DataDisplay/Drawer';
 
 const App = () => {
   return (
@@ -7,7 +7,7 @@ const App = () => {
         <h1 className="header__heading primary__text">User Manager</h1>
       </header>
       <div className="content__wrapper">
-        <Sidebar />
+        <Drawer />
       </div>
     </>
   );

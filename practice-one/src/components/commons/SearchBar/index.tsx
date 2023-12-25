@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Components
-import TextField from '../TextField';
+import TextField from '../../Commons/TextField';
 
 // SCSS
 import './Searchbar.scss';

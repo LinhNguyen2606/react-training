@@ -1,2 +1,1 @@
-export { Heading, Button, Sidebar } from './Common/index';
-export { SearchBar, TextField } from './Inputs/index';
+export { Heading, Button, Sidebar, SearchBar, TextField } from './Commons/index';

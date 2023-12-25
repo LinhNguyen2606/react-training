@@ -2,16 +2,15 @@ import { ButtonHTMLAttributes, FC, ReactElement, ReactNode } from 'react';
 
 // Types
 import { Variant } from '../../../types';
+import { ButtonSize } from '../../../types';
 
 // SCSS
 import './Button.scss';
 
-type TButtonSize = 'lg' | 'md';
-
 export type CustomBtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
   children: ReactNode;
-  size?: TButtonSize;
+  size?: ButtonSize;
   variants?: Variant;
 };
 

@@ -1,0 +1,28 @@
+.status {
+
+  &.active,
+  &.not__active {
+    min-width: 156px;
+  }
+
+  &.active {
+    span {
+      background-color: $bg-primary-color;
+      color           : $text-secondary;
+    }
+  }
+
+  &.not__active {
+    span {
+      background-color: $bg-secondary-color;
+      color           : $text-tertiary;
+    }
+  }
+
+  &__text {
+    border-radius: 8px;
+    padding      : 4px 12px;
+    font-size    : $fs-small;
+    font-weight  : $fw-medium;
+  }
+}

@@ -17,6 +17,6 @@ export const Default: Story = {
   args: {
     alt: 'UserName',
     bgColor: generateRandomColor(),
-    className: 'avatar--circle',
+    additionalClass: 'avatar--circle',
   },
 };

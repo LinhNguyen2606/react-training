@@ -23,10 +23,10 @@ const Drawer: FC<DrawerProps> = ({ width, height }): ReactElement => {
 
   return (
     <aside className="drawer" style={{ ...widthDrawer, ...heightDrawer }}>
-      <Button variants="primary" size="lg" className="drawer">
+      <Button variants="primary" size="lg" additionalClass="drawer">
         <span className="btn__text">+ New</span>
       </Button>
-      <DrawerItem className="drawer__item">
+      <DrawerItem additionalClass="drawer__item">
         <div className="drawer__item--icon">
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
             <path

@@ -5,11 +5,11 @@ import './DrawerItem.scss';
 
 type DrawerItemProps = {
   children: ReactNode;
-  className?: string;
+  additionalClass?: string;
 };
 
-const DrawerItem = ({ children, className }: DrawerItemProps) => {
-  return <div className={className}>{children}</div>;
+const DrawerItem = ({ children, additionalClass }: DrawerItemProps) => {
+  return <div className={additionalClass}>{children}</div>;
 };
 
 export default DrawerItem;

@@ -43,21 +43,24 @@ export const Default: Story = {
         key: 'avatar',
         title: '',
         render: (_, item: User) => (
-          <Avatar src={item.avatar} alt={item.userName} bgColor={item.bgColor} className="avatar--circle" />
+          <Avatar src={item.avatar} alt={item.userName} bgColor={item.bgColor} additionalClass="avatar--circle" />
         ),
       },
       {
         key: 'userName',
         title: 'Full Name',
+        width: "300px"
       },
       {
         key: 'isActive',
         title: 'Status',
         render: (_, item: User) => <Status isActive={item.isActive} />,
+        width: "160px"
       },
       {
         key: 'email',
         title: 'Email',
+        width: "300px"
       },
     ] as EnitityColumnType<unknown>[],
   },

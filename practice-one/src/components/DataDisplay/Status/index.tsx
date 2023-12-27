@@ -10,7 +10,11 @@ type StatusProps = {
   notActive?: StatusType;
 };
 
-const Status = ({ isActive, active = 'Active', notActive = 'Not active' }: StatusProps) => {
+const Status = ({
+  isActive,
+  active = 'Active',
+  notActive = 'Not active'
+}: StatusProps) => {
   return (
     <div className={`status ${isActive ? 'active' : 'not__active'}`}>
       <span className="status__text">{` ${isActive ? active : notActive}`}</span>

@@ -15,6 +15,6 @@ export const Default: Story = {
     variants: 'primary',
     children: '+ New',
     size: 'lg',
-    className: 'drawer',
+    additionalClass: 'drawer',
   },
 };

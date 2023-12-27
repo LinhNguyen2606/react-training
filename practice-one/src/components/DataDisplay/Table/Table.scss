@@ -35,6 +35,7 @@
       border-bottom: 1px solid #5ccce7;
 
       &--cell {
+        font-weight   : $fw-medium;
         vertical-align: middle;
         text-align    : left;
       }
@@ -45,17 +46,7 @@
 
       &--cell {
         &:nth-child(1) {
-          min-width: 80px;
-          padding  : 12px;
-        }
-
-        &:nth-child(2),
-        &:nth-child(4) {
-          min-width: 300px;
-        }
-
-        &:nth-child(3) {
-          min-width: 160px;
+          padding: 12px;
         }
       }
     }

@@ -12,7 +12,11 @@ type SearchBarProps = {
   onChange?: (value: string) => void;
 };
 
-const SearchBar = ({ label, placeholder, onChange }: SearchBarProps) => {
+const SearchBar = ({
+  label,
+  placeholder,
+  onChange
+}: SearchBarProps) => {
   const [isDismissSearchBar, setIsDismissSearchBar] = useState(false);
 
   return (

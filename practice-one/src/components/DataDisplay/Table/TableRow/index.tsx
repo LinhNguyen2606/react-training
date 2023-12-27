@@ -12,7 +12,11 @@ type TableRowProps<T> = {
   onRowClick: (index: number, item: T) => void;
 };
 
-const TableRow = <T,>({ rowData, columns, onRowClick }: TableRowProps<T>) => {
+const TableRow = <T,>({
+  rowData,
+  columns,
+  onRowClick
+}: TableRowProps<T>) => {
   const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
 
   const handleRowClick = (index: number, rowData: T) => {

@@ -7,4 +7,5 @@ export type EnitityColumnType<T> = {
   key: keyof T;
   title: string;
   render?: (column: EnitityColumnType<T>, item: T) => JSX.Element;
+  width?: string;
 };

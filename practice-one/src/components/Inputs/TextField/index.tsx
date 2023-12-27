@@ -1,5 +1,3 @@
-import React from 'react';
-
 // SCSS
 import './TextField.scss';
 
@@ -9,7 +7,11 @@ type TextFieldProps = {
   onChange?: (value: string) => void;
 };
 
-const TextField = ({ value, placeholder, onChange }: TextFieldProps) => {
+const TextField = ({
+  value,
+  placeholder,
+  onChange
+}: TextFieldProps) => {
   // Call onChange with new input value if provided
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange && onChange(e.target.value);
 

@@ -6,7 +6,13 @@ type TableRowItemProps<T> = {
   onClick: (index: number, rowData: T) => void;
 };
 
-const TableRowItem = <T,>({ children, index, rowData, isSelected, onClick }: TableRowItemProps<T>) => {
+const TableRowItem = <T,>({
+  children,
+  index,
+  rowData,
+  isSelected,
+  onClick
+}: TableRowItemProps<T>) => {
   const handleClick = () => {
     onClick(index, rowData);
   };

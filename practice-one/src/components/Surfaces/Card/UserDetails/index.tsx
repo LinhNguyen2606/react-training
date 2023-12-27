@@ -1,14 +1,14 @@
 // Helper
-import { convertDate } from '../../../helpers';
+import { convertDate } from '../../../../helpers';
 
 // Components
-import Avatar from '../../DataDisplay/Avatar';
-import Status from '../../DataDisplay/Status';
+import Avatar from '../../../DataDisplay/Avatar';
+import Status from '../../../DataDisplay/Status';
 
 // SCSS
-import './Card.scss';
+import './UserDetails.scss';
 
-type CardProps = {
+type UserDetailsProps = {
   title?: string;
   isActive?: boolean;
   src?: string;
@@ -18,7 +18,7 @@ type CardProps = {
   lastVisited?: string | undefined;
 };
 
-const Card = ({
+const UserDetails = ({
   title,
   isActive,
   src,
@@ -26,7 +26,7 @@ const Card = ({
   userName,
   email,
   lastVisited
-}: CardProps) => {
+}: UserDetailsProps) => {
   return (
     <div className="user__wrapper">
       <div className="user">
@@ -66,4 +66,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default UserDetails;

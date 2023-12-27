@@ -1,6 +1,6 @@
 .table__wrapper {
   background: $secondary-color;
-  border    : 0px solid #DADEE0;
+  border    : 0px solid #dadde0;
 
   .table {
     width    : 100%;
@@ -28,7 +28,7 @@
 
     &__head {
       height          : 55px;
-      background-color: #F4F5F9;
+      background-color: #f4f5f9;
     }
 
     &__header {
@@ -42,7 +42,7 @@
     }
 
     &__row {
-      border-bottom: 1px solid #EDEFF0;
+      border-bottom: 1px solid #edeff0;
 
       &--cell {
         &:nth-child(1) {
@@ -52,7 +52,7 @@
     }
 
     &__row--active {
-      box-shadow: inset 2px 0 #1CA1C1;
+      box-shadow: inset 2px 0 $primary-color;
       background: #F4F5F9;
     }
   }

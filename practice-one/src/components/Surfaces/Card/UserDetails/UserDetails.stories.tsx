@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Card from '.';
+import UserDetails from '.';
 
 // Helper
-import { generateRandomColor } from '../../../helpers';
+import { generateRandomColor } from '../../../../helpers/index';
 
 export default {
-  title: 'Components/Card',
-  component: Card,
+  title: 'Components/UserDetails',
+  component: UserDetails,
 } as Meta;
 
-type Story = StoryObj<typeof Card>;
+type Story = StoryObj<typeof UserDetails>;
 
 export const Default: Story = {
   args: {

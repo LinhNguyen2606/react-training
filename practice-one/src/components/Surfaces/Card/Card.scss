@@ -1,0 +1,80 @@
+.user__wrapper {
+  background: $secondary-color;
+
+  .user {
+    padding       : 12px 4px;
+    display       : flex;
+    flex-direction: column;
+    gap           : 20px;
+
+
+    &__header {
+      border-bottom  : 1px solid #dadee0;
+      justify-content: space-between;
+      align-items    : center;
+      display        : flex;
+      padding-bottom : 10px;
+
+      &--icon {
+        position    : relative;
+        margin-right: 14px;
+
+        &:hover {
+          &::before {
+            @extend .hover-icon;
+          }
+        }
+
+        svg {
+          @extend .style-icon;
+
+          &:hover {
+            fill: $text-primary;
+          }
+        }
+      }
+    }
+
+    &__avatar {
+      margin: 0 auto;
+      width : 180px;
+      height: 180px;
+
+      .avatar__initial {
+        color    : rgba(255, 255, 255, 0.5);
+        font-size: 90px;
+      }
+    }
+
+    &__username {
+      color     : $tertiary-color;
+      font-size : $fs-x-small;
+      text-align: center;
+    }
+
+    &__mail--icon,
+    &__visited--icon {
+      display      : flex;
+      gap          : 10px;
+      align-items  : center;
+      margin-bottom: 10px;
+
+      span {
+        color    : $tertiary-color;
+        font-size: $fs-x-small
+      }
+    }
+
+    &__time-text,
+    &__email-text {
+      margin     : 0 0 14px 26px;
+      font-size  : $fs-x-small;
+      font-weight: $fw-normal;
+      display    : block;
+    }
+
+    svg {
+      fill: #94A1B3;
+    }
+  }
+}

@@ -3,6 +3,12 @@ export type { ButtonSize } from './Size';
 export type { Status } from './Status';
 export type { User } from './User';
 
+export type InfoItemType = {
+  icon: string;
+  label?: string;
+  value?: string;
+};
+
 export type EnitityColumnType<T> = {
   key: keyof T;
   title: string;

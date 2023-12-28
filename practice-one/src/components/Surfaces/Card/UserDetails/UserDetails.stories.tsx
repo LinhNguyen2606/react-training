@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
 import UserDetails from '.';
+
+// Constant
 import { USER_INFORMATION } from '../../../../constants/users';
 
 // Helper
@@ -27,7 +29,7 @@ export default {
     src: { description: 'The image source.' },
     bgColor: { description: 'A randomly generated background color.' },
     userName: { description: 'A fullname of user' },
-    infoItem: { defaultValue: 'Contains the label and value of the user such as: email, last visited' },
+    infoItem: { description: 'Contains the label and value of the user such as: email, last visited' },
   },
 } as Meta;
 

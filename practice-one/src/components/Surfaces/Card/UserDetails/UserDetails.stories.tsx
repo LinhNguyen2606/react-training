@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
 import UserDetails from '.';
-import { USER_INFORMATION  } from '../../../../constants/UserInformation';
+import { USER_INFORMATION  } from '../../../../constants/users';
 
 // Helper
 import { generateRandomColor } from '../../../../helpers/index';

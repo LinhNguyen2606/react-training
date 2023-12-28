@@ -1,4 +1,7 @@
+// Type
 import { InfoItemType } from '../../../../../types';
+
+// Component
 import Icon from '../../../../DataDisplay/Icon';
 
 const InfoItem = ({

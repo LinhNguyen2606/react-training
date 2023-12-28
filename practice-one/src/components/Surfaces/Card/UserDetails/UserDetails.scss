@@ -14,27 +14,6 @@
       align-items    : center;
       display        : flex;
       padding-bottom : 10px;
-
-      &--icon {
-        position    : relative;
-        margin-right: 14px;
-
-        &:hover {
-          &::before {
-            @extend .hover-icon;
-          }
-        }
-
-        svg {
-          @extend .style-icon;
-
-          &:hover {
-            fill: $text-primary;
-          }
-        }
-
-
-      }
     }
 
     &__avatar {
@@ -67,7 +46,7 @@
     }
 
     &__text {
-      margin     : 0 0 10px 30px;
+      margin     : 0 0 10px 25px;
       font-size  : $fs-x-small;
       font-weight: $fw-normal;
       display    : block;

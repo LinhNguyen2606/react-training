@@ -1,5 +1,5 @@
 import { Clock, Envelope } from '../assets/icons';
-import { convertDate } from '../helpers';
+import { dateConversion } from '../helpers';
 
 /**
  * Constant array representing user information.
@@ -14,6 +14,6 @@ export const USER_INFORMATION = [
   {
     icon: Clock,
     label: 'Last visited:',
-    value: convertDate(),
+    value: dateConversion(),
   },
 ];

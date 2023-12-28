@@ -3,12 +3,6 @@
   border-color    : #4a4e58;
   min-width       : 210px;
 
-  &__item--icon {
-    svg {
-      fill: $primary-color;
-    }
-  }
-
   &__item--text {
     font-size: $fs-x-small;
   }

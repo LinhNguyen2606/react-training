@@ -1,2 +1,2 @@
-export { generateRandomColor } from './GenerateRandomColor';
-export { convertDate } from './Date';
+export { generateRandomColor } from './generate';
+export { dateConversion } from './date';

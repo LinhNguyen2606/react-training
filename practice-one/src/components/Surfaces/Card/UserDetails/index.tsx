@@ -5,7 +5,11 @@ import { Pencil } from '../../../../assets/icons';
 import { InfoItemType } from '../../../../types';
 
 // Components
-import { Icon, Status, Avatar } from '../../../DataDisplay';
+import {
+  Icon,
+  Status,
+  Avatar
+} from '../../../DataDisplay';
 import InfoItem from './InfoItem';
 
 // SCSS

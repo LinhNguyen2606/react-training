@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
 import UserDetails from '.';
+import { USER_INFORMATION  } from '../../../../constants/UserInformation';
 
 // Helper
 import { generateRandomColor } from '../../../../helpers/index';
@@ -19,7 +20,6 @@ export const Default: Story = {
     isActive: true,
     bgColor: generateRandomColor(),
     userName: 'Username',
-    email: 'email@example.com',
-    lastVisited: 'Dec 27, 2023 14:48:06',
+    infoItem: USER_INFORMATION ,
   },
 };

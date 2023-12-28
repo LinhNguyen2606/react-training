@@ -3,8 +3,8 @@
 
   .user {
     padding       : 12px 4px;
-    display       : flex;
     flex-direction: column;
+    display       : flex;
     gap           : 20px;
 
 
@@ -32,6 +32,8 @@
             fill: $text-primary;
           }
         }
+
+
       }
     }
 
@@ -52,29 +54,23 @@
       text-align: center;
     }
 
-    &__mail--icon,
-    &__visited--icon {
+    &--icon {
+      align-items  : center;
       display      : flex;
       gap          : 10px;
-      align-items  : center;
       margin-bottom: 10px;
 
       span {
-        color    : $tertiary-color;
-        font-size: $fs-x-small
+        font-size: $fs-x-small;
+        color    : #313131;
       }
     }
 
-    &__time-text,
-    &__email-text {
-      margin     : 0 0 14px 26px;
+    &__text {
+      margin     : 0 0 10px 30px;
       font-size  : $fs-x-small;
       font-weight: $fw-normal;
       display    : block;
-    }
-
-    svg {
-      fill: #94A1B3;
     }
   }
 }

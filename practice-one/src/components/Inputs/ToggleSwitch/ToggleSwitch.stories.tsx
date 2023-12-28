@@ -6,6 +6,7 @@ import ToggleSwitch from '.';
 export default {
   title: 'Components/ToggleSwitch',
   component: ToggleSwitch,
+  tags: ['autodocs'],
   argTypes: {
     isChecked: {
       description: 'The status of the toggle switch',

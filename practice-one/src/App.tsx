@@ -1,4 +1,4 @@
-import Drawer from './components/DataDisplay/Drawer';
+import { Drawer } from "@components";
 
 const App = () => {
   return (

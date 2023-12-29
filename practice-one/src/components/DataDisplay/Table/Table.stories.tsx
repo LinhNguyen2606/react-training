@@ -6,10 +6,10 @@ import Avatar from '../Avatar';
 import Status from '../Status';
 
 // Types
-import { EnitityColumnType, User } from '../../../types/index';
+import { EnitityColumnType, User } from '@types';
 
 // Helper
-import { generateRandomColor } from '../../../helpers';
+import { generateRandomColor } from '@helpers';
 
 export default {
   title: 'Components/Table',
@@ -60,7 +60,11 @@ export const Default: Story = {
         key: 'avatar',
         title: '',
         render: (_, item: User) => (
-          <Avatar src={item.avatar} alt={item.userName} bgColor={item.bgColor} additionalClass="avatar--circle" />
+          <Avatar
+            src={item.avatar}
+            alt={item.userName}
+            bgColor={item.bgColor}
+            additionalClass="avatar--circle" />
         ),
       },
       {

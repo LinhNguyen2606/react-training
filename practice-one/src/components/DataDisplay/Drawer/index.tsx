@@ -1,15 +1,15 @@
 import { FC, ReactElement } from 'react';
 
 // Components
-import Button from '../../Inputs/Button';
+import { Button } from '@components/Inputs';
+import Icon from '../Icon';
 import DrawerItem from './DrawerItem';
 
 // Icon
-import { UserGroup } from '../../../assets/icons';
+import { UserGroup } from '@assets/icons';
 
 // SCSS
 import './Drawer.scss';
-import Icon from '../Icon';
 
 type DrawerProps = {
   width?: number;
@@ -27,7 +27,11 @@ const Drawer: FC<DrawerProps> = ({ width, height }): ReactElement => {
 
   return (
     <aside className="drawer" style={{ ...widthDrawer, ...heightDrawer }}>
-      <Button variants="primary" size="lg" additionalClass="drawer">
+      <Button
+        variants="primary"
+        size="lg"
+        additionalClass="drawer"
+      >
         <span className="btn__text">+ New</span>
       </Button>
       <DrawerItem additionalClass="drawer__item">

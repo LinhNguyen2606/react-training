@@ -1,8 +1,8 @@
 // Type
-import { EnitityColumnType } from '../../../../../types';
+import { EnitityColumnType } from "@types";
 
 // Component
-import TableCell from './TableCell';
+import TableCell from "./TableCell";
 
 type TableRowCellProps<T> = {
   item: T;

@@ -1,10 +1,12 @@
-// Types
+// Hook
 import { useState } from 'react';
-import { EnitityColumnType } from '../../../../types';
+
+// Type
+import { EnitityColumnType } from '@types';
 
 // Components
-import TableRowCell from './TableRowCell';
 import TableRowItem from './TableRowItem';
+import TableRowCell from './TableRowCell';
 
 type TableRowProps<T> = {
   rowData: T[];

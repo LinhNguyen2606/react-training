@@ -1,5 +1,5 @@
-export { default as Button } from './Button/index';
-export { default as SearchBar } from './SearchBar/index';
-export { default as TextField } from './TextField/index';
-export { default as ToggleSwitch } from './ToggleSwitch/index';
-export { default as UploadImage } from './UploadImage/index';
+export { default as Button } from './Button';
+export { default as SearchBar } from './SearchBar';
+export { default as TextField } from './TextField';
+export { default as ToggleSwitch } from './ToggleSwitch';
+export { default as UploadImage } from './UploadImage';

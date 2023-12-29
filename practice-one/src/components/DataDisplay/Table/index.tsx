@@ -2,8 +2,8 @@
 import { EnitityColumnType } from '@types';
 
 // Components
-import TableHeader from './TableHeader';
-import TableRow from './TableRow';
+import TableHeader from '@components/DataDisplay/Table/TableHeader';
+import TableRow from '@components/DataDisplay/Table/TableRow';
 
 // SCSS
 import './Table.scss';
@@ -19,7 +19,8 @@ const Table = <T,>({
   rowData,
   columns,
   additionalClass,
-  onRowClick }: TableProps<T>) => {
+  onRowClick
+}: TableProps<T>) => {
   return (
     <div className="table__wrapper">
       <table className={`table ${additionalClass}`}>

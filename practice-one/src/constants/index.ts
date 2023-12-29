@@ -1,1 +1,1 @@
-export { USER_INFORMATION  } from './users';
+export { USER_INFORMATION  } from '@constants/users';

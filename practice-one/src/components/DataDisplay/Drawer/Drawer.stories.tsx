@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Drawer from '.';
+import Drawer from '@components/DataDisplay/Drawer';
 
 export default {
   title: 'Components/Drawer',

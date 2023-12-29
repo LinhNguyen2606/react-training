@@ -6,10 +6,10 @@ import { InfoItemType } from '@types';
 
 // Components
 import { Avatar, Icon, Status } from '@components/DataDisplay';
-import InfoItem from './InfoItem';
+import InfoItem from '@components/Surfaces/Card/UserDetails/InfoItem';
 
 // SCSS
-import './UserDetails.scss';
+import '@components/Surfaces/Card/UserDetails/UserDetails.scss';
 
 type UserDetailsProps = {
   title?: string;

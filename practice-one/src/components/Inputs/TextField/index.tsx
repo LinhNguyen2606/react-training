@@ -1,5 +1,5 @@
 // SCSS
-import './TextField.scss';
+import '@components/Inputs/TextField/TextField.scss';
 
 type TextFieldProps = {
   value?: string;

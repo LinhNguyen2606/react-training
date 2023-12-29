@@ -1,7 +1,14 @@
-export type { Variant } from './Variant';
-export type { ButtonSize } from './Size';
-export type { Status } from './Status';
-export type { User } from './User';
+export type UserType = {
+  id: number;
+  userName: string;
+  isActive: boolean;
+  email: string;
+  avatar: string;
+  registered: string;
+  lastVisited: string;
+  details: string;
+  bgColor: string;
+};
 
 export type InfoItemType = {
   icon: string;

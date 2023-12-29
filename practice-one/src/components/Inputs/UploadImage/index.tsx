@@ -11,7 +11,7 @@ import { convertFileToBase64 } from '@helpers';
 import { Avatar, Icon } from '@components/DataDisplay';
 
 // SCSS
-import './UploadImage.scss';
+import '@components/Inputs/UploadImage/UploadImage.scss';
 
 type UploadImageProps = {
   originalImage: string;

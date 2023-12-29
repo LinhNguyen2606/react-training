@@ -1,1 +1,1 @@
-export { default as UserDetails } from './Card/UserDetails';
+export { default as UserDetails } from '@components/Surfaces/Card/UserDetails';

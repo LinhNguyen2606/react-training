@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
-import Table from '.';
-import Avatar from '../Avatar';
-import Status from '../Status';
+import Table from '@components/DataDisplay/Table';
+import Avatar from '@components/DataDisplay/Avatar';
+import Status from '@components/DataDisplay/Status';
 
 // Types
-import { EnitityColumnType, User } from '@types';
+import { EnitityColumnType, UserType } from '@types';
 
 // Helper
 import { generateRandomColor } from '@helpers';
@@ -59,7 +59,7 @@ export const Default: Story = {
       {
         key: 'avatar',
         title: '',
-        render: (_, item: User) => (
+        render: (_, item: UserType) => (
           <Avatar
             src={item.avatar}
             alt={item.userName}
@@ -75,7 +75,7 @@ export const Default: Story = {
       {
         key: 'isActive',
         title: 'Status',
-        render: (_, item: User) => <Status isActive={item.isActive} />,
+        render: (_, item: UserType) => <Status isActive={item.isActive} />,
         width: '160px',
       },
       {

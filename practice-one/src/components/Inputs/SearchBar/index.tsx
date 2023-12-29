@@ -5,10 +5,10 @@ import { MagnifyingGlass, Xmark } from '@assets/icons';
 
 // Components
 import { Icon } from '@components/DataDisplay';
-import TextField from '../TextField';
+import TextField from '@components/Inputs/TextField';
 
 // SCSS
-import './Searchbar.scss';
+import '@components/Inputs/SearchBar/Searchbar.scss';
 
 type SearchBarProps = {
   label?: string;

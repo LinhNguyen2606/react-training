@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 // SCSS
-import './DrawerItem.scss';
+import '@components/DataDisplay/Drawer/DrawerItem/DrawerItem.scss';
 
 type DrawerItemProps = {
   children: ReactNode;

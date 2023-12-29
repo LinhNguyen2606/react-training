@@ -2,8 +2,8 @@ import { FC, ReactElement } from 'react';
 
 // Components
 import { Button } from '@components/Inputs';
-import Icon from '../Icon';
-import DrawerItem from './DrawerItem';
+import Icon from '@components/DataDisplay/Icon';
+import DrawerItem from '@components/DataDisplay/Drawer/DrawerItem';
 
 // Icon
 import { UserGroup } from '@assets/icons';

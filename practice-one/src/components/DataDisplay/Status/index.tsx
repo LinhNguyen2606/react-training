@@ -1,13 +1,10 @@
-// Type
-import { Status as StatusType} from '@types';
-
 // SCSS
-import './Status.scss';
+import '@components/DataDisplay/Status/Status.scss';
 
 type StatusProps = {
   isActive?: boolean;
-  active?: StatusType;
-  notActive?: StatusType;
+  active?: string;
+  notActive?: string;
 };
 
 const Status = ({

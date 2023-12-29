@@ -1,5 +1,5 @@
 // SCSS
-import './ToggleSwitch.scss';
+import '@components/Inputs/ToggleSwitch/ToggleSwitch.scss';
 
 type ToggleSwitchProps = {
   isChecked?: boolean;

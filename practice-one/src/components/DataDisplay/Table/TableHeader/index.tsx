@@ -2,7 +2,7 @@
 import { EnitityColumnType } from '@types';
 
 // Component
-import TableHeaderCell from './TableHeaderCell';
+import TableHeaderCell from '@components/DataDisplay/Table/TableHeader/TableHeaderCell';
 
 type TableHeaderProps<T> = {
   columns: EnitityColumnType<T>[];

@@ -2,13 +2,13 @@
 import { useState } from 'react';
 
 // Icon
-import { Upload } from '../../../assets/icons';
+import { Upload } from '@assets/icons';
 
 //Helper
-import { convertFileToBase64 } from '../../../helpers';
+import { convertFileToBase64 } from '@helpers';
 
 // Components
-import { Avatar, Icon} from '../../DataDisplay';
+import { Avatar, Icon } from '@components/DataDisplay';
 
 // SCSS
 import './UploadImage.scss';

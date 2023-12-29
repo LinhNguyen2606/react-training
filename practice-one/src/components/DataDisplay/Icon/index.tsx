@@ -9,11 +9,13 @@ const Icon = ({
   width = '16px',
   height = '16px'
 }: IconProps) => {
-  return <img
-    src={src}
-    width={width}
-    height={height} 
-  />;
+  return(
+    <img
+      src={src}
+      width={width}
+      height={height} 
+      />
+  )
 };
 
 export default Icon;

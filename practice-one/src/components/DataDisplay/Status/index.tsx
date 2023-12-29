@@ -1,5 +1,5 @@
 // Type
-import { Status as StatusType } from '../../../types';
+import { Status as StatusType} from '@types';
 
 // SCSS
 import './Status.scss';

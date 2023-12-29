@@ -1,5 +1,8 @@
-import { Clock, Envelope } from '../assets/icons';
-import { dateConversion } from '../helpers';
+// Icons
+import { Clock, Envelope } from '@assets/icons';
+
+// Helper
+import { dateConversion } from '@helpers';
 
 /**
  * Constant array representing user information.

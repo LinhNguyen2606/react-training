@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 // Icons
-import { MagnifyingGlass, Xmark } from '../../../assets/icons';
+import { MagnifyingGlass, Xmark } from '@assets/icons';
 
-// Component
+// Components
+import { Icon } from '@components/DataDisplay';
 import TextField from '../TextField';
-import { Icon } from '../../DataDisplay';
 
 // SCSS
 import './Searchbar.scss';

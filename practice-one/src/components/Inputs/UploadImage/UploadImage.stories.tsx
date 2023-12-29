@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import UploadImage from '.';
 
 // Helper
-import { generateRandomColor } from '../../../helpers';
+import { generateRandomColor } from '@helpers';
 
 export default {
   title: 'Components/UploadImage',

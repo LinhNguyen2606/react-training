@@ -4,10 +4,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import UserDetails from '.';
 
 // Constant
-import { USER_INFORMATION } from '../../../../constants/users';
+import { USER_INFORMATION } from '@constants';
 
 // Helper
-import { generateRandomColor } from '../../../../helpers/index';
+import { generateRandomColor } from '@helpers';
 
 export default {
   title: 'Components/UserDetails',

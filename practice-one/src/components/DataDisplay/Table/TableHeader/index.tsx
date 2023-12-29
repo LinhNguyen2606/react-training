@@ -1,5 +1,5 @@
 // Type
-import { EnitityColumnType } from '../../../../types';
+import { EnitityColumnType } from '@types';
 
 // Component
 import TableHeaderCell from './TableHeaderCell';

@@ -1,8 +1,12 @@
-import { ButtonHTMLAttributes, FC, ReactElement, ReactNode } from 'react';
+import {
+  ButtonHTMLAttributes,
+  FC,
+  ReactElement,
+  ReactNode
+} from 'react';
 
 // Types
-import { Variant } from '../../../types';
-import { ButtonSize } from '../../../types';
+import { ButtonSize, Variant } from '@types';
 
 // SCSS
 import './Button.scss';

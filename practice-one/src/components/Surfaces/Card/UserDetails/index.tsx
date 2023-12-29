@@ -1,15 +1,11 @@
 // Icon
-import { Pencil } from '../../../../assets/icons';
+import { Pencil } from '@assets/icons';
 
 // Type
-import { InfoItemType } from '../../../../types';
+import { InfoItemType } from '@types';
 
 // Components
-import {
-  Icon,
-  Status,
-  Avatar
-} from '../../../DataDisplay';
+import { Avatar, Icon, Status } from '@components/DataDisplay';
 import InfoItem from './InfoItem';
 
 // SCSS

@@ -1,5 +1,7 @@
-// Types
-import { EnitityColumnType } from '../../../types';
+// Type
+import { EnitityColumnType } from '@types';
+
+// Components
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 

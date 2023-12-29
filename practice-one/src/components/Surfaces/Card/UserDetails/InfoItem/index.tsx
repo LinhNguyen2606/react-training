@@ -1,8 +1,8 @@
 // Type
-import { InfoItemType } from '../../../../../types';
+import { InfoItemType } from "@types";
 
 // Component
-import Icon from '../../../../DataDisplay/Icon';
+import { Icon } from "@components/DataDisplay";
 
 const InfoItem = ({
   icon,

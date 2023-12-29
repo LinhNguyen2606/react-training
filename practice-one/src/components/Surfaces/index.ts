@@ -1,1 +1,1 @@
-export { default as UserDetails } from './Card/UserDetails/index';
+export { default as UserDetails } from './Card/UserDetails';

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import UserDetails from '.';
+import UserDetails from '@components/Surfaces/Card/UserDetails';
 
 // Constant
 import { USER_INFORMATION } from '@constants';

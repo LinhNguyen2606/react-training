@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Avatar from '.';
+import Avatar from '@components/DataDisplay/Avatar';
 
 // Helper
 import { generateRandomColor } from '@helpers';

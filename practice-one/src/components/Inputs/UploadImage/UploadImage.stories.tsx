@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import UploadImage from '.';
+import UploadImage from '@components/Inputs/UploadImage';
 
 // Helper
 import { generateRandomColor } from '@helpers';

@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { EnitityColumnType } from '@types';
 
 // Components
-import TableRowItem from './TableRowItem';
-import TableRowCell from './TableRowCell';
+import TableRowItem from '@components/DataDisplay/Table/TableRow/TableRowItem';
+import TableRowCell from '@components/DataDisplay/Table/TableRow/TableRowCell';
 
 type TableRowProps<T> = {
   rowData: T[];

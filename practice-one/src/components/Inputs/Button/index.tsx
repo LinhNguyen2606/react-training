@@ -5,17 +5,14 @@ import {
   ReactNode
 } from 'react';
 
-// Types
-import { ButtonSize, Variant } from '@types';
-
 // SCSS
-import './Button.scss';
+import '@components/Inputs/Button/Button.scss';
 
 export type CustomBtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   additionalClass?: string;
   children: ReactNode;
-  size?: ButtonSize;
-  variants?: Variant;
+  size?: 'lg' | 'md';
+  variants?: 'primary' | 'secondary';
 };
 
 const Button: FC<CustomBtnProps> = ({

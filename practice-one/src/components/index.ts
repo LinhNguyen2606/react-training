@@ -4,14 +4,13 @@ export {
   Icon,
   Status,
   Table
-} from './DataDisplay/index';
+} from '@components/DataDisplay/index';
 
 export {
   Button,
   SearchBar,
   TextField,
   UploadImage
-} from './Inputs/index';
+} from '@components/Inputs/index';
 
-export { UserDetails } from './Surfaces/index';
-
+export { UserDetails } from '@components/Surfaces/index';

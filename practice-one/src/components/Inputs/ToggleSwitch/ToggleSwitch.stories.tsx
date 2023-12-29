@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import ToggleSwitch from '.';
+import ToggleSwitch from '@components/Inputs/ToggleSwitch';
 
 export default {
   title: 'Components/ToggleSwitch',

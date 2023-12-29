@@ -2,7 +2,7 @@
 import { EnitityColumnType } from "@types";
 
 // Component
-import TableCell from "./TableCell";
+import TableCell from "@components/DataDisplay/Table/TableRow/TableRowCell/TableCell";
 
 type TableRowCellProps<T> = {
   item: T;

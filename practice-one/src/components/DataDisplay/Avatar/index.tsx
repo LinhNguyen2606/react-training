@@ -1,5 +1,5 @@
 // SCSS
-import './Avatar.scss';
+import '@components/DataDisplay/Avatar/Avatar.scss';
 
 type AvatarProps = {
   src?: string;

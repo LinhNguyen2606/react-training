@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Icon from '.';
+import Icon from '@components/DataDisplay/Icon';
 
 // Icon
-import { Pencil } from '../../../assets/icons';
+import { Pencil } from '@assets/icons';
 
 export default {
   title: 'Components/Icon',

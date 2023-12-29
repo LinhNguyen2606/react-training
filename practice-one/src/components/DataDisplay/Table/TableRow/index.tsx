@@ -39,7 +39,10 @@ const TableRow = <T,>({
           onClick={handleRowClick}
         >
           {columns.map((column, index) => (
-            <TableRowCell key={`table-row-cell-${index}`} item={item} column={column} />
+            <TableRowCell
+              key={`table-row-cell-${index}`}
+              item={item}
+              column={column} />
           ))}
         </TableRowItem>
       ))}

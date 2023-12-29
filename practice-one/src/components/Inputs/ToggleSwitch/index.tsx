@@ -6,7 +6,11 @@ type ToggleSwitchProps = {
 };
 
 const ToggleSwitch = ({ isChecked}: ToggleSwitchProps) => {
-  return <input type="checkbox" className="toggle--switch" checked={isChecked}  />;
+  return <input
+    type="checkbox"
+    className="toggle--switch"
+    checked={isChecked}
+  />;
 };
 
 export default ToggleSwitch;

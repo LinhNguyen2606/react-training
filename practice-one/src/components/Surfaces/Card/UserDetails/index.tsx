@@ -42,11 +42,21 @@ const UserDetails = ({
             <Icon src={Pencil} />
           </div>
         </article>
-        <Avatar src={src} alt={userName} bgColor={bgColor} additionalClass="user__avatar" />
+        <Avatar
+          src={src}
+          alt={userName}
+          bgColor={bgColor}
+          additionalClass="user__avatar"
+        />
         <span className="user__username primary__text">{userName}</span>
         <div>
           {infoItem.map(({ icon, label, value }, index) => (
-            <InfoItem key={index} icon={icon} label={label ? label : 'Unknown'} value={value ? value : 'Unknown'} />
+            <InfoItem
+              key={index}
+              icon={icon}
+              label={label ? label : 'Unknown'}
+              value={value ? value : 'Unknown'}
+            />
           ))}
         </div>
       </div>

@@ -65,7 +65,11 @@ const UploadImage = ({
             additionalClass="upload__avatar"
         />
         <label className="upload__label">
-          <input className="upload__input" type="file" onChange={handleImageUpload}/>
+          <input
+            className="upload__input"
+            type="file"
+            onChange={handleImageUpload}
+          />
           <Icon src={Upload}/>
           {label}
         </label>

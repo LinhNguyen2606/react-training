@@ -9,19 +9,19 @@ export default {
   tags: ['autodocs'],
   argTypes: {
     isActive: {
-      description: 'The status of the user.',
+      description: 'Shows whether the status is active or inactive',
       table: {
         defaultValue: { summary: true },
       },
     },
     active: {
-      description: 'Short text to describe the status of the user',
+      description: 'Short text to describe the status',
       table: {
         defaultValue: { summary: 'Active' },
       },
     },
     notActive: {
-      description: 'Short text to describe the status of the user',
+      description: 'Short text to describe the status',
       table: {
         defaultValue: { summary: 'Not active' },
       },

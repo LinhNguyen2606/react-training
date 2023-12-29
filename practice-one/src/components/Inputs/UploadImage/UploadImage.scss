@@ -6,9 +6,9 @@
 
 
   &__avatar {
+    line-height: calc(95/50);
     width      : 95px;
     height     : 95px;
-    line-height: 95px;
 
     .avatar__initial {
       color    : rgba(255, 255, 255, 0.5);

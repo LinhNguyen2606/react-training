@@ -12,7 +12,7 @@ export default {
   tags: ['autodocs'],
   argTypes: {
     src: { description: 'The image source.' },
-    alt: { description: 'The username.' },
+    alt: { description: 'An image with an alternate text specified.' },
     bgColor: { description: 'A randomly generated background color.' },
     additionalClass: {
       description: 'Adds the additional class to the avatar.',

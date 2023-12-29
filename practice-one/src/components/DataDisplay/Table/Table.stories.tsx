@@ -17,7 +17,7 @@ export default {
   tags: ['autodocs'],
   argTypes: {
     rowData: {
-      description: 'Row data contains information as well as the status of the user',
+      description: 'The data to be displayed in the table rows.',
     },
     columns: {
       description:

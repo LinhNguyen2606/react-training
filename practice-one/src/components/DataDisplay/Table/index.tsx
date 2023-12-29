@@ -26,7 +26,10 @@ const Table = <T,>({
         </thead>
 
         <tbody className="table__body">
-          <TableRow rowData={rowData} columns={columns} onRowClick={onRowClick} />
+          <TableRow
+            rowData={rowData}
+            columns={columns}
+            onRowClick={onRowClick} />
         </tbody>
       </table>
     </div>

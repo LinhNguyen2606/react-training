@@ -16,7 +16,13 @@ const TextField = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange && onChange(e.target.value);
 
   return (
-    <input type="text" className="text--field" placeholder={placeholder} value={value} onChange={handleInputChange} />
+    <input
+      type="text"
+      className="text--field"
+      placeholder={placeholder}
+      value={value}
+      onChange={handleInputChange}
+    />
   );
 };
 

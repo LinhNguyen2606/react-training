@@ -9,7 +9,8 @@ export {
 export {
   Button,
   SearchBar,
-  TextField
+  TextField,
+  UploadImage
 } from './Inputs/index';
 
 export { UserDetails } from './Surfaces/index';

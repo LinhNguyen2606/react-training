@@ -10,7 +10,8 @@ export {
   Button,
   SearchBar,
   TextField,
-  UploadImage
+  UploadImage,
+  TextArea
 } from '@components/Inputs/index';
 
 export { UserDetails } from '@components/Surfaces/index';

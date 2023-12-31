@@ -15,7 +15,9 @@ type ModalProps = {
   title?: string;
   textConfirmation?: string;
   onHide?: () => void;
+  onRemove?: () => void;
   onChange?: () => void;
+  onSubmit?: () => void;
 };
 
 const Modal = ({
@@ -24,7 +26,9 @@ const Modal = ({
   title,
   textConfirmation,
   onHide,
-  onChange
+  onRemove,
+  onChange,
+  onSubmit
 }: ModalProps) => {
   return (
     <>
@@ -39,9 +43,15 @@ const Modal = ({
           <ModalBody
             type={type}
             textConfirmation={textConfirmation}
-            onChange={onChange} />
+            onChange={onChange}
+            onSubmit={onSubmit}
+          />
           
-          <ModalFooter type={type} />
+          <ModalFooter
+            type={type}
+            onHide={onHide}
+            onRemove={onRemove}
+          />
         </div>
       )}
     </>

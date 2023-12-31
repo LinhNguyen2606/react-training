@@ -3,7 +3,8 @@ export {
   Drawer,
   Icon,
   Status,
-  Table
+  Table,
+  Modal
 } from '@components/DataDisplay/index';
 
 export {

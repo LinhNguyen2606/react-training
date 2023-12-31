@@ -8,10 +8,12 @@ import {
 // SCSS
 import '@components/Inputs/Button/Button.scss';
 
+type ButtonSize = 'lg' | 'md' | 'sm';
+
 export type CustomBtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   additionalClass?: string;
   children: ReactNode;
-  size?: 'lg' | 'md';
+  size?: ButtonSize;
   variants?: 'primary' | 'secondary';
 };
 

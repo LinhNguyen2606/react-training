@@ -22,3 +22,5 @@ export type EnitityColumnType<T> = {
   render?: (column: EnitityColumnType<T>, item: T) => JSX.Element;
   width?: string;
 };
+
+export type ModalType = 'submit' | 'confirm';

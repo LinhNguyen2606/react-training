@@ -21,7 +21,7 @@ export default {
 } as Meta;
 type Story = StoryObj<typeof TextArea>;
 
-/** Text Fields let users enter and edit text. */
+/** The textarea defines a multi-line text input control. */
 export const Default: Story = {
   args: {
     placeholder: '',

@@ -28,9 +28,25 @@
     padding: 8px 40px;
   }
 
+  &--size-sm {
+    padding: 0 30px;
+  }
+
   &__drawer {
     border: 1px solid $primary-color;
     margin: 18px 0 0 20px
+  }
+
+  &__save {
+    font-weight: $fw-medium;
+    font-size  : $fs-small;
+  }
+
+  &__cancel,
+  &__delete {
+    font-weight: $fw-medium;
+    font-size  : $fs-small;
+    padding    : 6px 27px;
   }
 
   &__text {

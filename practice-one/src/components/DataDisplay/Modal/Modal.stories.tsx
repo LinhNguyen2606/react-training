@@ -35,8 +35,14 @@ export default {
     onHide: {
       description: 'The onClick event when you click to close the modal',
     },
+    onRemove: {
+      description: 'The onClick event when you perform a remove action',
+    },
     onChange: {
       description: 'The onChange event when you type in the input',
+    },
+    onSubmit: {
+      description: 'The onClick event when you submit',
     },
   },
 } as Meta;

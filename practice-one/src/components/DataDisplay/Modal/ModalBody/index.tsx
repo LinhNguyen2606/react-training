@@ -10,12 +10,14 @@ type ModalBodyProps = {
   type?: ModalType;
   textConfirmation?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  onSubmit?: () => void;
 };
 
 const ModalBody = ({
   type,
   textConfirmation,
-  onChange
+  onChange,
+  onSubmit
 }: ModalBodyProps) => {
   return (
     <div className={`modal__body--${type}`}>
@@ -27,7 +29,9 @@ const ModalBody = ({
             <Button
               variants="primary"
               size="sm"
-              additionalClass="save">
+              additionalClass="save"
+              onClick={onSubmit}
+            >
               Save
             </Button>
         </>

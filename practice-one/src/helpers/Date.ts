@@ -1,8 +1,8 @@
 /**
  * Convert the day such as: May 21, 2020 17:02:06
  */
-export const dateConversion = () =>
-  new Date()
+export const dateConversion = (date: string) =>
+  new Date(date)
     .toLocaleString('en-US', {
       month: 'long',
       day: 'numeric',

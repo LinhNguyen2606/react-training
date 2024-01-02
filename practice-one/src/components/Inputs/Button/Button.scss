@@ -42,11 +42,20 @@
     font-size  : $fs-small;
   }
 
+
   &__cancel,
   &__delete {
     font-weight: $fw-medium;
     font-size  : $fs-small;
-    padding    : 6px 27px;
+    padding    : 6px 25px;
+  }
+
+  &__remove {
+    padding: 7px 35px;
+  }
+
+  &__store {
+    padding: 7px 40px;
   }
 
   &__text {

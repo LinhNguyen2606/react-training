@@ -1,6 +1,3 @@
-// Type
-import { ModalType } from '@types';
-
 // Components
 import ModalHeader from '@components/DataDisplay/Modal/ModalHeader'
 import ModalBody from '@components/DataDisplay/Modal/ModalBody'
@@ -9,8 +6,11 @@ import ModalFooter from '@components/DataDisplay/Modal/ModalFooter'
 // SCSS
 import '@components/DataDisplay/Modal/Modal.scss';
 
+export type ModalType = 'submit' | 'confirm';
+
 type ModalProps = {
   isOpen?: boolean;
+  isAutoFocus?: boolean; 
   type?: ModalType;
   title?: string;
   textConfirmation?: string;
@@ -22,6 +22,7 @@ type ModalProps = {
 
 const Modal = ({
   isOpen,
+  isAutoFocus = true,
   type,
   title,
   textConfirmation,
@@ -45,6 +46,7 @@ const Modal = ({
             textConfirmation={textConfirmation}
             onChange={onChange}
             onSubmit={onSubmit}
+            isAutoFocus={isAutoFocus}
           />
           
           <ModalFooter

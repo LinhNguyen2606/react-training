@@ -4,11 +4,12 @@ import { ChangeEventHandler } from 'react'
 import { Button } from '@components/Inputs';
 
 // Type
-import { ModalType } from '@types';
+import { ModalType } from '@components/DataDisplay/Modal';
 
 type ModalBodyProps = {
   type?: ModalType;
   textConfirmation?: string;
+  isAutoFocus?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onSubmit?: () => void;
 };
@@ -16,6 +17,7 @@ type ModalBodyProps = {
 const ModalBody = ({
   type,
   textConfirmation,
+  isAutoFocus,
   onChange,
   onSubmit
 }: ModalBodyProps) => {
@@ -25,7 +27,12 @@ const ModalBody = ({
         <p className="modal__body--text primary__text">{textConfirmation}</p>
       ) : (
         <>
-          <input type="text" className="modal__body--input" onChange={onChange} />
+            <input
+              type="text"
+              className="modal__body--input"
+              onChange={onChange}
+              autoFocus={isAutoFocus ? true : false}
+            />
             <Button
               variants="primary"
               size="sm"

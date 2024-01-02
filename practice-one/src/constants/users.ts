@@ -17,6 +17,6 @@ export const USER_INFORMATION = [
   {
     icon: Clock,
     label: 'Last visited:',
-    value: dateConversion(),
+    value: dateConversion('May 21, 2020 17:02:06'),
   },
 ];

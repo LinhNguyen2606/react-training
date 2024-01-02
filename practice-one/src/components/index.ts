@@ -4,7 +4,8 @@ export {
   Icon,
   Status,
   Table,
-  Modal
+  Modal,
+  Panel
 } from '@components/DataDisplay/index';
 
 export {

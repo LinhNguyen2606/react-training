@@ -17,6 +17,15 @@ export default {
         defaultValue: { summary: 'Search' },
       },
     },
+    label: {
+      description: 'The label of Text Field',
+    },
+    isShowLabel: {
+      description: 'Actions to show or hide the label',
+      table: {
+        defaultValue: { summary: false },
+      },
+    },
     onChange: {
       description: 'onChange event when you type the keyword in the input',
     },
@@ -28,5 +37,6 @@ type Story = StoryObj<typeof TextField>;
 export const Default: Story = {
   args: {
     placeholder: 'Search',
+    isShowLabel: false,
   },
 };

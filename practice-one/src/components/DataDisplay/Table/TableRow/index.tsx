@@ -1,8 +1,8 @@
 // Hook
 import { useState } from 'react';
 
-// Type
-import { EnitityColumnType } from '@types';
+// Interface
+import { EnitityColumn } from '@interfaces';
 
 // Components
 import TableRowItem from '@components/DataDisplay/Table/TableRow/TableRowItem';
@@ -10,7 +10,7 @@ import TableRowCell from '@components/DataDisplay/Table/TableRow/TableRowCell';
 
 type TableRowProps<T> = {
   rowData: T[];
-  columns: EnitityColumnType<T>[];
+  columns: EnitityColumn<T>[];
   onRowClick: (index: number, item: T) => void;
 };
 

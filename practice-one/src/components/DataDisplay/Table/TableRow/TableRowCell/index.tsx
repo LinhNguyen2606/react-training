@@ -1,12 +1,12 @@
-// Type
-import { EnitityColumnType } from "@types";
+// Interface
+import { EnitityColumn } from '@interfaces';
 
 // Component
-import TableCell from "@components/DataDisplay/Table/TableRow/TableRowCell/TableCell";
+import TableCell from '@components/DataDisplay/Table/TableRow/TableRowCell/TableCell';
 
 type TableRowCellProps<T> = {
   item: T;
-  column: EnitityColumnType<T>;
+  column: EnitityColumn<T>;
 };
 
 const TableRowCell = <T,>({ item, column }: TableRowCellProps<T>): JSX.Element => {

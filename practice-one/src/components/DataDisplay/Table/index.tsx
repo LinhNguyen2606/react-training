@@ -1,5 +1,5 @@
-// Type
-import { EnitityColumnType } from '@types';
+// Interface
+import { EnitityColumn } from '@interfaces';
 
 // Components
 import TableHeader from '@components/DataDisplay/Table/TableHeader';
@@ -10,7 +10,7 @@ import './Table.scss';
 
 type TableProps<T> = {
   rowData: T[];
-  columns: EnitityColumnType<T>[];
+  columns: EnitityColumn<T>[];
   additionalClass?: string;
   onRowClick: (index: number, item: T) => void;
 };

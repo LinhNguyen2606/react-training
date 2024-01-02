@@ -5,8 +5,11 @@ import Table from '@components/DataDisplay/Table';
 import Avatar from '@components/DataDisplay/Avatar';
 import Status from '@components/DataDisplay/Status';
 
-// Types
-import { EnitityColumnType, UserType } from '@types';
+// Interface
+import { EnitityColumn } from '@interfaces';
+
+// Interface
+import { User } from '@interfaces';
 
 // Helper
 import { generateRandomColor } from '@helpers';
@@ -59,12 +62,8 @@ export const Default: Story = {
       {
         key: 'avatar',
         title: '',
-        render: (_, item: UserType) => (
-          <Avatar
-            src={item.avatar}
-            alt={item.userName}
-            bgColor={item.bgColor}
-            additionalClass="avatar--circle" />
+        render: (_, item: User) => (
+          <Avatar src={item.avatar} alt={item.userName} bgColor={item.bgColor} additionalClass="avatar--circle" />
         ),
       },
       {
@@ -75,7 +74,7 @@ export const Default: Story = {
       {
         key: 'isActive',
         title: 'Status',
-        render: (_, item: UserType) => <Status isActive={item.isActive} />,
+        render: (_, item: User) => <Status isActive={item.isActive} />,
         width: '160px',
       },
       {
@@ -83,6 +82,6 @@ export const Default: Story = {
         title: 'Email',
         width: '300px',
       },
-    ] as EnitityColumnType<unknown>[],
+    ] as EnitityColumn<unknown>[],
   },
 };

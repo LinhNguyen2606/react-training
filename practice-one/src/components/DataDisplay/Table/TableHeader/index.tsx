@@ -1,11 +1,11 @@
-// Type
-import { EnitityColumnType } from '@types';
+// Interface
+import { EnitityColumn } from '@interfaces';
 
 // Component
 import TableHeaderCell from '@components/DataDisplay/Table/TableHeader/TableHeaderCell';
 
 type TableHeaderProps<T> = {
-  columns: EnitityColumnType<T>[];
+  columns: EnitityColumn<T>[];
 };
 
 const TableHeader = <T,>({ columns }: TableHeaderProps<T>): JSX.Element => {

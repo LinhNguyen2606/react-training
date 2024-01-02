@@ -2,7 +2,7 @@
 import { Pencil } from '@assets/icons';
 
 // Type
-import { InfoItemType } from '@types';
+import { InfoItemProps } from '@components/Surfaces/Card/UserDetails/InfoItem';
 
 // Components
 import { Avatar, Icon, Status } from '@components/DataDisplay';
@@ -17,7 +17,7 @@ type UserDetailsProps = {
   src?: string;
   bgColor?: string;
   userName: string;
-  infoItem: InfoItemType[];
+  infoItem: InfoItemProps[];
 };
 
 const UserDetails = ({

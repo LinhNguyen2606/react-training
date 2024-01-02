@@ -2,7 +2,7 @@
 import { Button } from '@components/Inputs';
 
 // Type
-import { ModalType } from '@types';
+import { ModalType } from '@components/DataDisplay/Modal';
 
 type ModalFooterProps = {
   type?: ModalType;

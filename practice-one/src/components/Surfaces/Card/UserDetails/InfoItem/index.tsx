@@ -1,14 +1,17 @@
-// Type
-import { InfoItemType } from "@types";
-
 // Component
 import { Icon } from "@components/DataDisplay";
+
+export type InfoItemProps = {
+  icon: string;
+  label?: string;
+  value?: string;
+};
 
 const InfoItem = ({
   icon,
   label,
   value
-}: InfoItemType) => {
+}: InfoItemProps) => {
   return (
     <>
       <div className="user--icon">

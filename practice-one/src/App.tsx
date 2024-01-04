@@ -1,4 +1,6 @@
-import { Drawer } from "@components";
+// Components
+import { Drawer, SearchBar } from '@components';
+
 
 const App = () => {
   return (
@@ -6,9 +8,13 @@ const App = () => {
       <header className="header">
         <h1 className="header__heading primary__text">User Manager</h1>
       </header>
-      <div className="content__wrapper">
+      <main className="main__container">
         <Drawer />
-      </div>
+
+        <div className="content__wrapper">
+          <SearchBar label='Users' placeholder='Search'/>
+        </div>
+      </main>
     </>
   );
 };

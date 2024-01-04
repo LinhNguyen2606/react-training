@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Icons
 import { MagnifyingGlass, Xmark } from '@assets/icons';
@@ -16,22 +16,23 @@ type SearchBarProps = {
   onChange?: (value: string) => void;
 };
 
-const SearchBar = ({
-  label,
-  placeholder,
-  onChange
-}: SearchBarProps) => {
+const SearchBar = ({ label, placeholder, onChange }: SearchBarProps) => {
   const [isDismissSearchBar, setIsDismissSearchBar] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isDismissSearchBar && inputRef.current) inputRef.current.focus();
+  }, [isDismissSearchBar]);
 
   return (
     <div className="search">
       <label className={`primary__text ${isDismissSearchBar && 'hidden'}`}>{label}</label>
-      {isDismissSearchBar && <TextField placeholder={placeholder} onChange={onChange} />}
+      {isDismissSearchBar && <TextField autoFocus = {true} placeholder={placeholder} onChange={onChange} />}
       <div
         className={isDismissSearchBar ? 'search__close--icon' : 'search__magnifier--icon'}
         onClick={() => setIsDismissSearchBar(!isDismissSearchBar)}
       >
-        {isDismissSearchBar ? <Icon src={ Xmark} /> : <Icon src={ MagnifyingGlass}/>}
+        {isDismissSearchBar ? <Icon src={Xmark} /> : <Icon src={MagnifyingGlass} />}
       </div>
     </div>
   );

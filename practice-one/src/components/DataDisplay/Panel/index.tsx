@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 // Icon
 import { ArrowLeft } from '@assets/icons';
 
@@ -7,7 +9,6 @@ import Tabs from '@components/DataDisplay/Panel/Tabs'
 
 // SCSS
 import '@components/DataDisplay/Panel/Panel.scss';
-import { useState } from 'react';
 
 type ContentType = {
   content: React.ReactNode
@@ -28,8 +29,7 @@ const Panel = ({ tabs, onBackClick }: PanelProps) => {
   const tabData = tabs[activeTabIndex].content;
 
   return (
-    <div className="panel__wrapper">
-      <div className="panel">
+    <div className="panel">
         <div className="panel__header">
           <div className="panel__header--icon">
             <Icon src={ArrowLeft} onClick={onBackClick} />
@@ -46,7 +46,6 @@ const Panel = ({ tabs, onBackClick }: PanelProps) => {
           </div>
         </div>
         {tabData}
-      </div>
     </div>
   )
 };

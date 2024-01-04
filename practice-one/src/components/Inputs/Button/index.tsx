@@ -15,15 +15,21 @@ export type CustomBtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
   size?: ButtonSize;
   variants?: 'primary' | 'secondary';
+  onClick?: () => void;
 };
 
 const Button: FC<CustomBtnProps> = ({
   additionalClass,
   children,
   size,
-  variants = 'primary'
+  variants = 'primary',
+  onClick,
 }): ReactElement => {
-  return <button className={`btn btn--${variants} btn--size-${size} btn__${additionalClass}`}>{children}</button>;
+  return (
+    <button className={`btn btn--${variants} btn--size-${size} btn__${additionalClass}`} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

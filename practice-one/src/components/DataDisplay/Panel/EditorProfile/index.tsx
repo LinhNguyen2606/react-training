@@ -6,57 +6,29 @@ import TextView from '@components/DataDisplay/Panel/Textview';
 import { Button, TextArea, TextField, ToggleSwitch, UploadImage } from '@components/Inputs';
 
 // Helper
-import { dateFormat } from '@helpers';
+import { dateFormat, generateRandomColor } from '@helpers';
 
 // Interface
 import { DataItems } from '@interfaces';
 
-
 type EditorProfileProps = {
   id: number;
-  userName: string;
-  email: string;
-  avatar: string;
-  bgColor: string;
-  isActive: boolean;
-  registered?: string;
-  lastVisited?: string;
-  details: string;
-  onRemove: (id: number) => void;
   dataItems: DataItems[];
+  onRemove: (id: number) => void;
 };
 
 const EditorProfile = ({
   id,
-  userName,
-  email,
-  avatar,
-  bgColor,
-  isActive,
-  registered,
-  lastVisited,
-  details,
-  onRemove,
   dataItems,
+  onRemove
 }: EditorProfileProps) => {
-  const [userData, setUserData] = useState({
-    userName,
-    email,
-    avatar,
-    status: isActive,
-    details,
-  });
-
+  const [data, setData] = useState(dataItems);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [randomColor, setRandomColor] = useState(generateRandomColor());
 
-  const handleChange = (key: string, value: string | boolean) => {
-    // The setUser function is called to update the state of the user
-    setUserData((prevUser) => ({
-      // Copy all current properties of the user
-      ...prevUser,
-      // The value of the property specified by key is updated
-      [key]: value,
-    }));
+  const handleChange = (id: number, value: string | boolean) => {
+    // Update the value of the element with the corresponding id in the data array
+    setData(data.map((item) => (item.id === id ? { ...item, value } : item)));
   };
 
   return (
@@ -64,8 +36,7 @@ const EditorProfile = ({
       <div className="panel__actions-btn">
         <Button
           additionalClass="remove"
-          size="md"
-          variants="secondary"
+          size="md" variants="secondary"
           onClick={() => setIsOpenModal(true)}>
             Delete
         </Button>
@@ -78,17 +49,17 @@ const EditorProfile = ({
       </div>
 
       <form className="panel__form">
-        {dataItems?.map((item) => {
+        {data?.map((item) => {
           switch (item.type) {
             case 'TEXT_FIELD':
               return (
-                <div className="panel__form-group" key={item.id}>
+                <div className="panel__form-group" key={item.key}>
                   <TextField
                     label={item.label}
                     additionalClass="panel__form-group--label"
                     isShowLabel={true}
-                    value={item.key === "userName" ? userData.userName : userData.email}
-                    onChange={(value: string) => handleChange(item.key, value)}
+                    value={item.value as string}
+                    onChange={(value) => handleChange(item.id, value)}
                   />
                 </div>
               );
@@ -98,41 +69,37 @@ const EditorProfile = ({
                 <div className="panel__form-group" key={item.key}>
                   <label className="panel__form-group--label">{item.label}</label>
                   <UploadImage
-                    originalImage={userData.avatar}
-                    alt={userData.userName}
-                    bgColor={bgColor}
-                    onChange={(value: string) => handleChange(item.key, value)}
+                    originalImage={item.value as string}
+                    alt={data.find((dataItem) => dataItem.key === 'userName')?.value as string}
+                    bgColor={randomColor}
+                    onChange={(value) => handleChange(item.id, value)}
                   />
                 </div>
               );
 
             case 'STATUS_FIELD':
               return (
-                <div className="panel__form-group" key={item.id}>
+                <div className="panel__form-group" key={item.key}>
                   <label className="panel__form-group--label">{item.label}</label>
-                  <ToggleSwitch isChecked={userData.status} onChange={(value: boolean) => handleChange(item.key, value)} />
+                  <ToggleSwitch isChecked={item.value as boolean} onChange={(value) => handleChange(item.id, value)}/>
                   <span className="panel__form-group--status">
-                    <Status isActive={userData.status} />
+                    <Status isActive={item.value as boolean} />
                   </span>
                 </div>
               );
 
             case 'DATE_FIELD':
-              return (
-                <TextView
-                  key={item.id}
-                  label={item.label}
-                  value={
-                    registered ? dateFormat(registered) : 'Unknown' && lastVisited ? dateFormat(lastVisited) : 'Unknown'
-                  }
-                />
-              );
+              return <TextView
+                        key={item.key}
+                        label={item.label}
+                        value={dateFormat(item.value as string)}
+                      />;
 
             case 'DETAILS_FIELD':
               return (
-                <div className="panel__form-group" key={item.id}>
+                <div className="panel__form-group" key={item.key}>
                   <span className="panel__form-group--label">{item.label}</span>
-                  <TextArea value={userData.details} onChange={(value: string) => handleChange(item.key, value)} />
+                  <TextArea value={item.value as string} onChange={(value) => handleChange(item.id, value)} />
                 </div>
               );
             default:

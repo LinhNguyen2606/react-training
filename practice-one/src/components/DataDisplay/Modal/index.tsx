@@ -34,26 +34,28 @@ const Modal = ({
   return (
     <>
       {isOpen && (
-        <div className={`modal modal__${type}`}>
-          <ModalHeader
-            type={type}
-            title={title}
-            onHide={onHide}
-          />
+        <div className={`modal`}>
+          <div className={`modal__wrapper modal__${type}`}>
+            <ModalHeader
+              type={type}
+              title={title}
+              onHide={onHide}
+            />
 
-          <ModalBody
-            type={type}
-            textConfirmation={textConfirmation}
-            onChange={onChange}
-            onSubmit={onSubmit}
-            isAutoFocus={isAutoFocus}
-          />
-          
-          <ModalFooter
-            type={type}
-            onHide={onHide}
-            onRemove={onRemove}
-          />
+            <ModalBody
+              type={type}
+              textConfirmation={textConfirmation}
+              onChange={onChange}
+              onSubmit={onSubmit}
+              isAutoFocus={isAutoFocus}
+            />
+            
+            <ModalFooter
+              type={type}
+              onHide={onHide}
+              onRemove={onRemove}
+            />
+          </div>
         </div>
       )}
     </>

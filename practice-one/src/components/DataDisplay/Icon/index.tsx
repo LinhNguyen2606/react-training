@@ -11,13 +11,15 @@ const Icon = ({
   height = '16px',
   onClick
 }: IconProps) => {
-  return(
-    <img
-      src={src}
-      width={width}
-      height={height} 
-      onClick={onClick}
-      />
+  return (
+    <div>
+          <img
+            src={src}
+            width={width}
+            height={height} 
+            onClick={onClick}
+          />
+    </div>
   )
 };
 

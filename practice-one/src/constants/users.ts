@@ -2,7 +2,7 @@
 import { Clock, Envelope } from '@assets/icons';
 
 // Helper
-import { dateConversion } from '@helpers';
+import { dateFormat } from '@helpers';
 
 /**
  * Constant array representing user information.
@@ -17,6 +17,6 @@ export const USER_INFORMATION = [
   {
     icon: Clock,
     label: 'Last visited:',
-    value: dateConversion('May 21, 2020 17:02:06'),
+    value: dateFormat('May 21, 2020 17:02:06'),
   },
 ];

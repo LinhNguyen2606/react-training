@@ -1,5 +1,5 @@
 export { generateRandomColor } from '@helpers/generate';
-export { dateConversion } from '@helpers/date';
+export { dateFormat } from '@helpers/date';
 
 /**
  * Convert a File to Base64 using a Promise

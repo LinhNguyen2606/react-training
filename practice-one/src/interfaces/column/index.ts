@@ -1,4 +1,4 @@
-export type EnitityColumn<T> = {
+export interface EnitityColumn<T> {
   key: keyof T;
   title: string;
   render?: (column: EnitityColumn<T>, item: T) => JSX.Element;

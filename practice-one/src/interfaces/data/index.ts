@@ -3,5 +3,5 @@ export interface DataItems {
   type: string;
   label: string;
   key: string;
-  value: string;
+  value: string | boolean;
 };

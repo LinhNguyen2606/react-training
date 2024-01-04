@@ -4,9 +4,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Panel } from '@components/DataDisplay';
 import EditorProfile from '@components/DataDisplay/Panel/EditorProfile';
 
-// Helper
-import { generateRandomColor } from '@helpers';
-
 // Constant
 import { DATA_ITEMS } from '@constants';
 
@@ -38,13 +35,7 @@ export const Default: Story = {
         content: (
           <EditorProfile
             id={1}
-            userName={''}
-            email={''}
-            details={''}
             dataItems={DATA_ITEMS as DataItems[]}
-            avatar={''}
-            isActive={true}
-            bgColor={generateRandomColor()}
             onRemove={() => {}}
           />
         ),

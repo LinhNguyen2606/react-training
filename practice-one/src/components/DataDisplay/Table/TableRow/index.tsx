@@ -32,7 +32,7 @@ const TableRow = <T,>({
 
   return (
     <>
-      {rowData.map((item, index) => (
+      {rowData?.map((item, index) => (
         <TableRowItem
           key={`table-row-${index}`}
           rowData={item}

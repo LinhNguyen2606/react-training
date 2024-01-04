@@ -78,7 +78,7 @@ const EditorProfile = ({
       </div>
 
       <form className="panel__form">
-        {dataItems.map((item) => {
+        {dataItems?.map((item) => {
           switch (item.type) {
             case 'TEXT_FIELD':
               return (

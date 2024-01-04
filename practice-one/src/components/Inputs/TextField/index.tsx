@@ -2,6 +2,7 @@
 import '@components/Inputs/TextField/TextField.scss';
 
 type TextFieldProps = {
+  autoFocus?: boolean;
   label?: string;
   additionalClass?: string;
   isShowLabel?: boolean;
@@ -11,6 +12,7 @@ type TextFieldProps = {
 };
 
 const TextField = ({
+  autoFocus,
   label,
   additionalClass,
   isShowLabel,
@@ -30,6 +32,7 @@ const TextField = ({
         placeholder={placeholder}
         value={value}
         onChange={handleInputChange}
+        autoFocus={autoFocus}
       />
     </>
   );

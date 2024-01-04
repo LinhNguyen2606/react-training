@@ -44,9 +44,9 @@
   }
 
   &__error {
+    font-size  : $fs-x-small;
     font-weight: $fw-medium;
-    margin-left: 10px;
     color      : #ff0000;
-    font-size  : 14px;
+    margin-left: 10px;
   }
 }

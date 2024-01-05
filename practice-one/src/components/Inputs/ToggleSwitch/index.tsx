@@ -1,5 +1,6 @@
 // SCSS
 import '@components/Inputs/ToggleSwitch/ToggleSwitch.scss';
+import { useState } from 'react';
 
 type ToggleSwitchProps = {
   isChecked?: boolean;
@@ -7,13 +8,19 @@ type ToggleSwitchProps = {
 };
 
 const ToggleSwitch = ({ isChecked, onChange }: ToggleSwitchProps) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange && onChange(e.target.checked);
+  const [switchValue, setSwichValue ] = useState(isChecked);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.checked;
+    setSwichValue(value);
+    onChange && onChange(e.target.checked);
+  }
 
   return(
     <input
       type="checkbox"
       className="toggle--switch"
-      checked={isChecked}
+      checked={switchValue}
       onChange={handleChange}
     />
   )

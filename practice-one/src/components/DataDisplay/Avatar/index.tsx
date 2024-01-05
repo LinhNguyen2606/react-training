@@ -14,7 +14,8 @@ const Avatar = ({
   bgColor,
   additionalClass
 }: AvatarProps) => {
-  const initial = alt.charAt(0).toUpperCase();
+  const initial = alt?.charAt(0).toUpperCase();
+
   return (
     <div className={`avatar ${additionalClass}`} style={{ backgroundColor: bgColor }}>
       {src ? (

@@ -11,24 +11,42 @@ import { dateFormat, generateRandomColor } from '@helpers';
 // Interface
 import { DataItems } from '@interfaces';
 
+type KeyIndexType = {
+  [key: string]: string | boolean;
+}
+
 type EditorProfileProps = {
   id: number;
   dataItems: DataItems[];
   onRemove: (id: number) => void;
 };
 
-const EditorProfile = ({
-  id,
-  dataItems,
-  onRemove
-}: EditorProfileProps) => {
-  const [data, setData] = useState(dataItems);
+const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
+  const [dataChanged, setDataChanged] = useState<KeyIndexType>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [randomColor, setRandomColor] = useState(generateRandomColor());
 
-  const handleChange = (id: number, value: string | boolean) => {
-    // Update the value of the element with the corresponding id in the data array
-    setData(data.map((item) => (item.id === id ? { ...item, value } : item)));
+  const handleChange = (key: string, value: string | boolean) => {
+    setDataChanged((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
+
+  /**
+   * Get the value of the `alt` attribute for Avatar from a data item (`DataItems`).
+   *
+   * @param {DataItems} item - Data item representing the Avatar.
+   * @returns {string | boolean} - `alt` value for Avatar.
+   */
+  const getAvatarAlt = (item: DataItems) => {
+    const { keyImageDefault } = item;
+    // Check if `keyImageDefault` exists and has a value in `dataChanged`
+    if (keyImageDefault && dataChanged[keyImageDefault]) {
+      return dataChanged[keyImageDefault] as string; 
+    }else {
+      return item.value as string;
+    }
   };
 
   return (
@@ -36,7 +54,8 @@ const EditorProfile = ({
       <div className="panel__actions-btn">
         <Button
           additionalClass="remove"
-          size="md" variants="secondary"
+          size="md"
+          variants="secondary"
           onClick={() => setIsOpenModal(true)}>
             Delete
         </Button>
@@ -49,7 +68,7 @@ const EditorProfile = ({
       </div>
 
       <form className="panel__form">
-        {data?.map((item) => {
+        {dataItems?.map((item) => {
           switch (item.type) {
             case 'TEXT_FIELD':
               return (
@@ -59,7 +78,7 @@ const EditorProfile = ({
                     additionalClass="panel__form-group--label"
                     isShowLabel={true}
                     value={item.value as string}
-                    onChange={(value) => handleChange(item.id, value)}
+                    onChange={(value) => handleChange(item.key, value)}
                   />
                 </div>
               );
@@ -70,9 +89,9 @@ const EditorProfile = ({
                   <label className="panel__form-group--label">{item.label}</label>
                   <UploadImage
                     originalImage={item.value as string}
-                    alt={data.find((dataItem) => dataItem.key === 'userName')?.value as string}
+                    alt={getAvatarAlt(item)}
                     bgColor={randomColor}
-                    onChange={(value) => handleChange(item.id, value)}
+                    onChange={(value) => handleChange(item.key, value)}
                   />
                 </div>
               );
@@ -81,25 +100,25 @@ const EditorProfile = ({
               return (
                 <div className="panel__form-group" key={item.key}>
                   <label className="panel__form-group--label">{item.label}</label>
-                  <ToggleSwitch isChecked={item.value as boolean} onChange={(value) => handleChange(item.id, value)}/>
+                  <ToggleSwitch isChecked={dataChanged[item.key] as boolean} onChange={(value) => handleChange(item.key, value)} />
                   <span className="panel__form-group--status">
-                    <Status isActive={item.value as boolean} />
+                    <Status isActive={dataChanged[item.key] as boolean} />
                   </span>
                 </div>
               );
 
             case 'DATE_FIELD':
               return <TextView
-                        key={item.key}
-                        label={item.label}
-                        value={dateFormat(item.value as string)}
-                      />;
+                      key={item.key}
+                      label={item.label}
+                      value={item.value ? dateFormat(item.value as string) : "Unknown"}
+                    />;
 
             case 'DETAILS_FIELD':
               return (
                 <div className="panel__form-group" key={item.key}>
                   <span className="panel__form-group--label">{item.label}</span>
-                  <TextArea value={item.value as string} onChange={(value) => handleChange(item.id, value)} />
+                  <TextArea value={item.value as string} onChange={(value) => handleChange(item.key, value)} />
                 </div>
               );
             default:

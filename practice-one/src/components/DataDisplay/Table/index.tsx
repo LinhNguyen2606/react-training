@@ -13,13 +13,15 @@ type TableProps<T> = {
   columns: EnitityColumn<T>[];
   additionalClass?: string;
   onRowClick: (index: number, item: T) => void;
+  selectedRow: { index: number; data: T | null };
 };
 
 const Table = <T,>({
   rowData,
   columns,
   additionalClass,
-  onRowClick
+  onRowClick,
+  selectedRow
 }: TableProps<T>) => {
   return (
     <div className="table__wrapper">
@@ -32,7 +34,9 @@ const Table = <T,>({
           <TableRow
             rowData={rowData}
             columns={columns}
-            onRowClick={onRowClick} />
+            onRowClick={onRowClick}
+            selectedRow={selectedRow}
+          />
         </tbody>
       </table>
     </div>

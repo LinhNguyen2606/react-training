@@ -16,7 +16,11 @@ type SearchBarProps = {
   onChange?: (value: string) => void;
 };
 
-const SearchBar = ({ label, placeholder, onChange }: SearchBarProps) => {
+const SearchBar = ({
+  label,
+  placeholder,
+  onChange
+}: SearchBarProps & { onChange: (value: string) => void }) => {
   const [isDismissSearchBar, setIsDismissSearchBar] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -24,13 +28,26 @@ const SearchBar = ({ label, placeholder, onChange }: SearchBarProps) => {
     if (isDismissSearchBar && inputRef.current) inputRef.current.focus();
   }, [isDismissSearchBar]);
 
+  const handleChange = (value: string) => onChange && onChange(value);
+
+  const handleIconClick = () => {
+    setIsDismissSearchBar(!isDismissSearchBar);
+    if (isDismissSearchBar) handleChange('');
+  }
+
   return (
     <div className="search">
       <label className={`primary__text ${isDismissSearchBar && 'hidden'}`}>{label}</label>
-      {isDismissSearchBar && <TextField autoFocus = {true} placeholder={placeholder} onChange={onChange} />}
+      {isDismissSearchBar &&
+        <TextField
+          autoFocus={true}
+          placeholder={placeholder}
+          onChange={handleChange}
+        />
+      }
       <div
         className={isDismissSearchBar ? 'search__close--icon' : 'search__magnifier--icon'}
-        onClick={() => setIsDismissSearchBar(!isDismissSearchBar)}
+        onClick={handleIconClick}
       >
         {isDismissSearchBar ? <Icon src={Xmark} /> : <Icon src={MagnifyingGlass} />}
       </div>

@@ -6,17 +6,12 @@ type TableRowItemProps<T> = {
   onClick: (index: number, rowData: T) => void;
 };
 
-const TableRowItem = <T,>({
-  children,
-  index,
-  rowData,
-  isSelected,
-  onClick
-}: TableRowItemProps<T>) => {
-  const handleClick = () => {
-    onClick(index, rowData);
-  };
-
+const TableRowItem = <T,>({ children, index, rowData, isSelected, onClick }: TableRowItemProps<T>) => {
+  /**
+ * Handles the click event on a table row item.
+ * Calls the `onClick` function with the index and data of the clicked row item.
+ */
+  const handleClick = () => onClick(index, rowData);
   return (
     <tr className={isSelected ? 'table__row  table__row--active ' : 'table__row'} onClick={handleClick}>
       {children}

@@ -1,0 +1,1 @@
+export {useFilteredUsers} from '@hooks/useFilterUsers'

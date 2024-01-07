@@ -1,6 +1,3 @@
-// Hook
-import { useState } from 'react';
-
 // Interface
 import { EnitityColumn } from '@interfaces';
 
@@ -12,23 +9,24 @@ type TableRowProps<T> = {
   rowData: T[];
   columns: EnitityColumn<T>[];
   onRowClick: (index: number, item: T) => void;
+  selectedRow: { index: number; data: T | null };
 };
 
 const TableRow = <T,>({
   rowData,
   columns,
-  onRowClick
+  onRowClick,
+  selectedRow
 }: TableRowProps<T>) => {
-  const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
 
-  const handleRowClick = (index: number, rowData: T) => {
-    if (selectedRow === index) {
-      setSelectedRow(undefined);
-    } else {
-      setSelectedRow(index);
-    }
-    onRowClick(index, rowData);
-  };
+  /**
+   * Handles the event when a row in the table is clicked.
+   * Calls the `onRowClick` function with the index and data of the clicked row.
+   *
+   * @param {number} index - The index of the clicked row.
+   * @param {T} rowData - The data of the clicked row.
+   */
+  const handleRowClick = (index: number, rowData: T) => onRowClick(index, rowData);
 
   return (
     <>
@@ -37,14 +35,15 @@ const TableRow = <T,>({
           key={`table-row-${index}`}
           rowData={item}
           index={index}
-          isSelected={selectedRow === index}
+          isSelected={selectedRow?.index === index}
           onClick={handleRowClick}
         >
           {columns.map((column, index) => (
             <TableRowCell
               key={`table-row-cell-${index}`}
               item={item}
-              column={column} />
+              column={column}
+            />
           ))}
         </TableRowItem>
       ))}

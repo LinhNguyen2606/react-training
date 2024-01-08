@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
-import Table from '@components/DataDisplay/Table';
-import Avatar from '@components/DataDisplay/Avatar';
-import Status from '@components/DataDisplay/Status';
+import {
+  Table,
+  Avatar,
+  Status
+} from '@components/DataDisplay';
 
 // Interface
 import { EnitityColumn } from '@interfaces';

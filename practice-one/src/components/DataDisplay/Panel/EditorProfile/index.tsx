@@ -1,12 +1,24 @@
 import { useState } from 'react';
 
 // Components
-import { Modal, Status } from '@components/DataDisplay';
+import {
+  Modal,
+  Status
+} from '@components/DataDisplay';
 import TextView from '@components/DataDisplay/Panel/Textview';
-import { Button, TextArea, TextField, ToggleSwitch, UploadImage } from '@components/Inputs';
+import {
+  Button,
+  TextArea,
+  TextField,
+  ToggleSwitch,
+  UploadImage
+} from '@components/Inputs';
 
 // Helper
-import { dateFormat, generateRandomColor } from '@helpers';
+import {
+  dateFormat,
+  generateRandomColor
+} from '@helpers';
 
 // Interface
 import { DataItems } from '@interfaces';
@@ -49,6 +61,16 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
     }
   };
 
+  /**
+   * Handle events when the user presses the Modal open or close button.
+   */
+  const handleToggleModal = () => setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
+
+  const handleOnRemove = () => {
+    setIsOpenModal(false);
+    onRemove(id)
+  }
+
   return (
     <>
       <div className="panel__actions-btn">
@@ -56,7 +78,7 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
           additionalClass="remove"
           size="md"
           variants="secondary"
-          onClick={() => setIsOpenModal(true)}>
+          onClick={handleToggleModal}>
             Delete
         </Button>
         <Button
@@ -133,11 +155,8 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
           type="confirm"
           title="Delete"
           textConfirmation="Are you sure to delete this user?"
-          onHide={() => setIsOpenModal(false)}
-          onRemove={() => {
-            setIsOpenModal(false);
-            onRemove(id);
-          }}
+          onHide={handleToggleModal}
+          onRemove={handleOnRemove}
         />
       )}
     </>

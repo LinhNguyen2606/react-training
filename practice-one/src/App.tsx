@@ -1,10 +1,12 @@
 // Hooks
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState
+} from 'react';
 
 // Components
 import {
   Avatar,
-  
   Drawer,
   Progress,
   SearchBar,
@@ -20,10 +22,16 @@ import {
 } from '@helpers';
 
 // Interfaces
-import { EnitityColumn, User } from '@interfaces';
+import {
+  EnitityColumn,
+  User
+} from '@interfaces';
 
 // Services
-import { createUser, fetchUsers } from '@services/index';
+import {
+  createUser,
+  fetchUsers
+} from '@services';
 
 // Custom hooks
 import { useFilteredUsers } from '@hooks';
@@ -110,9 +118,7 @@ const App = () => {
    *
    * @param {string} keyword - The search keyword.
    */
-  const handleSearch = (keyword: string) => {
-    setKeyword(keyword);
-  };
+  const handleSearch = (keyword: string) => setKeyword(keyword);
 
   const filteredUsers = useFilteredUsers(users, keyword);
 
@@ -135,8 +141,8 @@ const App = () => {
 
   /**
    * Add a new user.
-   * @param {string} userName - Tên người dùng mới.
-   * @returns {Promise<void>} - Hứa hẹn khi xử lý xong.
+   * @param {string} userName - New user name.
+   * @returns {Promise<void>} - Promise when finished processing.
   */
   const handleAddUser = async (userName: string): Promise<void> => {
     setIsShowProgress(true);
@@ -152,9 +158,11 @@ const App = () => {
       bgColor: generateRandomColor(),
     });
 
-    if (res && res.data) {
-      setUsers((prevUsers) => [...prevUsers, res.data]);
-      setSelectedRow({ index: users.length, data: res.data });
+    const data = res && res.data
+
+    if (data) {
+      setUsers((prevUsers) => [...prevUsers, data]);
+      setSelectedRow({ index: users.length, data});
     }
 
     setIsShowProgress(false);

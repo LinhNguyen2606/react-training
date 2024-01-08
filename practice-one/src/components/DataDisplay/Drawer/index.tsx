@@ -1,8 +1,16 @@
-import { ChangeEvent, FC, ReactElement, useState } from 'react';
+import {
+  ChangeEvent,
+  FC,
+  ReactElement,
+  useState
+} from 'react';
 
 // Components
 import { Button } from '@components/Inputs';
-import {Icon, Modal} from '@components/DataDisplay/index'
+import {
+  Icon,
+  Modal
+} from '@components/DataDisplay';
 import DrawerItem from '@components/DataDisplay/Drawer/DrawerItem';
 
 // Icon
@@ -10,7 +18,6 @@ import { UserGroup } from '@assets/icons';
 
 // SCSS
 import './Drawer.scss';
-
 
 type DrawerProps = {
   width?: number;
@@ -34,19 +41,34 @@ const Drawer: FC<DrawerProps> = ({
     height: `${height}px`,
   };
 
+  /**
+   * Handle events when the value of an input field changes.
+   * @param {ChangeEvent<HTMLInputElement>} event - Input field value change event.
+   */
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => setInputField(event.target.value);
+
+  /**
+   * Handle the event when the user presses the submit button in Modal.
+   */
+  const handleOnSubmit = () => {
+    onSubmit(inputField);
+    setIsOpenModal(false);
+  };
+
+  /**
+   * Handle events when the user presses the Modal open or close button.
+   */
+  const handleToggleModal = () => setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
+
   return (
     <>
       <aside className="drawer" style={{ ...widthDrawer, ...heightDrawer }}>
-        <Button
-          variants="primary"
-          size="lg" additionalClass="drawer"
-          onClick={() => setIsOpenModal(true)}
-        >
+        <Button variants="primary" size="lg" additionalClass="drawer" onClick={handleToggleModal}>
           <span className="btn__text">+ New</span>
         </Button>
         <DrawerItem additionalClass="drawer__item">
           <div className="drawer__item--icon">
-            <Icon src={UserGroup}/>
+            <Icon src={UserGroup} />
           </div>
           <span className="drawer__item--text">Users</span>
         </DrawerItem>
@@ -57,12 +79,9 @@ const Drawer: FC<DrawerProps> = ({
           isOpen={isOpenModal}
           type="submit"
           title="Enter user name"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setInputField(event.target.value)}
-          onSubmit={() => {
-            onSubmit(inputField);
-            setIsOpenModal(false);
-          }}
-          onHide= {() => setIsOpenModal(false)}
+          onChange={handleOnChange}
+          onSubmit={handleOnSubmit}
+          onHide={handleToggleModal}
         />
       )}
     </>

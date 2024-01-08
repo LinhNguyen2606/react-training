@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Button from '@components/Inputs/Button';
+import { Button } from '@components/Inputs';
 
 export default {
   title: 'Components/Button',

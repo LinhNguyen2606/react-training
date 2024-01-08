@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import TextArea from '@components/Inputs/TextArea';
+import { TextArea } from '@components/Inputs';
 
 export default {
   title: 'Components/TextArea',

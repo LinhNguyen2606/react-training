@@ -13,11 +13,13 @@ const Tabs = ({
   index,
   onClick
 }: TabsProps) => {
+  const handleOnClick = () => onClick(index);
+
   return (
     <button
       type="button"
       className={`panel__header--tab ${isActive ? 'active' : 'not__active'}`}
-      onClick={() => onClick(index)}
+      onClick={handleOnClick}
     >
       {children}
     </button>

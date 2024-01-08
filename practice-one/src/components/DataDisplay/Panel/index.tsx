@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ArrowLeft } from '@assets/icons';
 
 // Components
-import {Icon} from '@components/DataDisplay'
+import { Icon } from '@components/DataDisplay'
 import Tabs from '@components/DataDisplay/Panel/Tabs'
 
 // SCSS

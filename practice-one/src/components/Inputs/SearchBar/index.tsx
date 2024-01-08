@@ -1,11 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 
 // Icons
-import { MagnifyingGlass, Xmark } from '@assets/icons';
+import {
+  MagnifyingGlass,
+  Xmark
+} from '@assets/icons';
 
 // Components
 import { Icon } from '@components/DataDisplay';
-import TextField from '@components/Inputs/TextField';
+import { TextField } from '@components/Inputs';
 
 // SCSS
 import '@components/Inputs/SearchBar/Searchbar.scss';

@@ -1,17 +1,29 @@
-// Hook
+// Hooks
 import { useEffect, useState } from 'react';
 
 // Components
-import { Avatar, Drawer, SearchBar, Status, Table } from '@components';
+import {
+  Avatar,
+  
+  Drawer,
+  Progress,
+  SearchBar,
+  Status,
+  Table
+} from '@components';
 
-// Helper
-import { highlightKeyword } from '@helpers';
+// Helpers
+import {
+  dateFormat,
+  generateRandomColor,
+  highlightKeyword
+} from '@helpers';
 
 // Interfaces
 import { EnitityColumn, User } from '@interfaces';
 
 // Services
-import { fetchUsers } from '@services/index';
+import { createUser, fetchUsers } from '@services/index';
 
 // Custom hooks
 import { useFilteredUsers } from '@hooks';
@@ -66,7 +78,7 @@ const generateUserTableColumns = (searchKeyword: string): EnitityColumn<User>[] 
 };
 
 const App = () => {
-  const [users, setusers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [keyword, setKeyword] = useState('');
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
@@ -75,6 +87,7 @@ const App = () => {
     index: 0,
     data: null,
   });
+  const [isShowProgress, setIsShowProgress] = useState(false);
 
   useEffect(() => {
     handleGetUsers();
@@ -87,7 +100,7 @@ const App = () => {
   const handleGetUsers = async () => {
     const res = await fetchUsers();
     if (res && res.data) {
-      setusers(res.data);
+      setUsers(res.data);
     }
   };
 
@@ -114,19 +127,47 @@ const App = () => {
    */
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
-      setSelectedRow({index: -1, data: null});
+      setSelectedRow({ index: -1, data: null });
     } else {
       setSelectedRow({ index, data: user });
     }
+  };
+
+  /**
+   * Add a new user.
+   * @param {string} userName - Tên người dùng mới.
+   * @returns {Promise<void>} - Hứa hẹn khi xử lý xong.
+  */
+  const handleAddUser = async (userName: string): Promise<void> => {
+    setIsShowProgress(true);
+
+    const res = await createUser({
+      userName,
+      avatar: '',
+      isActive: false,
+      email: '',
+      registered: dateFormat(new Date().toString()),
+      lastVisited: dateFormat(new Date().toString()),
+      details: '',
+      bgColor: generateRandomColor(),
+    });
+
+    if (res && res.data) {
+      setUsers((prevUsers) => [...prevUsers, res.data]);
+      setSelectedRow({ index: users.length, data: res.data });
+    }
+
+    setIsShowProgress(false);
   };
 
   return (
     <>
       <header className="header">
         <h1 className="header__heading primary__text">User Manager</h1>
+        {isShowProgress && <Progress successMessage="Done" />}
       </header>
       <main className="main">
-        <Drawer />
+        <Drawer onSubmit={handleAddUser} />
         <div className="content__wrapper">
           <SearchBar
             label="Users"

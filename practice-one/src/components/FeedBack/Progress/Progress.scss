@@ -1,0 +1,34 @@
+.spinner {
+  justify-content: flex-end;
+  align-items    : center;
+  display        : flex;
+
+  &--icon {
+    background: url('../../../assets/icons/yin-yang-solid.svg') no-repeat;
+    animation : spinner-anim 3s linear infinite;
+    width     : 26px;
+    height    : 26px;
+  }
+}
+
+.toast {
+  align-items    : center;
+  display        : flex;
+  justify-content: end;
+
+  &--icon {
+    background: url('../../../assets/icons/circle-check-solid.svg') no-repeat center;
+    width     : 26px;
+    height    : 26px;
+  }
+}
+
+@keyframes spinner-anim {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

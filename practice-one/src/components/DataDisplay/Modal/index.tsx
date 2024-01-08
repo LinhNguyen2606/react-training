@@ -1,3 +1,9 @@
+import {
+  ChangeEvent,
+  useEffect,
+  useRef
+} from 'react';
+
 // Components
 import ModalHeader from '@components/DataDisplay/Modal/ModalHeader'
 import ModalBody from '@components/DataDisplay/Modal/ModalBody'
@@ -10,19 +16,19 @@ export type ModalType = 'submit' | 'confirm';
 
 type ModalProps = {
   isOpen?: boolean;
-  isAutoFocus?: boolean; 
+  autoFocus?: boolean; 
   type?: ModalType;
   title?: string;
   textConfirmation?: string;
   onHide?: () => void;
   onRemove?: () => void;
-  onChange?: () => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit?: () => void;
 };
 
 const Modal = ({
   isOpen,
-  isAutoFocus = true,
+  autoFocus,
   type,
   title,
   textConfirmation,
@@ -31,6 +37,12 @@ const Modal = ({
   onChange,
   onSubmit
 }: ModalProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if(autoFocus && inputRef.current) inputRef.current.focus();
+  }, [autoFocus])
+
   return (
     <>
       {isOpen && (
@@ -47,7 +59,7 @@ const Modal = ({
               textConfirmation={textConfirmation}
               onChange={onChange}
               onSubmit={onSubmit}
-              isAutoFocus={isAutoFocus}
+              autoFocus={true}
             />
             
             <ModalFooter

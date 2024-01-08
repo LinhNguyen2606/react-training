@@ -1,7 +1,7 @@
 import '@components/FeedBack/Progress/Progress.scss';
 
 // Custom hook
-import { useSpinnerToast } from '@hooks/index';
+import { useSpinnerToast } from '@hooks';
 
 type ProgressProps = {
   successMessage?: string;
@@ -14,14 +14,14 @@ const Progress = ({ successMessage }: ProgressProps) => {
     <>
       {showSpinner && (
         <div className="spinner">
-          <span className="spinner--icon"></span>
+          <span className="icon spinner--icon"></span>
         </div>
       )}
 
       {toastVisible && (
         <div className="toast">
           <span className="primary__text">{successMessage}</span>
-          <span className="toast--icon"></span>
+          <span className="icon toast--icon"></span>
         </div>
       )}
     </>

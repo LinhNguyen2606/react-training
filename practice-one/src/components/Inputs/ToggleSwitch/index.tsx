@@ -1,5 +1,6 @@
 // SCSS
 import '@components/Inputs/ToggleSwitch/ToggleSwitch.scss';
+
 import { useState } from 'react';
 
 type ToggleSwitchProps = {

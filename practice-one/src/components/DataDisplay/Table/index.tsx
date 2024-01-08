@@ -6,7 +6,7 @@ import TableHeader from '@components/DataDisplay/Table/TableHeader';
 import TableRow from '@components/DataDisplay/Table/TableRow';
 
 // SCSS
-import './Table.scss';
+import '@components/DataDisplay/Table/Table.scss';
 
 type TableProps<T> = {
   rowData: T[];

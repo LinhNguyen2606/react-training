@@ -31,6 +31,8 @@ const UploadImage = ({
   const [uploadImage, setUploadImage] = useState<string | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+  const acceptedImageType = ['image/jpeg', 'image/png', 'image/gif'];
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     // Get the file from the onChange event of the file input
     const selectedFile = e.target.files?.[0];
@@ -38,6 +40,11 @@ const UploadImage = ({
 
     // If no file is selected, exit the function
     if (!selectedFile) return;
+
+    if(!acceptedImageType.includes(selectedFile.type)) {
+      setErrorMessage('Only image files (JPEG, PNG, GIF) are allowed');
+      return;
+    }
 
     // Check the file size, if it exceeds the limit, display an error message and exit the function
     if (selectedFile.size > maxSizeInBytes) {

@@ -11,7 +11,6 @@ import './Table.scss';
 type TableProps<T> = {
   rowData: T[];
   columns: EnitityColumn<T>[];
-  additionalClass?: string;
   onRowClick: (index: number, item: T) => void;
   selectedRow: { index: number; data: T | null };
 };
@@ -19,13 +18,12 @@ type TableProps<T> = {
 const Table = <T,>({
   rowData,
   columns,
-  additionalClass,
   onRowClick,
   selectedRow
 }: TableProps<T>) => {
   return (
-    <div className="table__wrapper">
-      <table className={`table ${additionalClass}`}>
+    <div className="table">
+      <table className="table__wrapper">
         <thead className="table__head">
           <TableHeader columns={columns} />
         </thead>

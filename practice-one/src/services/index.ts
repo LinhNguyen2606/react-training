@@ -1,5 +1,12 @@
+// Constants
 import { API_BASE_URL } from '@constants';
 import { USER_API_ENDPOINT } from '@constants/config';
+
+// Helper
+import { delayRespone } from '@helpers';
+
+// Interface
+import { User } from '@interfaces';
 
 /**
  * Handle API response
@@ -44,4 +51,31 @@ export const fetchUsers = async (): Promise<{ data: any; errMsg: string | null }
   } catch (err) {
     return handleError(err);
   }
+};
+
+/**
+ * Create a new user with the provided data.
+ * @param {User} usersData - The data for the new user.
+ * @returns {Promise<{ data: any; errMsg: string | null }>} The created user data or an error message.
+ */
+export const createUser = async (usersData: User): Promise<{ data: any; errMsg: string | null }> => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/${USER_API_ENDPOINT}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(usersData),
+      });
+
+      const data = await handleRespone(res);
+
+      if (!data.errMsg) {
+        return delayRespone(data);
+      }
+      
+      return data;
+    } catch (err) {
+      return handleError(err);
+    }
 };

@@ -4,12 +4,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Panel } from '@components/DataDisplay';
 import EditorProfile from '@components/DataDisplay/Panel/EditorProfile';
 
-// Constant
-import { DATA_ITEMS } from '@constants';
-
-// Interface
-import { DataItems } from '@interfaces';
-
 export default {
   title: 'Components/Panel',
   component: Panel,
@@ -35,7 +29,58 @@ export const Default: Story = {
         content: (
           <EditorProfile
             id={1}
-            dataItems={DATA_ITEMS as DataItems[]}
+            dataItems={[
+              {
+                id: 1,
+                type: 'TEXT_FIELD',
+                label: 'Full Name',
+                key: 'userName',
+                value: 'Elly Soyer',
+              },
+              {
+                id: 2,
+                type: 'TEXT_FIELD',
+                label: 'Email',
+                key: 'email',
+                value: 'elly.soyer@example',
+              },
+              {
+                id: 3,
+                type: 'AVATAR_FIELD',
+                label: 'Avatar',
+                key: 'avatar',
+                value: '',
+                keyImageDefault: 'userName'
+              },
+              {
+                id: 4,
+                type: 'STATUS_FIELD',
+                label: 'Status',
+                key: 'status',
+                value: true
+              },
+              {
+                id: 5,
+                type: 'DATE_FIELD',
+                label: 'Registered',
+                key: 'registered',
+                value: ''
+              },
+              {
+                id: 6,
+                type: 'DATE_FIELD',
+                label: 'Last visited',
+                key: 'lastVisited',
+                value: ''
+              },
+              {
+                id: 7,
+                type: 'DETAILS_FIELD',
+                label: 'Details',
+                key: 'details',
+                value: 'Farmer'
+              }
+            ]}
             onRemove={() => {}}
           />
         ),

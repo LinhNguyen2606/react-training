@@ -1,23 +1,27 @@
-export const DATA_ITEMS = [
+// Interface
+import { User } from "@interfaces";
+
+export const DATA_ITEMS = (data: User) => [
   {
     id: 1,
     type: 'TEXT_FIELD',
     label: 'Full Name',
     key: 'userName',
-    value: '',
+    value: data.userName,
   },
   {
     id: 2,
     type: 'TEXT_FIELD',
     label: 'Email',
     key: 'email',
-    value: '',
+    value: data.email,
   },
   {
     id: 3,
     type: 'AVATAR_FIELD',
     label: 'Avatar',
     key: 'avatar',
+    value: data.avatar,
     keyImageDefault: 'userName'
   },
   {
@@ -25,27 +29,27 @@ export const DATA_ITEMS = [
     type: 'STATUS_FIELD',
     label: 'Status',
     key: 'status',
-    value: true
+    value: data.isActive
   },
   {
     id: 5,
     type: 'DATE_FIELD',
     label: 'Registered',
     key: 'registered',
-    value: ""
+    value: data.registered
   },
   {
     id: 6,
     type: 'DATE_FIELD',
     label: 'Last visited',
     key: 'lastVisited',
-    value: ""
+    value: data.lastVisited
   },
   {
     id: 7,
     type: 'DETAILS_FIELD',
     label: 'Details',
     key: 'details',
-    value: ""
+    value: data.details
   },
 ];

@@ -19,6 +19,7 @@ export const useSpinnerToast = (isProcessing: boolean, spinnerDelay = 1000, toas
     if (isProcessing) {
       setShowSpinner(false);
       setToastVisible(false);
+
       // Set a timer to show the spinner after spinnerDelay milliseconds
       spinnerTimer = setTimeout(() => {
         setShowSpinner(true);
@@ -26,6 +27,7 @@ export const useSpinnerToast = (isProcessing: boolean, spinnerDelay = 1000, toas
     } else {
       setShowSpinner(false);
       setToastVisible(true);
+      
       // Set a timer to hide the toast after toastDelay milliseconds
       hideToastTimer = setTimeout(() => {
         setToastVisible(false);

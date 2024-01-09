@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import {
+  useEffect,
+  useState
+} from 'react';
 
 // Components
 import {
@@ -25,10 +28,10 @@ import { DataItems } from '@interfaces';
 
 type KeyIndexType = {
   [key: string]: string | boolean;
-}
+};
 
 type EditorProfileProps = {
-  id: number;
+  id?: number;
   dataItems: DataItems[];
   onRemove: (id: number) => void;
 };
@@ -38,6 +41,25 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [randomColor, setRandomColor] = useState(generateRandomColor());
 
+  useEffect(() => {
+    const newDataChanged = dataItems.reduce((acc, item) => {
+      // Assign the value of `item.value` to the key `item.key` in `acc`.
+      acc[item.key] = item.value;
+
+      // Return `acc` to continue to the next `reduce` loop.
+      return acc;
+    }, {} as KeyIndexType);
+
+    // Update the `dataChanged` state with `newDataChanged`.
+    setDataChanged(newDataChanged);
+  }, [dataItems]);
+
+  /**
+   * Handles the change event for a specific field.
+   * @param {string} key - The key of the field being changed.
+   * @param {string | boolean} value - The new value of the field.
+   * @returns {void}
+  */
   const handleChange = (key: string, value: string | boolean) => {
     setDataChanged((prevState) => ({
       ...prevState,
@@ -55,8 +77,8 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
     const { keyImageDefault } = item;
     // Check if `keyImageDefault` exists and has a value in `dataChanged`
     if (keyImageDefault && dataChanged[keyImageDefault]) {
-      return dataChanged[keyImageDefault] as string; 
-    }else {
+      return dataChanged[keyImageDefault] as string;
+    } else {
       return item.value as string;
     }
   };
@@ -66,10 +88,15 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
    */
   const handleToggleModal = () => setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
 
+  /**
+   * Handles the action of removing a user.
+   * Closes the modal and triggers the `onRemove` callback if the `id` is a number.
+   * @returns {void}
+  */
   const handleOnRemove = () => {
     setIsOpenModal(false);
-    onRemove(id)
-  }
+    if (typeof id === 'number') onRemove(id);
+  };
 
   return (
     <>
@@ -78,14 +105,16 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
           additionalClass="remove"
           size="md"
           variants="secondary"
-          onClick={handleToggleModal}>
-            Delete
+          onClick={handleToggleModal}
+        >
+          Delete
         </Button>
         <Button
           additionalClass="store"
           size="md"
-          variants="primary">
-            Save
+          variants="primary"
+        >
+          Save
         </Button>
       </div>
 
@@ -122,7 +151,10 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
               return (
                 <div className="panel__form-group" key={item.key}>
                   <label className="panel__form-group--label">{item.label}</label>
-                  <ToggleSwitch isChecked={dataChanged[item.key] as boolean} onChange={(value) => handleChange(item.key, value)} />
+                  <ToggleSwitch
+                    isChecked={dataChanged[item.key] as boolean}
+                    onChange={(value) => handleChange(item.key, value)}
+                  />
                   <span className="panel__form-group--status">
                     <Status isActive={dataChanged[item.key] as boolean} />
                   </span>
@@ -130,11 +162,13 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
               );
 
             case 'DATE_FIELD':
-              return <TextView
-                      key={item.key}
-                      label={item.label}
-                      value={item.value ? dateFormat(item.value as string) : "Unknown"}
-                    />;
+              return (
+                <TextView
+                  key={item.key}
+                  label={item.label}
+                  value={item.value ? dateFormat(item.value as string) : 'Unknown'}
+                />
+              );
 
             case 'DETAILS_FIELD':
               return (

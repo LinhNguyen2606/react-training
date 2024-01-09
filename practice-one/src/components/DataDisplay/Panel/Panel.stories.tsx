@@ -4,6 +4,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Panel } from '@components/DataDisplay';
 import EditorProfile from '@components/DataDisplay/Panel/EditorProfile';
 
+// Helper
+import { generateRandomColor } from '@helpers';
+
 export default {
   title: 'Components/Panel',
   component: Panel,
@@ -29,6 +32,7 @@ export const Default: Story = {
         content: (
           <EditorProfile
             id={1}
+            bgColor={generateRandomColor()}
             dataItems={[
               {
                 id: 1,
@@ -50,36 +54,36 @@ export const Default: Story = {
                 label: 'Avatar',
                 key: 'avatar',
                 value: '',
-                keyImageDefault: 'userName'
+                keyImageDefault: 'userName',
               },
               {
                 id: 4,
                 type: 'STATUS_FIELD',
                 label: 'Status',
                 key: 'status',
-                value: true
+                value: true,
               },
               {
                 id: 5,
                 type: 'DATE_FIELD',
                 label: 'Registered',
                 key: 'registered',
-                value: ''
+                value: '',
               },
               {
                 id: 6,
                 type: 'DATE_FIELD',
                 label: 'Last visited',
                 key: 'lastVisited',
-                value: ''
+                value: '',
               },
               {
                 id: 7,
                 type: 'DETAILS_FIELD',
                 label: 'Details',
                 key: 'details',
-                value: 'Farmer'
-              }
+                value: 'Farmer',
+              },
             ]}
             onRemove={() => {}}
           />

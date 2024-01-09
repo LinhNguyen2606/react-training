@@ -36,6 +36,7 @@ import {
 // Services
 import {
   createUser,
+  deleteUser,
   fetchUsers
 } from '@services';
 
@@ -113,11 +114,8 @@ const App = () => {
   const [dataItems, setDataItems] = useState<DataItems[]>([]);
 
   useEffect(() => {
-    if (!showCard && selectedRow.data !== null) {
-      setDataItems(DATA_ITEMS(selectedRow.data));
-    }
     handleGetUsers();
-  }, [!showCard, selectedRow.data]);
+  }, []);
 
   /**
    * Asynchronously fetches users from an external service and updates the state of `users`.
@@ -145,6 +143,10 @@ const App = () => {
 
   const selectedRowData = selectedRow.data;
 
+  const isShowDetails = showCard && selectedRowData !== null
+  
+  const isShowEdit = !showCard && selectedRowData !== null
+
   /**
    * Handles the event when a row in the table is clicked.
    * Updates the state of `selectedRow` with the index and data of the clicked row.
@@ -156,9 +158,11 @@ const App = () => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
       setUserDetailsInfo([]);
+      setDataItems([]);
     } else {
-      setSelectedRow({ index, data: user });   
+      setSelectedRow({ index, data: user });
       setUserDetailsInfo(USER_INFORMATION(user));
+      setDataItems(DATA_ITEMS(user));
     }
   };
 
@@ -186,6 +190,8 @@ const App = () => {
     if (data) {
       setUsers((prevUsers) => [...prevUsers, data]);
       setSelectedRow({ index: users.length, data });
+      setUserDetailsInfo(USER_INFORMATION(data));
+      setDataItems(DATA_ITEMS(data));
       setIsShowProgress('success');
     } else {
       setIsShowProgress('failed');
@@ -197,7 +203,35 @@ const App = () => {
    */
   const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard)
 
-  const handleRemoveUser = () => {}
+  const handleRemoveUser = async () => {
+    setIsShowProgress('processing');
+
+    const userId = selectedRowData?.id;
+    const res = await deleteUser(Number(userId));
+    const data = extractData(res);
+
+    if (data) {
+      handleGetUsers();
+      setSelectedRow({ index: -1, data: null });
+      setIsShowProgress('success');
+    } else {
+      setIsShowProgress('failed');
+    }
+  }
+
+  const tabsContent = [
+    {
+      content: (
+        <EditorProfile
+          id={selectedRowData?.id}
+          dataItems={dataItems}
+          onRemove={handleRemoveUser}
+          bgColor={selectedRowData?.bgColor}
+        />
+      ),
+      title: 'General'
+    }
+  ]    
 
   return (
     <>
@@ -216,7 +250,7 @@ const App = () => {
             selectedRow={selectedRow}
           />
         </div>
-        {showCard && selectedRowData !== null && (
+        {isShowDetails && (
           <ViewDetails
             title="User information"
             isActive={selectedRowData.isActive}
@@ -227,20 +261,9 @@ const App = () => {
             onShowPanel={handleTogglePanel}
           />
         )}
-        {!showCard && selectedRowData !== null && (
+        {isShowEdit && (
           <Panel
-            tabs={[
-              {
-                content: (
-                  <EditorProfile
-                    id={selectedRowData.id}
-                    dataItems={dataItems}
-                    onRemove={handleRemoveUser}
-                  />
-                ),
-                title: 'General'
-              }
-            ]}
+            tabs={tabsContent}
             onBackClick={handleTogglePanel}
           />
         )}

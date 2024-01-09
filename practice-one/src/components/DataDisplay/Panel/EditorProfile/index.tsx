@@ -18,10 +18,7 @@ import {
 } from '@components/Inputs';
 
 // Helper
-import {
-  dateFormat,
-  generateRandomColor
-} from '@helpers';
+import { dateFormat } from '@helpers';
 
 // Interface
 import { DataItems } from '@interfaces';
@@ -34,12 +31,17 @@ type EditorProfileProps = {
   id?: number;
   dataItems: DataItems[];
   onRemove: (id: number) => void;
+  bgColor?: string;
 };
 
-const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
+const EditorProfile = ({
+  id,
+  dataItems,
+  onRemove,
+  bgColor
+}: EditorProfileProps) => {
   const [dataChanged, setDataChanged] = useState<KeyIndexType>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [randomColor, setRandomColor] = useState(generateRandomColor());
 
   useEffect(() => {
     const newDataChanged = dataItems.reduce((acc, item) => {
@@ -75,12 +77,13 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
    */
   const getAvatarAlt = (item: DataItems) => {
     const { keyImageDefault } = item;
+
+    const hasDataChanged = keyImageDefault && dataChanged[keyImageDefault]
+    
     // Check if `keyImageDefault` exists and has a value in `dataChanged`
-    if (keyImageDefault && dataChanged[keyImageDefault]) {
-      return dataChanged[keyImageDefault] as string;
-    } else {
-      return item.value as string;
-    }
+    if (hasDataChanged) return hasDataChanged as string;
+  
+    return item.value as string;
   };
 
   /**
@@ -141,7 +144,7 @@ const EditorProfile = ({ id, dataItems, onRemove }: EditorProfileProps) => {
                   <UploadImage
                     originalImage={item.value as string}
                     alt={getAvatarAlt(item)}
-                    bgColor={randomColor}
+                    bgColor={bgColor}
                     onChange={(value) => handleChange(item.key, value)}
                   />
                 </div>

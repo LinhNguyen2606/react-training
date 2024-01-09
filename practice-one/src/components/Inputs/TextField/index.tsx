@@ -1,10 +1,7 @@
 // SCSS
 import '@components/Inputs/TextField/TextField.scss';
 
-import {
-  ChangeEvent,
-  useState
-} from 'react';
+import { ChangeEvent } from 'react';
 
 type TextFieldProps = {
   autoFocus?: boolean;
@@ -25,12 +22,10 @@ const TextField = ({
   placeholder,
   onChange
 }: TextFieldProps) => {
-  const [inputValue, setInputValue] = useState(value);
 
   // Call onChange with new input value if provided
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setInputValue(value);
     onChange && onChange(value);
   };
 
@@ -41,7 +36,7 @@ const TextField = ({
         type="text"
         className="text--field"
         placeholder={placeholder}
-        value={inputValue}
+        value={value}
         onChange={handleInputChange}
         autoFocus={autoFocus}
       />

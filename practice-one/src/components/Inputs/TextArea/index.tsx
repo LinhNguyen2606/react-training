@@ -1,6 +1,5 @@
 // SCSS
 import '@components/Inputs/TextArea/TextArea.scss';
-import { useState } from 'react';
 
 type TextAreaProps = {
   value?: string;
@@ -13,12 +12,8 @@ const TextArea = ({
   placeholder,
   onChange
 }: TextAreaProps) => {
-  const [textareaValue, setTextareaValue] = useState(value);
-
-  
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    setTextareaValue(value);
     onChange && onChange(value); 
   }
 
@@ -26,7 +21,7 @@ const TextArea = ({
     <textarea
       id="details"
       name="details"
-      value={textareaValue}
+      value={value}
       onChange={handleOnChange}
       placeholder={placeholder}
       className="textarea"

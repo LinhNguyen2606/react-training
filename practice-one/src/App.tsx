@@ -8,13 +8,15 @@ import {
 import {
   Avatar,
   Drawer,
+  Panel,
   Progress,
   SearchBar,
   Status,
   Table,
-  UserDetails
+  ViewDetails
 } from '@components';
-import { InfoItemProps } from '@components/Surfaces/Card/UserDetails/InfoItem';
+import EditorProfile from '@components/DataDisplay/Panel/EditorProfile';
+import { InfoItemProps } from '@components/Surfaces/Card/ViewDetails/InfoItem';
 
 // Helpers
 import {
@@ -25,7 +27,11 @@ import {
 } from '@helpers';
 
 // Interfaces
-import { EnitityColumn, User } from '@interfaces';
+import {
+  DataItems,
+  EnitityColumn,
+  User
+} from '@interfaces';
 
 // Services
 import {
@@ -37,7 +43,10 @@ import {
 import { useFilteredUsers } from '@hooks';
 
 // Constant
-import { USER_INFORMATION } from '@constants';
+import {
+  DATA_ITEMS,
+  USER_INFORMATION
+} from '@constants';
 
 /**
  * Defines the columns configuration for the user table.
@@ -100,14 +109,15 @@ const App = () => {
   });
   const [isShowProgress, setIsShowProgress] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle');
   const [userDetailsInfo, setUserDetailsInfo] = useState<InfoItemProps[]>([]);
-
+  const [showCard, setShowCard] = useState(true);
+  const [dataItems, setDataItems] = useState<DataItems[]>([]);
 
   useEffect(() => {
-    if (selectedRowData) {
-      setUserDetailsInfo(USER_INFORMATION(selectedRowData));
+    if (!showCard && selectedRow.data !== null) {
+      setDataItems(DATA_ITEMS(selectedRow.data));
     }
     handleGetUsers();
-  }, [selectedRow.data]);
+  }, [!showCard, selectedRow.data]);
 
   /**
    * Asynchronously fetches users from an external service and updates the state of `users`.
@@ -145,8 +155,10 @@ const App = () => {
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
+      setUserDetailsInfo([]);
     } else {
-      setSelectedRow({ index, data: user });
+      setSelectedRow({ index, data: user });   
+      setUserDetailsInfo(USER_INFORMATION(user));
     }
   };
 
@@ -180,10 +192,17 @@ const App = () => {
     }
   };
 
+  /**
+   * Handle events to show the panel and hide the card
+   */
+  const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard)
+
+  const handleRemoveUser = () => {}
+
   return (
     <>
       <header className="header">
-        <h1 className="header__heading primary__text">User Manager</h1>
+        <h1 className="header__heading text--primary">User Manager</h1>
         <Progress status={isShowProgress} />
       </header>
       <main className="main">
@@ -197,14 +216,32 @@ const App = () => {
             selectedRow={selectedRow}
           />
         </div>
-        {selectedRowData !== null && (
-          <UserDetails
+        {showCard && selectedRowData !== null && (
+          <ViewDetails
             title="User information"
             isActive={selectedRowData.isActive}
             src={selectedRowData.avatar}
             bgColor={selectedRowData.bgColor}
             userName={selectedRowData.userName}
             infoItem={userDetailsInfo}
+            onShowPanel={handleTogglePanel}
+          />
+        )}
+        {!showCard && selectedRowData !== null && (
+          <Panel
+            tabs={[
+              {
+                content: (
+                  <EditorProfile
+                    id={selectedRowData.id}
+                    dataItems={dataItems}
+                    onRemove={handleRemoveUser}
+                  />
+                ),
+                title: 'General'
+              }
+            ]}
+            onBackClick={handleTogglePanel}
           />
         )}
       </main>

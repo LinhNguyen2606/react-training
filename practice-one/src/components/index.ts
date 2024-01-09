@@ -16,6 +16,6 @@ export {
   TextArea
 } from '@components/Inputs/index';
 
-export { UserDetails } from '@components/Surfaces/index';
+export { ViewDetails } from '@components/Surfaces/index';
 
 export { Progress } from '@components/FeedBack/index';

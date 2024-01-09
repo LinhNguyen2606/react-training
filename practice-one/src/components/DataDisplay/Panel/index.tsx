@@ -41,7 +41,7 @@ const Panel = ({ tabs, onBackClick }: PanelProps) => {
                 onClick={handleActiveTab}
               >
                 {tab.title}
-          </Tabs>
+              </Tabs>
         ))}
           </div>
         </div>

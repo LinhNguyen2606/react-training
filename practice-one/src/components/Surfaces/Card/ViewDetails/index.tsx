@@ -2,49 +2,52 @@
 import { Pencil } from '@assets/icons';
 
 // Type
-import { InfoItemProps } from '@components/Surfaces/Card/UserDetails/InfoItem';
+import { InfoItemProps } from '@components/Surfaces/Card/ViewDetails/InfoItem';
 
 // Components
 import { Avatar, Icon, Status } from '@components/DataDisplay';
-import InfoItem from '@components/Surfaces/Card/UserDetails/InfoItem';
+import InfoItem from '@components/Surfaces/Card/ViewDetails/InfoItem';
 
 // SCSS
-import '@components/Surfaces/Card/UserDetails/UserDetails.scss';
+import '@components/Surfaces/Card/ViewDetails/ViewDetails.scss';
 
-type UserDetailsProps = {
+type ViewDetailsProps = {
   title?: string;
   isActive?: boolean;
   src?: string;
   bgColor?: string;
   userName: string;
   infoItem: InfoItemProps[];
+  onShowPanel: () => void;
 };
 
-const UserDetails = ({
+const ViewDetails = ({
   title,
   isActive,
   src,
   bgColor,
   userName,
-  infoItem
-}: UserDetailsProps) => {
+  infoItem,
+  onShowPanel
+}: ViewDetailsProps) => {
   return (
-    <div className="user">
-      <div className="user__wrapper">
-        <article className="user__header">
-          <h2 className="primary__text">{title}</h2>
+    <div className="view-details">
+      <div className="view-details__wrapper">
+        <article className="view-details__header">
+          <h2 className="text--primary">{title}</h2>
           <Status isActive={isActive} />
-          <div className="user__header--icon">
-            <Icon src={Pencil} />
+          <div className="view-details__header--icon">
+            <Icon src={Pencil} onClick={onShowPanel} />
           </div>
         </article>
         <Avatar
+          size='lg'
           src={src}
           alt={userName}
           bgColor={bgColor}
-          additionalClass="user__avatar"
+          additionalClass="view-details__avatar"
         />
-        <span className="user__username">{userName}</span>
+        <span className="view-details__username">{userName}</span>
         <div>
           {infoItem.map(({ icon, label, value }, index) => (
             <InfoItem
@@ -60,4 +63,4 @@ const UserDetails = ({
   );
 };
 
-export default UserDetails;
+export default ViewDetails;

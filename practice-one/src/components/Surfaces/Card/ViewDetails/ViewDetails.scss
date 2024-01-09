@@ -1,4 +1,4 @@
-.user {
+.view-details {
   background: $secondary-color;
   margin    : 10px;
   width     : 50%;
@@ -21,12 +21,7 @@
   &__avatar {
     margin: 0 auto;
     width : 180px;
-    height: 180px;
-
-    .avatar__initial {
-      color    : rgba(255, 255, 255, 0.5);
-      font-size: 90px;
-    }
+    height: 180px;  
   }
 
   &__username {

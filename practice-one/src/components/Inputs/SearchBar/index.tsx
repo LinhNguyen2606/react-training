@@ -40,11 +40,11 @@ const SearchBar = ({
   const handleIconClick = () => {
     setIsDismissSearchBar(!isDismissSearchBar);
     if (isDismissSearchBar) handleChange('');
-  }
+  };
 
   return (
     <div className="search">
-      <label className={`primary__text ${isDismissSearchBar && 'hidden'}`}>{label}</label>
+      <label className={`text--primary ${isDismissSearchBar && 'hidden'}`}>{label}</label>
       {isDismissSearchBar &&
         <TextField
           autoFocus={true}

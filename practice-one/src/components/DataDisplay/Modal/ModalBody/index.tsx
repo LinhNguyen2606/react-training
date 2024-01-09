@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react';
 
 // Component
 import { Button } from '@components/Inputs';
@@ -24,23 +24,23 @@ const ModalBody = ({
   return (
     <div className={`modal__body--${type}`}>
       {type === 'confirm' ? (
-        <p className="modal__body--text primary__text">{textConfirmation}</p>
+        <p className="modal__body--text text--primary">{textConfirmation}</p>
       ) : (
         <>
-            <input
+          <input
               type="text"
               className="modal__body--input"
               onChange={onChange}
               autoFocus={autoFocus}
             />
-            <Button
+          <Button
               variants="primary"
               size="sm"
               additionalClass="save"
               onClick={onSubmit}
             >
               Save
-            </Button>
+          </Button>
         </>
       )}
     </div>

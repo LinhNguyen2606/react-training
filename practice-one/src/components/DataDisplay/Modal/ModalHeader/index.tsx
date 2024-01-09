@@ -22,12 +22,12 @@ const ModalHeader = ({
     <div className={`modal__header--${type}`}>
       {type === 'submit' ? (
         <>
-          <span className="primary__text">{title}</span>
+          <span className="text--primary">{title}</span>
           <Icon src={Xmark} onClick={onHide} />
         </>
       ) : (
         <>
-          <span className="primary__text">{title}</span>
+          <span className="text--primary">{title}</span>
         </>
       )}
     </div>

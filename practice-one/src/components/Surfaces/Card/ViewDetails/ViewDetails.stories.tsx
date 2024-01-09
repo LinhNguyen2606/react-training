@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import UserDetails from '@components/Surfaces/Card/UserDetails';
+import { ViewDetails } from '@components';
 
 // Helper
 import { dateFormat, generateRandomColor } from '@helpers';
@@ -10,8 +10,8 @@ import { dateFormat, generateRandomColor } from '@helpers';
 import { Clock, Envelope } from '@assets/icons';
 
 export default {
-  title: 'Components/UserDetails',
-  component: UserDetails,
+  title: 'Components/ViewDetails',
+  component: ViewDetails,
   tags: ['autodocs'],
   argTypes: {
     title: {
@@ -30,10 +30,11 @@ export default {
     bgColor: { description: 'A randomly generated background color.' },
     userName: { description: 'A fullname of user' },
     infoItem: { description: 'Contains the label and value of the user such as: email, last visited' },
+    onShowPanel: { description: 'The actions event to show the panel when clicking on the pencil icon' },
   },
 } as Meta;
 
-type Story = StoryObj<typeof UserDetails>;
+type Story = StoryObj<typeof ViewDetails>;
 
 export const Default: Story = {
   args: {

@@ -3,8 +3,10 @@ import '@components/FeedBack/Progress/Progress.scss';
 // Custom hook
 import { useSpinnerToast } from '@hooks';
 
+type ProgressType = 'idle' | 'processing' | 'success' | 'failed';
+
 type ProgressProps = {
-  status: 'idle' | 'processing' | 'success' | 'failed';
+  status: ProgressType;
 };
 
 const Progress = ({ status }: ProgressProps) => {
@@ -24,7 +26,7 @@ const Progress = ({ status }: ProgressProps) => {
 
       {toastVisible && (status === 'success' || status === 'failed') && (
         <div className="toast">
-          <span className="primary__text">{toastText}</span>
+          <span className="text--primary">{toastText}</span>
           <span className={`icon ${toastIconClass}`} />
         </div>
       )}

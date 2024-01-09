@@ -70,6 +70,7 @@ const UploadImage = ({
             alt={alt}
             bgColor={bgColor}
             additionalClass="upload__avatar"
+            size='md'
         />
         <label className="upload__label">
           <input

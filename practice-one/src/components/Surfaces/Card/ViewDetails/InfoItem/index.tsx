@@ -1,5 +1,5 @@
 // Component
-import { Icon } from "@components/DataDisplay";
+import { Icon } from '@components/DataDisplay';
 
 export type InfoItemProps = {
   icon: string;
@@ -14,11 +14,11 @@ const InfoItem = ({
 }: InfoItemProps) => {
   return (
     <>
-      <div className="user--icon">
+      <div className="view-details--icon">
         <Icon src={icon} />
-        <span className="primary__text">{label}</span>
+        <span className="text--primary">{label}</span>
       </div>
-      <span className="user__text">{value}</span>
+      <span className="view-details__text">{value}</span>
     </>
   );
 };

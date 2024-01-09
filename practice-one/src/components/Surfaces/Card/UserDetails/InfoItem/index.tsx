@@ -18,7 +18,7 @@ const InfoItem = ({
         <Icon src={icon} />
         <span className="primary__text">{label}</span>
       </div>
-      <span className="user__text primary__text">{value}</span>
+      <span className="user__text">{value}</span>
     </>
   );
 };

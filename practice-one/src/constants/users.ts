@@ -3,20 +3,21 @@ import { Clock, Envelope } from '@assets/icons';
 
 // Helper
 import { dateFormat } from '@helpers';
+import { User } from '@interfaces';
 
 /**
  * Constant array representing user information.
  * Each object contains an icon, label, and value.
  */
-export const USER_INFORMATION = [
+export const USER_INFORMATION = (data: User) => [
   {
     icon: Envelope,
     label: 'Email:',
-    value: 'email@example.com',
+    value: data.email,
   },
   {
     icon: Clock,
     label: 'Last visited:',
-    value: dateFormat('May 21, 2020 17:02:06'),
+    value: dateFormat(data.lastVisited),
   },
 ];

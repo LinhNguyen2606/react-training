@@ -1,7 +1,9 @@
-export { generateRandomColor} from '@helpers/generate';
+export { generateRandomColor } from '@helpers/generate';
 export { dateFormat } from '@helpers/date';
-export {highlightKeyword} from '@helpers/highlightKeyword'
-export {delayRespone} from '@helpers/delay'
+export { highlightKeyword } from '@helpers/highlightKeyword';
+export { delayRespone } from '@helpers/delay';
+export { extractData } from '@helpers/extract';
+
 /**
  * Convert a File to Base64 using a Promise
  *

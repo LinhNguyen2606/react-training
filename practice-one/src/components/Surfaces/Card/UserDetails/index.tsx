@@ -29,8 +29,8 @@ const UserDetails = ({
   infoItem
 }: UserDetailsProps) => {
   return (
-    <div className="user__wrapper">
-      <div className="user">
+    <div className="user">
+      <div className="user__wrapper">
         <article className="user__header">
           <h2 className="primary__text">{title}</h2>
           <Status isActive={isActive} />
@@ -44,13 +44,13 @@ const UserDetails = ({
           bgColor={bgColor}
           additionalClass="user__avatar"
         />
-        <span className="user__username primary__text">{userName}</span>
+        <span className="user__username">{userName}</span>
         <div>
           {infoItem.map(({ icon, label, value }, index) => (
             <InfoItem
               key={index}
               icon={icon}
-              label={label ? label : 'Unknown'}
+              label={label}
               value={value ? value : 'Unknown'}
             />
           ))}

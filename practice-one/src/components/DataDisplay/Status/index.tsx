@@ -13,7 +13,7 @@ const Status = ({
   notActive = 'Not active'
 }: StatusProps) => {
   return (
-    <div className={`status ${isActive ? 'active' : 'not__active'}`}>
+    <div className={`status ${isActive ? 'active' : 'not-active'}`}>
       <span className="status__text">{` ${isActive ? active : notActive}`}</span>
     </div>
   );

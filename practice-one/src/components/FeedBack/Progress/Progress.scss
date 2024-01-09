@@ -14,8 +14,12 @@
   display        : flex;
   justify-content: end;
 
-  &--icon {
+  &--success {
     background: url('../../../assets/icons/circle-check-solid.svg') no-repeat center;
+  }
+
+  &--failed {
+    background: url('../../../assets/icons/circle-xmark-solid.svg') no-repeat center;
   }
 }
 

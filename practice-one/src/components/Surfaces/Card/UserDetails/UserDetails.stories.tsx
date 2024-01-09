@@ -3,11 +3,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 // Component
 import UserDetails from '@components/Surfaces/Card/UserDetails';
 
-// Constant
-import { USER_INFORMATION } from '@constants';
-
 // Helper
-import { generateRandomColor } from '@helpers';
+import { dateFormat, generateRandomColor } from '@helpers';
+
+// Icons
+import { Clock, Envelope } from '@assets/icons';
 
 export default {
   title: 'Components/UserDetails',
@@ -41,6 +41,17 @@ export const Default: Story = {
     isActive: true,
     bgColor: generateRandomColor(),
     userName: 'Username',
-    infoItem: USER_INFORMATION,
+    infoItem: [
+      {
+        icon: Envelope,
+        label: 'Email:',
+        value: 'user@example.com'
+      },
+      {
+        icon: Clock,
+        label: 'Last visited:',
+        value: dateFormat(new Date().toString())
+      }
+    ]
   },
 };

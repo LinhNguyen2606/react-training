@@ -8,10 +8,10 @@ export default {
   component: Progress,
   tags: ['autodocs'],
   argTypes: {
-    rowData: {
-      successMessage: 'The message successfully',
+    status: {
+      description: 'The status of the spinner and the toast',
       table: {
-        defaultValue: { summary: 'Done' },
+        defaultValue: { summary: 'idle' },
       },
     },
   },
@@ -21,6 +21,6 @@ type Story = StoryObj<typeof Progress>;
 
 export const Default: Story = {
   args: {
-    successMessage: 'Done'
+    status: 'idle'
   },
 };

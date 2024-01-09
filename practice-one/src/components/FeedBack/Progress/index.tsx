@@ -4,24 +4,28 @@ import '@components/FeedBack/Progress/Progress.scss';
 import { useSpinnerToast } from '@hooks';
 
 type ProgressProps = {
-  successMessage?: string;
+  status: 'idle' | 'processing' | 'success' | 'failed';
 };
 
-const Progress = ({ successMessage }: ProgressProps) => {
-  const { showSpinner, toastVisible } = useSpinnerToast();
+const Progress = ({ status }: ProgressProps) => {
+  const isProcessing = status === 'processing';
+  const { showSpinner, toastVisible } = useSpinnerToast(isProcessing);
+
+  const toastText = status === 'success' ? 'Done' : 'Failed';
+  const toastIconClass = status === 'success' ? 'toast--success' : 'toast--failed';
 
   return (
     <>
-      {showSpinner && (
+      {showSpinner && status === 'processing' && (
         <div className="spinner">
-          <span className="icon spinner--icon"></span>
+          <span className="icon spinner--icon" />
         </div>
       )}
 
-      {toastVisible && (
+      {toastVisible && (status === 'success' || status === 'failed') && (
         <div className="toast">
-          <span className="primary__text">{successMessage}</span>
-          <span className="icon toast--icon"></span>
+          <span className="primary__text">{toastText}</span>
+          <span className={`icon ${toastIconClass}`} />
         </div>
       )}
     </>

@@ -5,17 +5,20 @@ import { USER_API_ENDPOINT } from '@constants/config';
 // Helper
 import { delayRespone } from '@helpers';
 
-// Interface
-import { User } from '@interfaces';
+// Interfaces
+import {
+  APIResponse,
+  User
+} from '@interfaces';
 
 /**
  * Handle API response
  * @param {Response} res The response object from the API
  * @returns {object} An object containing the response data or error message
  */
-const handleRespone = async (res: Response): Promise<{ data: any; errMsg: string | null }> => {
+const handleRespone = async <T>(res: Response): Promise<APIResponse<T>> => {
   if (res.ok) {
-    const data = await res.json();
+    const data: T = await res.json();
     return {
       data,
       errMsg: null,
@@ -44,10 +47,10 @@ const handleError = (err: unknown): { data: null; errMsg: string } => {
  * Handle fetching users
  * @returns {object} An object containing the response data or error message
  */
-export const fetchUsers = async (): Promise<{ data: any; errMsg: string | null }> => {
+export const fetchUsers = async (): Promise<APIResponse<User[]>> => {
   try {
     const res = await fetch(`${API_BASE_URL}/${USER_API_ENDPOINT}`);
-    return handleRespone(res);
+    return handleRespone<User[]>(res);
   } catch (err) {
     return handleError(err);
   }
@@ -58,24 +61,24 @@ export const fetchUsers = async (): Promise<{ data: any; errMsg: string | null }
  * @param {User} usersData - The data for the new user.
  * @returns {Promise<{ data: any; errMsg: string | null }>} The created user data or an error message.
  */
-export const createUser = async (usersData: User): Promise<{ data: any; errMsg: string | null }> => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/${USER_API_ENDPOINT}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(usersData),
-      });
+export const createUser = async (usersData: User): Promise<APIResponse<User>> => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/${USER_API_ENDPOINT}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(usersData),
+    });
 
-      const data = await handleRespone(res);
+    const data = await handleRespone<User>(res);
 
-      if (!data.errMsg) {
-        return delayRespone(data);
-      }
-      
-      return data;
-    } catch (err) {
-      return handleError(err);
+    if (!data.errMsg) {
+      return delayRespone(data);
     }
+
+    return data;
+  } catch (err) {
+    return handleError(err);
+  }
 };

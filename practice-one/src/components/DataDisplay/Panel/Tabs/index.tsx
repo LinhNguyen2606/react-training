@@ -18,7 +18,7 @@ const Tabs = ({
   return (
     <button
       type="button"
-      className={`panel__header--tab ${isActive ? 'active' : 'not__active'}`}
+      className={`panel__header--tab ${isActive ? 'active' : 'not-active'}`}
       onClick={handleOnClick}
     >
       {children}

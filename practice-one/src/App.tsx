@@ -11,21 +11,21 @@ import {
   Progress,
   SearchBar,
   Status,
-  Table
+  Table,
+  UserDetails
 } from '@components';
+import { InfoItemProps } from '@components/Surfaces/Card/UserDetails/InfoItem';
 
 // Helpers
 import {
   dateFormat,
+  extractData,
   generateRandomColor,
   highlightKeyword
 } from '@helpers';
 
 // Interfaces
-import {
-  EnitityColumn,
-  User
-} from '@interfaces';
+import { EnitityColumn, User } from '@interfaces';
 
 // Services
 import {
@@ -35,6 +35,9 @@ import {
 
 // Custom hooks
 import { useFilteredUsers } from '@hooks';
+
+// Constant
+import { USER_INFORMATION } from '@constants';
 
 /**
  * Defines the columns configuration for the user table.
@@ -92,14 +95,19 @@ const App = () => {
     index: number;
     data: User | null;
   }>({
-    index: 0,
+    index: -1,
     data: null,
   });
-  const [isShowProgress, setIsShowProgress] = useState(false);
+  const [isShowProgress, setIsShowProgress] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle');
+  const [userDetailsInfo, setUserDetailsInfo] = useState<InfoItemProps[]>([]);
+
 
   useEffect(() => {
+    if (selectedRowData) {
+      setUserDetailsInfo(USER_INFORMATION(selectedRowData));
+    }
     handleGetUsers();
-  }, []);
+  }, [selectedRow.data]);
 
   /**
    * Asynchronously fetches users from an external service and updates the state of `users`.
@@ -107,8 +115,9 @@ const App = () => {
    */
   const handleGetUsers = async () => {
     const res = await fetchUsers();
-    if (res && res.data) {
-      setUsers(res.data);
+    const data = extractData(res);
+    if (data) {
+      setUsers(data);
     }
   };
 
@@ -123,6 +132,8 @@ const App = () => {
   const filteredUsers = useFilteredUsers(users, keyword);
 
   const columns = generateUserTableColumns(keyword);
+
+  const selectedRowData = selectedRow.data;
 
   /**
    * Handles the event when a row in the table is clicked.
@@ -143,9 +154,9 @@ const App = () => {
    * Add a new user.
    * @param {string} userName - New user name.
    * @returns {Promise<void>} - Promise when finished processing.
-  */
+   */
   const handleAddUser = async (userName: string): Promise<void> => {
-    setIsShowProgress(true);
+    setIsShowProgress('processing');
 
     const res = await createUser({
       userName,
@@ -158,30 +169,27 @@ const App = () => {
       bgColor: generateRandomColor(),
     });
 
-    const data = res && res.data
+    const data = extractData(res);
 
     if (data) {
       setUsers((prevUsers) => [...prevUsers, data]);
-      setSelectedRow({ index: users.length, data});
+      setSelectedRow({ index: users.length, data });
+      setIsShowProgress('success');
+    } else {
+      setIsShowProgress('failed');
     }
-
-    setIsShowProgress(false);
   };
 
   return (
     <>
       <header className="header">
         <h1 className="header__heading primary__text">User Manager</h1>
-        {isShowProgress && <Progress successMessage="Done" />}
+        <Progress status={isShowProgress} />
       </header>
       <main className="main">
         <Drawer onSubmit={handleAddUser} />
         <div className="content__wrapper">
-          <SearchBar
-            label="Users"
-            placeholder="Search"
-            onChange={handleSearch}
-          />
+          <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
           <Table
             rowData={filteredUsers}
             columns={columns}
@@ -189,6 +197,16 @@ const App = () => {
             selectedRow={selectedRow}
           />
         </div>
+        {selectedRowData !== null && (
+          <UserDetails
+            title="User information"
+            isActive={selectedRowData.isActive}
+            src={selectedRowData.avatar}
+            bgColor={selectedRowData.bgColor}
+            userName={selectedRowData.userName}
+            infoItem={userDetailsInfo}
+          />
+        )}
       </main>
     </>
   );

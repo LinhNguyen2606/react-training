@@ -16,7 +16,6 @@ import {
   ViewDetails
 } from '@components';
 import EditorProfile from '@components/DataDisplay/Panel/EditorProfile';
-import { InfoItemProps } from '@components/Surfaces/Card/ViewDetails/InfoItem';
 
 // Helpers
 import {
@@ -28,7 +27,6 @@ import {
 
 // Interfaces
 import {
-  DataItems,
   EnitityColumn,
   User
 } from '@interfaces';
@@ -48,6 +46,7 @@ import {
   DATA_ITEMS,
   USER_INFORMATION
 } from '@constants';
+
 
 /**
  * Defines the columns configuration for the user table.
@@ -99,19 +98,24 @@ const generateUserTableColumns = (searchKeyword: string): EnitityColumn<User>[] 
 };
 
 const App = () => {
+  // Variables related to user data and state
   const [users, setUsers] = useState<User[]>([]);
+  const [selectedRow, setSelectedRow] = useState<{index: number, data: User | null}>({index: -1, data: null});
+  const selectedRowData = selectedRow.data;
+  const [dataItems, setDataItems] = useState<any>([]);
+
+  // Variables related to UI state
   const [keyword, setKeyword] = useState('');
-  const [selectedRow, setSelectedRow] = useState<{
-    index: number;
-    data: User | null;
-  }>({
-    index: -1,
-    data: null,
-  });
   const [isShowProgress, setIsShowProgress] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle');
-  const [userDetailsInfo, setUserDetailsInfo] = useState<InfoItemProps[]>([]);
   const [showCard, setShowCard] = useState(true);
-  const [dataItems, setDataItems] = useState<DataItems[]>([]);
+  const isShowDetails = showCard && selectedRowData !== null
+  const isShowEdit = !showCard && selectedRowData !== null
+
+  // Variables related to data processing
+  const filteredUsers = useFilteredUsers(users, keyword);
+  const columns = generateUserTableColumns(keyword);
+  const generateUserInfo = (data: User) => USER_INFORMATION(data)
+  const generateDataItems = (data: User) => DATA_ITEMS(data) 
 
   useEffect(() => {
     handleGetUsers();
@@ -120,7 +124,7 @@ const App = () => {
   /**
    * Asynchronously fetches users from an external service and updates the state of `users`.
    * If the response is successful and contains data, the state of `users` is updated with the fetched data.
-   */
+  */
   const handleGetUsers = async () => {
     const res = await fetchUsers();
     const data = extractData(res);
@@ -134,18 +138,8 @@ const App = () => {
    * Updates the state of `keyword` with the provided search keyword.
    *
    * @param {string} keyword - The search keyword.
-   */
+  */
   const handleSearch = (keyword: string) => setKeyword(keyword);
-
-  const filteredUsers = useFilteredUsers(users, keyword);
-
-  const columns = generateUserTableColumns(keyword);
-
-  const selectedRowData = selectedRow.data;
-
-  const isShowDetails = showCard && selectedRowData !== null
-  
-  const isShowEdit = !showCard && selectedRowData !== null
 
   /**
    * Handles the event when a row in the table is clicked.
@@ -153,16 +147,14 @@ const App = () => {
    *
    * @param {number} index - The index of the clicked row.
    * @param {User} user - The data of the user corresponding to the clicked row.
-   */
+  */
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
-      setUserDetailsInfo([]);
       setDataItems([]);
     } else {
       setSelectedRow({ index, data: user });
-      setUserDetailsInfo(USER_INFORMATION(user));
-      setDataItems(DATA_ITEMS(user));
+      setDataItems([...generateUserInfo(user), ...generateDataItems(user)]);
     }
   };
 
@@ -170,7 +162,7 @@ const App = () => {
    * Add a new user.
    * @param {string} userName - New user name.
    * @returns {Promise<void>} - Promise when finished processing.
-   */
+  */
   const handleAddUser = async (userName: string): Promise<void> => {
     setIsShowProgress('processing');
 
@@ -190,8 +182,7 @@ const App = () => {
     if (data) {
       setUsers((prevUsers) => [...prevUsers, data]);
       setSelectedRow({ index: users.length, data });
-      setUserDetailsInfo(USER_INFORMATION(data));
-      setDataItems(DATA_ITEMS(data));
+      setDataItems([...generateUserInfo(data), ...generateDataItems(data)]);
       setIsShowProgress('success');
     } else {
       setIsShowProgress('failed');
@@ -200,9 +191,15 @@ const App = () => {
 
   /**
    * Handle events to show the panel and hide the card
-   */
+  */
   const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard)
 
+  /**
+   * Handles the removal of a user.
+   * This function sets the progress state to 'processing',
+   * sends a request to delete the user with the specified ID,
+   * and updates the UI based on the response.
+  */
   const handleRemoveUser = async () => {
     setIsShowProgress('processing');
 
@@ -231,18 +228,22 @@ const App = () => {
       ),
       title: 'General'
     }
-  ]    
+  ]  
 
   return (
     <>
       <header className="header">
-        <h1 className="header__heading text--primary">User Manager</h1>
-        <Progress status={isShowProgress} />
+        <h1 className="header__heading primary__text">User Manager</h1>
+        {isShowProgress && <Progress status={isShowProgress} />}
       </header>
       <main className="main">
         <Drawer onSubmit={handleAddUser} />
         <div className="content__wrapper">
-          <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
+          <SearchBar
+            label="Users"
+            placeholder="Search"
+            onChange={handleSearch}
+          />
           <Table
             rowData={filteredUsers}
             columns={columns}
@@ -257,7 +258,7 @@ const App = () => {
             src={selectedRowData.avatar}
             bgColor={selectedRowData.bgColor}
             userName={selectedRowData.userName}
-            infoItem={userDetailsInfo}
+            infoItem={generateUserInfo(selectedRowData)}
             onShowPanel={handleTogglePanel}
           />
         )}
@@ -266,7 +267,7 @@ const App = () => {
             tabs={tabsContent}
             onBackClick={handleTogglePanel}
           />
-        )}
+      )}
       </main>
     </>
   );

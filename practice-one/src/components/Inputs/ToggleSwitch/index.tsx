@@ -6,7 +6,10 @@ type ToggleSwitchProps = {
   onChange?: (value: boolean) => void
 };
 
-const ToggleSwitch = ({ isChecked, onChange }: ToggleSwitchProps) => {
+const ToggleSwitch = ({
+  isChecked = false,
+  onChange
+}: ToggleSwitchProps) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.checked;

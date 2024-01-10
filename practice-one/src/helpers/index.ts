@@ -3,6 +3,7 @@ export { dateFormat } from '@helpers/date';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { delayRespone } from '@helpers/delay';
 export { extractData } from '@helpers/extract';
+export { validateUsername, validateEmail } from '@helpers/validation';
 
 /**
  * Convert a File to Base64 using a Promise

@@ -11,9 +11,10 @@ export {
 export {
   Button,
   SearchBar,
+  TextArea,
   TextField,
-  UploadImage,
-  TextArea
+  ToggleSwitch,
+  UploadImage
 } from '@components/Inputs/index';
 
 export { ViewDetails } from '@components/Surfaces/index';

@@ -15,7 +15,7 @@ export const useFilteredUsers = (users: User[], keyword: string): User[] => {
   const [filterUser, setFilterUser] = useState<User[]>([]);
 
   useEffect(() => {
-    const filteredUsers = users.filter((user) => user.userName.toLowerCase().includes(keyword.toLowerCase()));
+    const filteredUsers = users.filter((user) => user.userName?.toLowerCase().includes(keyword.toLowerCase()));
     setFilterUser(filteredUsers);
   }, [users, keyword]);
 

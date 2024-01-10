@@ -26,7 +26,7 @@ const TextField = ({
   // Call onChange with new input value if provided
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    onChange && onChange(value);
+    onChange && onChange(value);  
   };
 
   return (

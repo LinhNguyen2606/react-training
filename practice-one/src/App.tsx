@@ -18,7 +18,7 @@ import {
 import EditorProfile from '@components/DataDisplay/Panel/EditorProfile';
 
 // Helpers
-import {
+import { 
   dateFormat,
   extractData,
   generateRandomColor,
@@ -35,6 +35,7 @@ import {
 import {
   createUser,
   deleteUser,
+  editUser,
   fetchUsers
 } from '@services';
 
@@ -46,7 +47,6 @@ import {
   DATA_ITEMS,
   USER_INFORMATION
 } from '@constants';
-
 
 /**
  * Defines the columns configuration for the user table.
@@ -100,7 +100,7 @@ const generateUserTableColumns = (searchKeyword: string): EnitityColumn<User>[] 
 const App = () => {
   // Variables related to user data and state
   const [users, setUsers] = useState<User[]>([]);
-  const [selectedRow, setSelectedRow] = useState<{index: number, data: User | null}>({index: -1, data: null});
+  const [selectedRow, setSelectedRow] = useState<{ index: number; data: User | null }>({ index: -1, data: null });
   const selectedRowData = selectedRow.data;
   const [dataItems, setDataItems] = useState<any>([]);
 
@@ -108,14 +108,14 @@ const App = () => {
   const [keyword, setKeyword] = useState('');
   const [isShowProgress, setIsShowProgress] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle');
   const [showCard, setShowCard] = useState(true);
-  const isShowDetails = showCard && selectedRowData !== null
-  const isShowEdit = !showCard && selectedRowData !== null
+  const isShowDetails = showCard && selectedRowData !== null;
+  const isShowEdit = !showCard && selectedRowData !== null;
 
   // Variables related to data processing
   const filteredUsers = useFilteredUsers(users, keyword);
   const columns = generateUserTableColumns(keyword);
-  const generateUserInfo = (data: User) => USER_INFORMATION(data)
-  const generateDataItems = (data: User) => DATA_ITEMS(data) 
+  const generateUserInfo = (data: User) => USER_INFORMATION(data);
+  const generateDataItems = (data: User) => DATA_ITEMS(data);
 
   useEffect(() => {
     handleGetUsers();
@@ -192,7 +192,7 @@ const App = () => {
   /**
    * Handle events to show the panel and hide the card
   */
-  const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard)
+  const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard);
 
   /**
    * Handles the removal of a user.
@@ -214,7 +214,29 @@ const App = () => {
     } else {
       setIsShowProgress('failed');
     }
-  }
+  };
+
+  /**
+   * Edit a user.
+   * @param {string} userData - The user's data after updated.
+   * @returns {Promise<void>} - Promise when finished processing.
+  */
+  const handleUpdateUser = async (userData: User): Promise<void> => {
+    setIsShowProgress('processing');
+  
+    const res = await editUser(Number(selectedRowData?.id) , userData);
+  
+    const data = extractData(res);
+  
+    if (data) {
+      handleGetUsers();
+      setSelectedRow({ index: selectedRow.index, data }); 
+      setDataItems([...generateUserInfo(data), ...generateDataItems(data)]); 
+      setIsShowProgress('success');
+    } else {
+      setIsShowProgress('failed');
+    }
+  };
 
   const tabsContent = [
     {
@@ -224,11 +246,12 @@ const App = () => {
           dataItems={dataItems}
           onRemove={handleRemoveUser}
           bgColor={selectedRowData?.bgColor}
+          onSubmit={handleUpdateUser}
         />
       ),
-      title: 'General'
-    }
-  ]  
+      title: 'General',
+    },
+  ];
 
   return (
     <>
@@ -262,12 +285,12 @@ const App = () => {
             onShowPanel={handleTogglePanel}
           />
         )}
-        {isShowEdit && (
+        {isShowEdit &&
           <Panel
             tabs={tabsContent}
             onBackClick={handleTogglePanel}
           />
-      )}
+        }
       </main>
     </>
   );

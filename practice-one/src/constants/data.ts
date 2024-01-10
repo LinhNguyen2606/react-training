@@ -28,7 +28,7 @@ export const DATA_ITEMS = (data: User) => [
     id: 4,
     type: 'STATUS_FIELD',
     label: 'Status',
-    key: 'status',
+    key: 'isActive',
     value: data.isActive
   },
   {

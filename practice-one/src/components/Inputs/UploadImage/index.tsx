@@ -12,6 +12,7 @@ import { Avatar, Icon } from '@components/DataDisplay';
 
 // SCSS
 import '@components/Inputs/UploadImage/UploadImage.scss';
+import { ERROR_MESSAGE } from '@constants';
 
 type UploadImageProps = {
   originalImage: string;
@@ -42,13 +43,13 @@ const UploadImage = ({
     if (!selectedFile) return;
 
     if(!acceptedImageType.includes(selectedFile.type)) {
-      setErrorMessage('Only image files (JPEG, PNG, GIF) are allowed');
+      setErrorMessage(ERROR_MESSAGE.AVATAR_TYPES);
       return;
     }
 
     // Check the file size, if it exceeds the limit, display an error message and exit the function
     if (selectedFile.size > maxSizeInBytes) {
-      setErrorMessage('File size should be less than 5MB');
+      setErrorMessage(ERROR_MESSAGE.AVATAR_SIZE);
       return;
     }
 

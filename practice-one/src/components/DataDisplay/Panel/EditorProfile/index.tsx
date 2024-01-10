@@ -4,24 +4,22 @@ import {
 } from 'react';
 
 // Components
-import {
-  Modal,
-  Status
-} from '@components/DataDisplay';
 import TextView from '@components/DataDisplay/Panel/Textview';
 import {
+  Modal,
+  Status,
   Button,
   TextArea,
   TextField,
   ToggleSwitch,
   UploadImage
-} from '@components/Inputs';
+} from '@components';
 
 // Helper
-import { dateFormat } from '@helpers';
+import { dateFormat, validateEmail, validateUsername } from '@helpers';
 
 // Interface
-import { DataItems } from '@interfaces';
+import { DataItems} from '@interfaces';
 
 type KeyIndexType = {
   [key: string]: string | boolean;
@@ -31,6 +29,7 @@ type EditorProfileProps = {
   id?: number;
   dataItems: DataItems[];
   onRemove: (id: number) => void;
+  onSubmit: (userData: any) => void;
   bgColor?: string;
 };
 
@@ -38,10 +37,12 @@ const EditorProfile = ({
   id,
   dataItems,
   onRemove,
+  onSubmit,
   bgColor
 }: EditorProfileProps) => {
   const [dataChanged, setDataChanged] = useState<KeyIndexType>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [errorMessages, setErrorMessages] = useState<{ [key: string]: string | null }>({});
 
   useEffect(() => {
     const newDataChanged = dataItems.reduce((acc, item) => {
@@ -56,6 +57,18 @@ const EditorProfile = ({
     setDataChanged(newDataChanged);
   }, [dataItems]);
 
+  const validateInput = (key: string, value: string | boolean) => {
+    if (key === 'userName') {
+      return validateUsername(value as string);
+    }
+  
+    if (key === 'email') {
+      return validateEmail(value as string);
+    }
+  
+    return null;
+  };
+
   /**
    * Handles the change event for a specific field.
    * @param {string} key - The key of the field being changed.
@@ -63,9 +76,16 @@ const EditorProfile = ({
    * @returns {void}
   */
   const handleChange = (key: string, value: string | boolean) => {
+    const errorMessage = validateInput(key, value);
+    
     setDataChanged((prevState) => ({
       ...prevState,
       [key]: value,
+    }));
+      
+    setErrorMessages((prevErrorMessages) => ({
+      ...prevErrorMessages,
+      [key]: errorMessage,
     }));
   };
 
@@ -74,15 +94,15 @@ const EditorProfile = ({
    *
    * @param {DataItems} item - Data item representing the Avatar.
    * @returns {string | boolean} - `alt` value for Avatar.
-   */
+  */
   const getAvatarAlt = (item: DataItems) => {
     const { keyImageDefault } = item;
 
-    const hasDataChanged = keyImageDefault && dataChanged[keyImageDefault]
-    
+    const hasDataChanged = keyImageDefault && dataChanged[keyImageDefault];
+
     // Check if `keyImageDefault` exists and has a value in `dataChanged`
     if (hasDataChanged) return hasDataChanged as string;
-  
+
     return item.value as string;
   };
 
@@ -101,6 +121,12 @@ const EditorProfile = ({
     if (typeof id === 'number') onRemove(id);
   };
 
+  /**
+   * Handles the action of update a user.
+   * @returns {void}
+  */
+  const handleOnUpdate = () => onSubmit(dataChanged);
+  
   return (
     <>
       <div className="panel__actions-btn">
@@ -110,14 +136,14 @@ const EditorProfile = ({
           variants="secondary"
           onClick={handleToggleModal}
         >
-          Delete
+            Delete
         </Button>
         <Button
           additionalClass="store"
           size="md"
           variants="primary"
-        >
-          Save
+          onClick={handleOnUpdate}>
+            Save
         </Button>
       </div>
 
@@ -131,9 +157,10 @@ const EditorProfile = ({
                     label={item.label}
                     additionalClass="panel__form-group--label"
                     isShowLabel={true}
-                    value={item.value as string}
+                    value={(dataChanged[item.key] as string)}
                     onChange={(value) => handleChange(item.key, value)}
                   />
+                  {errorMessages[item.key] && <span className="panel__error">{errorMessages[item.key]}</span>}
                 </div>
               );
 
@@ -169,7 +196,9 @@ const EditorProfile = ({
                 <TextView
                   key={item.key}
                   label={item.label}
-                  value={item.value ? dateFormat(item.value as string) : 'Unknown'}
+                  value={
+                    item.key === 'registered' ? dataChanged[item.key] as string : dateFormat(new Date().toString())
+                  }
                 />
               );
 
@@ -177,7 +206,10 @@ const EditorProfile = ({
               return (
                 <div className="panel__form-group" key={item.key}>
                   <span className="panel__form-group--label">{item.label}</span>
-                  <TextArea value={item.value as string} onChange={(value) => handleChange(item.key, value)} />
+                  <TextArea
+                    value={(dataChanged[item.key] as string)}
+                    onChange={(value) => handleChange(item.key, value)}
+                  />
                 </div>
               );
             default:

@@ -43,6 +43,7 @@
     &-group {
       align-items  : center;
       display      : flex;
+      flex-wrap    : wrap;
       margin-bottom: 10px;
 
       &--label {
@@ -74,5 +75,13 @@
         flex-basis: 286px;
       }
     }
+  }
+
+  &__error {
+    margin     : 10px 0 0 150px;
+    font-size  : $fs-x-small;
+    font-weight: $fw-medium;
+    color      : #ff0000;
+    height     : 0;
   }
 }

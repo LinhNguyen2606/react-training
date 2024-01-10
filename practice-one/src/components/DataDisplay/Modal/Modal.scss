@@ -8,12 +8,12 @@
   left            : 0;
 
   &__wrapper {
-    @extend .common-modal ;
+    @extend .common-modal;
   }
 
   &__submit {
     width : 351px;
-    height: 108px;
+    height: 120px;
   }
 
   &__confirm {
@@ -40,7 +40,7 @@
   }
 
   &__body--submit {
-    padding: 5px 0 20px 0;
+    padding: 5px 0;
     display: flex;
     gap    : 12px;
 
@@ -75,5 +75,12 @@
     justify-content: center;
     display        : flex;
     gap            : 10px;
+  }
+
+  &__error {
+    font-size  : $fs-x-small;
+    font-weight: $fw-medium;
+    margin     : 10px 20px;
+    color      : #ff0000;
   }
 }

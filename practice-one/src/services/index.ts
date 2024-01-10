@@ -49,9 +49,9 @@ const handleError = (err: unknown): { data: null; errMsg: string } => {
 const handleAPIRequest = async <T>(url: string, options?: RequestInit): Promise<APIResponse<T>> => {
   try {
     const res = await fetch(url, options);
-    const data = await handleRespone<T>(res);
+    const data = handleRespone<T>(res);
 
-    if (!data.errMsg) {
+    if (data) {
       return delayRespone(data);
     }
 
@@ -76,27 +76,41 @@ export const fetchUsers = async (): Promise<APIResponse<User[]>> => {
 
 /**
  * Create a new user with the provided data.
- * @param {User} usersData - The data for the new user.
+ * @param {User} userData - The data for the new user.
  * @returns {Promise<{ data: any; errMsg: string | null }>} The created user data or an error message.
  */
-export const createUser = async (usersData: User): Promise<APIResponse<User>> =>
+export const createUser = (userData: User): Promise<APIResponse<User>> =>
   handleAPIRequest(`${API_BASE_URL}/${USER_API_ENDPOINT}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(usersData),
+    body: JSON.stringify(userData),
   });
 
 /**
- * Deletes a user from the server.
+ * Delete a user with corresponding id.
  * @param {User} userId - The ID of the user to delete.
  * @returns {Promise<APIResponse<User>>} A promise that resolves to the API response containing the deleted user, or an error message.
  */
-export const deleteUser = async (userId: Number): Promise<APIResponse<User>> =>
+export const deleteUser = (userId: number): Promise<APIResponse<User>> =>
   handleAPIRequest(`${API_BASE_URL}/${USER_API_ENDPOINT}/${userId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
+  });
+
+/**
+ * Edit a user with corresponding data.
+ * @param {User} userData - The data for the user .
+ * @returns {Promise<APIResponse<User>>} A promise that resolves to the API response containing the deleted user, or an error message.
+ */
+export const editUser = (id:number, userData: User): Promise<APIResponse<User>> =>
+  handleAPIRequest(`${API_BASE_URL}/${USER_API_ENDPOINT}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
   });

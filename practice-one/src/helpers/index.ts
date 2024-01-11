@@ -1,5 +1,5 @@
 export { generateRandomColor } from '@helpers/generate';
-export { default as dateFormat } from '@helpers/date';
+export { dateFormat } from '@helpers/date';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { delayRespone } from '@helpers/delay';
 export { extractData } from '@helpers/extract';

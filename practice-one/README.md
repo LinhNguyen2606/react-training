@@ -199,17 +199,6 @@ cd practice-one
 pnpm run storybook
 ~~~
 
-## Run the storybook
-- Step 01:  Open the folder practice-one
-~~~
-cd practice-one
-~~~
-
-- Step 02: Run the storybook
-~~~
-pnpm run storybook
-~~~
-
 ## Run the server
 - Step 01:  Open the folder practice-one
 ~~~

@@ -1,7 +1,7 @@
 /**
  * Convert the day such as: May 21, 2020 17:02:06
  */
-export const dateFormat = (date: string) =>
+const dateFormat = (date: string) =>
   new Date(date)
     .toLocaleString('en-US', {
       month: 'long',
@@ -13,3 +13,5 @@ export const dateFormat = (date: string) =>
       hour12: false,
     })
     .replace('at', '');
+
+export default dateFormat;

@@ -103,8 +103,9 @@ export const deleteUser = (userId: number): Promise<APIResponse<User>> =>
 
 /**
  * Edit a user with corresponding data.
- * @param {User} userData - The data for the user .
- * @returns {Promise<APIResponse<User>>} A promise that resolves to the API response containing the deleted user, or an error message.
+ * @param {number} id - The users'id.
+ * @param {User} userData - The data for the user.
+ * @returns {Promise<APIResponse<User>>} A promise that resolves to the API response containing the data to edit user, or an error message.
  */
 export const editUser = (id:number, userData: User): Promise<APIResponse<User>> =>
   handleAPIRequest(`${API_BASE_URL}/${USER_API_ENDPOINT}/${id}`, {

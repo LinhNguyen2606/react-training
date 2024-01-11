@@ -157,6 +157,11 @@ const App = () => {
       setDataItems([...generateUserInfo(user), ...generateDataItems(user)]);
     }
   };
+  
+  /**
+   * Handle events to show the panel and hide the card
+   */
+  const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard);
 
   /**
    * Add a new user.
@@ -190,11 +195,6 @@ const App = () => {
   };
 
   /**
-   * Handle events to show the panel and hide the card
-  */
-  const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard);
-
-  /**
    * Handles the removal of a user.
    * This function sets the progress state to 'processing',
    * sends a request to delete the user with the specified ID,
@@ -225,7 +225,6 @@ const App = () => {
     setIsShowProgress('processing');
   
     const res = await editUser(Number(selectedRowData?.id) , userData);
-  
     const data = extractData(res);
   
     if (data) {

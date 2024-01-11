@@ -15,7 +15,7 @@ import { Icon } from '@components/DataDisplay';
 import { TextField } from '@components/Inputs';
 
 // SCSS
-import '@components/Inputs/SearchBar/Searchbar.scss';
+import '@components/Inputs/SearchBar/searchbar.scss';
 
 type SearchBarProps = {
   label?: string;

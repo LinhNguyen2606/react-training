@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
 
 // Components
-import { Modal, Status, Button, TextArea, TextField, ToggleSwitch, UploadImage } from '@components';
+import {
+  Modal,
+  Status,
+  Button,
+  TextArea,
+  TextField,
+  ToggleSwitch,
+  UploadImage
+} from '@components';
+import TextView from '@components/DataDisplay/Panel/TextView';
 
 // Helper
 import { dateFormat, validateEmail, validateUsername } from '@helpers';
 
 // Interface
 import { DataItems } from '@interfaces';
-// import TextView from '../TextView';
 
 type KeyIndexType = {
   [key: string]: string | boolean;
@@ -113,11 +121,17 @@ const EditorProfile = ({ id, dataItems, onRemove, onSubmit, bgColor }: EditorPro
   return (
     <>
       <div className="panel__actions-btn">
-        <Button additionalClass="remove" size="md" variants="secondary" onClick={handleToggleModal}>
-          Delete
+        <Button
+          additionalClass="remove"
+          size="md" variants="secondary"
+          onClick={handleToggleModal}>
+            Delete
         </Button>
-        <Button additionalClass="store" size="md" variants="primary" onClick={handleOnUpdate}>
-          Save
+        <Button
+          additionalClass="store"
+          size="md" variants="primary"
+          onClick={handleOnUpdate}>
+            Save
         </Button>
       </div>
 
@@ -167,19 +181,13 @@ const EditorProfile = ({ id, dataItems, onRemove, onSubmit, bgColor }: EditorPro
 
             case 'DATE_FIELD':
               return (
-                // <TextView
-                //   key={item.key}
-                //   label={item.label}
-                //   value={
-                //     item.key === 'registered' ? (dataChanged[item.key] as string) : dateFormat(new Date().toString())
-                //   }
-                // />
-                <div className="panel__form-group">
-                  <label className="panel__form-group--label">{item.label}</label>
-                  <p className="panel__form-group--text">
-                    {item.key === 'registered' ? (dataChanged[item.key] as string) : dateFormat(new Date().toString())}
-                  </p>
-                </div>
+                <TextView
+                  key={item.key}
+                  label={item.label}
+                  value={
+                    item.key === 'registered' ? (dataChanged[item.key] as string) : dateFormat(new Date().toString())
+                  }
+                />
               );
 
             case 'DETAILS_FIELD':

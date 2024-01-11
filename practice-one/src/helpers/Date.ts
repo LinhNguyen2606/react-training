@@ -13,4 +13,5 @@ const dateFormat = (date: string) =>
       hour12: false,
     })
     .replace('at', '');
+
 export default dateFormat;

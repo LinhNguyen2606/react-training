@@ -223,8 +223,14 @@ const App = () => {
   */
   const handleUpdateUser = async (userData: User): Promise<void> => {
     setIsShowProgress('processing');
-  
-    const res = await editUser(Number(selectedRowData?.id) , userData);
+    
+    const bgColor = selectedRowData ? selectedRowData.bgColor : '';
+    const updatedUserData = {
+      ...userData,
+      bgColor
+    };
+
+    const res = await editUser(Number(selectedRowData?.id) , updatedUserData);
     const data = extractData(res);
   
     if (data) {
@@ -255,7 +261,7 @@ const App = () => {
   return (
     <>
       <header className="header">
-        <h1 className="header__heading primary__text">User Manager</h1>
+        <h1 className="header__heading text--primary">User Manager</h1>
         {isShowProgress && <Progress status={isShowProgress} />}
       </header>
       <main className="main">

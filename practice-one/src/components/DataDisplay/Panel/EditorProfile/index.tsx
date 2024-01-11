@@ -25,8 +25,8 @@ type KeyIndexType = {
 type EditorProfileProps = {
   id?: number;
   dataItems: DataItems[];
-  onRemove?: (id: number) => void;
-  onSubmit?: (userData: any) => void;
+  onRemove: (id: number) => void;
+  onSubmit: (userData: any) => void;
   bgColor?: string;
 };
 
@@ -68,7 +68,7 @@ const EditorProfile = ({ id, dataItems, onRemove, onSubmit, bgColor }: EditorPro
    */
   const handleChange = (key: string, value: string | boolean) => {
     const errorMessage = validateInput(key, value);
-
+    
     setDataChanged((prevState) => ({
       ...prevState,
       [key]: value,
@@ -109,14 +109,14 @@ const EditorProfile = ({ id, dataItems, onRemove, onSubmit, bgColor }: EditorPro
    */
   const handleOnRemove = () => {
     setIsOpenModal(false);
-    if (typeof id === 'number') onRemove!(id);
+    if (typeof id === 'number') onRemove(id);
   };
 
   /**
    * Handles the action of update a user.
    * @returns {void}
    */
-  const handleOnUpdate = () => onSubmit!(dataChanged);
+  const handleOnUpdate = () => onSubmit(dataChanged);
 
   return (
     <>

@@ -4,20 +4,20 @@ import { useState } from 'react';
 import { ArrowLeft } from '@assets/icons';
 
 // Components
-import { Icon } from '@components/DataDisplay'
-import Tabs from '@components/DataDisplay/Panel/Tabs'
+import { Icon } from '@components/DataDisplay';
+import Tabs from '@components/DataDisplay/Panel/Tabs';
 
 // SCSS
 import '@components/DataDisplay/Panel/Panel.scss';
 
 type ContentType = {
-  content: React.ReactNode
-  title: string
-}
+  content: React.ReactNode;
+  title: string;
+};
 
 type PanelProps = {
   tabs: ContentType[];
-  onBackClick: () => void;
+  onBackClick?: () => void;
 };
 
 const Panel = ({ tabs, onBackClick }: PanelProps) => {
@@ -30,24 +30,19 @@ const Panel = ({ tabs, onBackClick }: PanelProps) => {
 
   return (
     <div className="panel">
-        <div className="panel__header">
-          <div className="panel__header--icon">
-            <Icon src={ArrowLeft} onClick={onBackClick} />
-            {tabs.map((tab, index) => (
-              <Tabs 
-                key={index}
-                isActive={activeTabIndex === index}
-                index={index}
-                onClick={handleActiveTab}
-              >
-                {tab.title}
-              </Tabs>
-        ))}
-          </div>
+      <div className="panel__header">
+        <div className="panel__header--icon">
+          <Icon src={ArrowLeft} onClick={onBackClick} />
+          {tabs.map((tab, index) => (
+            <Tabs key={index} isActive={activeTabIndex === index} index={index} onClick={handleActiveTab}>
+              {tab.title}
+            </Tabs>
+          ))}
         </div>
-        {tabData}
+      </div>
+      {tabData}
     </div>
-  )
+  );
 };
 
 export default Panel;

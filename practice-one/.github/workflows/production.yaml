@@ -2,7 +2,7 @@ name: Practice one - Production deploy
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  REACT_APP_API_ENDPOINT: ${{ secrets.REACT_API_BASE_URL }}
+  REACT_API_BASE_URL: ${{ secrets.REACT_API_BASE_URL }}
 on:
   push:
     branches:

@@ -4,7 +4,7 @@ import {
 } from 'react';
 
 // Components
-import TextView from '@components/DataDisplay/Panel/Textview';
+import TextView from '@components/DataDisplay/Panel/TextView';
 import {
   Modal,
   Status,

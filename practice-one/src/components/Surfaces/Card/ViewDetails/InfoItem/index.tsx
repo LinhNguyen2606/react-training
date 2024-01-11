@@ -1,5 +1,5 @@
 // Component
-import { Icon } from '@components/DataDisplay';
+import { Icon } from '@components';
 
 export type InfoItemProps = {
   icon: string;

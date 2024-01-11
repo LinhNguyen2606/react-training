@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Icon from '@components/DataDisplay/Icon';
+import { Icon } from '@components';
 
 // Icon
 import { Pencil } from '@assets/icons';

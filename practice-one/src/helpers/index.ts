@@ -1,6 +1,6 @@
 export { generateRandomColor } from '@helpers/generate';
 export { dateFormat } from '@helpers/date';
-export { highlightKeyword } from '@helpers/highlightKeyword';
+export { highlightKeyword } from '@helpers/highlight';
 export { delayRespone } from '@helpers/delay';
 export { extractData } from '@helpers/extract';
 export { validateUsername, validateEmail } from '@helpers/validation';

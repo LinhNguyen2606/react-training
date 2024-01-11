@@ -3,6 +3,8 @@ import { Clock, Envelope } from '@assets/icons';
 
 // Helper
 import { dateFormat } from '@helpers';
+
+// Interface
 import { User } from '@interfaces';
 
 /**

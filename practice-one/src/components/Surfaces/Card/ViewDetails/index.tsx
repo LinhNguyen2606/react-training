@@ -5,7 +5,7 @@ import { Pencil } from '@assets/icons';
 import { InfoItemProps } from '@components/Surfaces/Card/ViewDetails/InfoItem';
 
 // Components
-import { Avatar, Icon, Status } from '@components/DataDisplay';
+import { Avatar, Icon, Status } from '@components';
 import InfoItem from '@components/Surfaces/Card/ViewDetails/InfoItem';
 
 // SCSS

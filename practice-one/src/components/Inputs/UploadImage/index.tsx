@@ -8,10 +8,12 @@ import { Upload } from '@assets/icons';
 import { convertFileToBase64 } from '@helpers';
 
 // Components
-import { Avatar, Icon } from '@components/DataDisplay';
+import { Avatar, Icon } from '@components';
 
 // SCSS
 import '@components/Inputs/UploadImage/UploadImage.scss';
+
+// Constant
 import { ERROR_MESSAGE } from '@constants';
 
 type UploadImageProps = {

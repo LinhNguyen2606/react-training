@@ -5,6 +5,8 @@ import { Button } from '@components/Inputs';
 
 // Type
 import { ModalType } from '@components/DataDisplay/Modal';
+
+// Constant
 import { ERROR_MESSAGE } from '@constants';
 
 type ModalBodyProps = {
@@ -15,7 +17,13 @@ type ModalBodyProps = {
   onSubmit?: () => void;
 };
 
-const ModalBody = ({ type, textConfirmation, autoFocus, onChange, onSubmit }: ModalBodyProps) => {
+const ModalBody = ({
+  type,
+  textConfirmation,
+  autoFocus,
+  onChange,
+  onSubmit
+}: ModalBodyProps) => {
   const [errorMessage, setErrorMessage] = useState<string | null>('');
 
   /**

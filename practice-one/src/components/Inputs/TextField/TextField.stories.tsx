@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import { TextField } from '@components/Inputs';
+import { TextField } from '@components';
 
 export default {
   title: 'Components/TextField',

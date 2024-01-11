@@ -85,7 +85,8 @@ export const Default: Story = {
                 value: 'Farmer',
               },
             ]}
-            onRemove={() => {}}
+            onRemove={() => { }}
+            onSubmit={() => { }}
           />
         ),
       },

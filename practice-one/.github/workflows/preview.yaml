@@ -1,8 +1,7 @@
-name: Practice one - Preview deploy
+name: React practice - Preview deploy
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  REACT_BASE_URL: ${{ secrets.REACT_BASE_URL }} 
 on:
   push:
     branches-ignore:

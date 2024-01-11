@@ -1,3 +1,4 @@
+// SCSS
 import '@components/FeedBack/Progress/Progress.scss';
 
 // Custom hook

@@ -40,6 +40,10 @@
       font-weight   : $fw-medium;
       vertical-align: middle;
       text-align    : left;
+
+      &:first-child {
+        width: 70px;
+      }
     }
   }
 

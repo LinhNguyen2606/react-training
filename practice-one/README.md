@@ -31,8 +31,7 @@
 
 ## Deploy:
 
-- App: [Here]()
-- Storybook: [Here]()
+- App: [Here](https://react-training-swart-tau.vercel.app/)
 
 ## Information:
 
@@ -44,6 +43,10 @@
 
 - Node: v18.16.0
 - Vite: Vite requires Node.js version 14.18+, 16+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
+
+## .env:
+
+- VITE_API_BASE_URL=http://localhost:3000
 
 ## Folder structure
 
@@ -79,9 +82,8 @@ practice-one
                 |-- TableRow
                     |-- TableRowCell
                     |-- TableRowItem
-                |-- TextView
             |-- index.ts
-        |-- FeeBack
+        |-- FeedBack
             |-- Progress
         |-- Inputs
             |-- Button
@@ -108,7 +110,7 @@ practice-one
         |-- delay.ts
         |-- extract.ts
         |-- generate.ts
-        |-- highlightKeyword.ts
+        |-- highlight.ts
         |-- index.ts
         |-- validation.ts
     |-- hooks
@@ -125,7 +127,6 @@ practice-one
         |-- index.ts
     |-- styles
         |-- base
-        |-- components
         |-- components
         |-- layout
         |-- pages
@@ -196,4 +197,26 @@ cd practice-one
 - Step 02: Run the storybook
 ~~~
 pnpm run storybook
+~~~
+
+## Run the storybook
+- Step 01:  Open the folder practice-one
+~~~
+cd practice-one
+~~~
+
+- Step 02: Run the storybook
+~~~
+pnpm run storybook
+~~~
+
+## Run the server
+- Step 01:  Open the folder practice-one
+~~~
+cd practice-one
+~~~
+
+- Step 02: Run the server
+~~~
+pnpm run server
 ~~~

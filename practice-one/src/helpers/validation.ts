@@ -1,3 +1,4 @@
+// Constant
 import { ERROR_MESSAGE, REGEX } from '@constants';
 
 /**

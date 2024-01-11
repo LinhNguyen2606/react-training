@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Progress from '@components/FeedBack/Progress';
+import { Progress } from '@components';
 
 export default {
   title: 'Components/Progress',

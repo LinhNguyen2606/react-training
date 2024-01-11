@@ -2,7 +2,7 @@
 import { ModalType } from '@components/DataDisplay/Modal';
 
 // Component
-import Icon from '@components/DataDisplay/Icon';
+import { Icon } from '@components';
 
 // Icon
 import { Xmark } from '@assets/icons';

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import Modal from '@components/DataDisplay/Modal';
+import { Modal } from '@components';
 
 export default {
   title: 'Components/Modal',

@@ -6,18 +6,18 @@ import {
 } from 'react';
 
 // Components
-import { Button } from '@components/Inputs';
 import {
   Icon,
-  Modal
-} from '@components/DataDisplay';
+  Modal,
+  Button
+} from '@components';
 import DrawerItem from '@components/DataDisplay/Drawer/DrawerItem';
 
 // Icon
 import { UserGroup } from '@assets/icons';
 
 // SCSS
-import './Drawer.scss';
+import '@components/DataDisplay/Drawer/Drawer.scss';
 
 type DrawerProps = {
   width?: number;

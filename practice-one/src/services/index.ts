@@ -1,6 +1,5 @@
 // Constants
-import { API_BASE_URL } from '@constants';
-import { USER_API_ENDPOINT } from '@constants/config';
+import { API_BASE_URL, USER_API_ENDPOINT } from '@constants';
 
 // Helper
 import { delayRespone } from '@helpers';

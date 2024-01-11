@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState
+} from 'react';
 
 // Components
 import {
@@ -12,8 +15,12 @@ import {
 } from '@components';
 import TextView from '@components/DataDisplay/Panel/TextView';
 
-// Helper
-import { dateFormat, validateEmail, validateUsername } from '@helpers';
+// Helpers
+import {
+  dateFormat,
+  validateEmail,
+  validateUsername
+} from '@helpers';
 
 // Interface
 import { DataItems } from '@interfaces';
@@ -30,7 +37,13 @@ type EditorProfileProps = {
   bgColor?: string;
 };
 
-const EditorProfile = ({ id, dataItems, onRemove, onSubmit, bgColor }: EditorProfileProps) => {
+const EditorProfile = ({
+  id,
+  dataItems,
+  onRemove,
+  onSubmit,
+  bgColor
+}: EditorProfileProps) => {
   const [dataChanged, setDataChanged] = useState<KeyIndexType>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{ [key: string]: string | null }>({});

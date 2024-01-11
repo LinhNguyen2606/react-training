@@ -11,8 +11,7 @@ import {
 } from '@assets/icons';
 
 // Components
-import { Icon } from '@components/DataDisplay';
-import { TextField } from '@components/Inputs';
+import { Icon, TextField } from '@components';
 
 // SCSS
 import '@components/Inputs/SearchBar/SearchBar.scss';

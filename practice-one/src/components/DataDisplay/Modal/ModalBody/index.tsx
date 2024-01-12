@@ -24,6 +24,7 @@ const ModalBody = ({
   onChange,
   onSubmit
 }: ModalBodyProps) => {
+  const [inputValue, setInputValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>('');
 
   /**
@@ -39,6 +40,7 @@ const ModalBody = ({
    */
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    setInputValue(value);
 
     if (value.trim() === '') {
       setErrorMessage(ERROR_MESSAGE.USER_NAME);
@@ -51,6 +53,15 @@ const ModalBody = ({
       onChange(event);
     }
   };
+
+  const handleSubmit = () => {
+    if (inputValue.trim() === '') { 
+      setErrorMessage(ERROR_MESSAGE.USER_NAME);
+      return;
+    }
+
+    if(onSubmit) onSubmit();
+  }
 
   return (
     <>
@@ -69,7 +80,7 @@ const ModalBody = ({
               variants="primary"
               size="sm"
               additionalClass="save"
-              onClick={onSubmit}
+              onClick={handleSubmit}
             >
               Save
             </Button>

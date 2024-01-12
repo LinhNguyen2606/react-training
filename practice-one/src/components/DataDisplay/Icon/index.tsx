@@ -18,6 +18,7 @@ const Icon = ({
             width={width}
             height={height} 
             onClick={onClick}
+            alt="The icon"
           />
     </div>
   )

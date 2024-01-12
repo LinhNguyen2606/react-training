@@ -41,6 +41,8 @@ const UploadImage = ({
     const selectedFile = e.target.files?.[0];
     const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
 
+    setErrorMessage(undefined);
+
     // If no file is selected, exit the function
     if (!selectedFile) return;
 

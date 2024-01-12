@@ -68,14 +68,14 @@ export const Default: Story = {
                 type: 'DATE_FIELD',
                 label: 'Registered',
                 key: 'registered',
-                value: '',
+                value: 'January 12, 2024 10:15:34',
               },
               {
                 id: 6,
                 type: 'DATE_FIELD',
                 label: 'Last visited',
                 key: 'lastVisited',
-                value: '',
+                value: 'January 12, 2024 10:15:34',
               },
               {
                 id: 7,

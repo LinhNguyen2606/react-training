@@ -13,9 +13,10 @@ import {
   SearchBar,
   Status,
   Table,
+  Toast,
   ViewDetails
 } from '@components';
-import EditorProfile from '@components/DataDisplay/Panel/EditorProfile';
+import EditorProfile from '@components/Panel/EditorProfile';
 
 // Helpers
 import { 
@@ -38,9 +39,6 @@ import {
   editUser,
   fetchUsers
 } from '@services';
-
-// Custom hooks
-import { useFilteredUsers } from '@hooks';
 
 // Constant
 import {
@@ -106,13 +104,13 @@ const App = () => {
 
   // Variables related to UI state
   const [keyword, setKeyword] = useState('');
-  const [isShowProgress, setIsShowProgress] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle');
+  const [isShowProgress, setIsShowProgress] = useState<'idle' | 'processing' | 'success' | 'failure'>('idle');
   const [showCard, setShowCard] = useState(true);
   const isShowDetails = showCard && selectedRowData !== null;
   const isShowEdit = !showCard && selectedRowData !== null;
 
   // Variables related to data processing
-  const filteredUsers = useFilteredUsers(users, keyword);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const columns = generateUserTableColumns(keyword);
   const generateUserInfo = (data: User) => USER_INFORMATION(data);
   const generateDataItems = (data: User) => DATA_ITEMS(data);
@@ -121,6 +119,12 @@ const App = () => {
     handleGetUsers();
   }, []);
 
+  useEffect(() => {
+    const filtered = users.filter((user) =>
+      user.userName?.toLowerCase().includes(keyword.toLowerCase()));
+    setFilteredUsers(filtered);
+  }, [users, keyword]);
+
   /**
    * Asynchronously fetches users from an external service and updates the state of `users`.
    * If the response is successful and contains data, the state of `users` is updated with the fetched data.
@@ -128,9 +132,7 @@ const App = () => {
   const handleGetUsers = async () => {
     const res = await fetchUsers();
     const data = extractData(res);
-    if (data) {
-      setUsers(data);
-    }
+    if (data) setUsers(data);
   };
 
   /**
@@ -190,7 +192,7 @@ const App = () => {
       setDataItems([...generateUserInfo(data), ...generateDataItems(data)]);
       setIsShowProgress('success');
     } else {
-      setIsShowProgress('failed');
+      setIsShowProgress('failure');
     }
   };
 
@@ -212,7 +214,7 @@ const App = () => {
       setSelectedRow({ index: -1, data: null });
       setIsShowProgress('success');
     } else {
-      setIsShowProgress('failed');
+      setIsShowProgress('failure');
     }
   };
 
@@ -239,7 +241,7 @@ const App = () => {
       setDataItems([...generateUserInfo(data), ...generateDataItems(data)]); 
       setIsShowProgress('success');
     } else {
-      setIsShowProgress('failed');
+      setIsShowProgress('failure');
     }
   };
 
@@ -250,8 +252,8 @@ const App = () => {
           id={selectedRowData?.id}
           dataItems={dataItems}
           onRemove={handleRemoveUser}
-          bgColor={selectedRowData?.bgColor}
           onSubmit={handleUpdateUser}
+          bgColor={selectedRowData?.bgColor}
         />
       ),
       title: 'General',
@@ -262,7 +264,8 @@ const App = () => {
     <>
       <header className="header">
         <h1 className="header__heading text--primary">User Manager</h1>
-        {isShowProgress && <Progress status={isShowProgress} />}
+        {isShowProgress === 'processing' && <Progress isProcessing={true} delay={1000} />}
+        {isShowProgress !== 'processing' && <Toast status={isShowProgress} delay={2000} />}
       </header>
       <main className="main">
         <Drawer onSubmit={handleAddUser} />

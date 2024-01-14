@@ -1,0 +1,32 @@
+.avatar {
+  text-align: center;
+  width     : 41px;
+  height    : 41px;
+
+  &__img {
+    width : 100%;
+    height: 100%;
+  }
+
+  &--circle {
+    border-radius: 50%;
+  }
+
+  &__initial {
+    color      : rgba(255, 255, 255, 0.5);
+    font-weight: $fw-medium;
+    line-height: calc(41/20);
+  }
+
+  &--lg {
+    font-size: 90px;
+  }
+
+  &--md {
+    font-size: 50px;
+  }
+
+  &--sm {
+    font-size: $fs-medium;
+  }
+}

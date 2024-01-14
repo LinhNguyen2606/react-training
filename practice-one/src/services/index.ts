@@ -1,5 +1,8 @@
 // Constants
-import { API_BASE_URL, USER_API_ENDPOINT } from '@constants';
+import {
+  API_BASE_URL,
+  USER_API_ENDPOINT
+} from '@constants';
 
 // Helper
 import { delayRespone } from '@helpers';
@@ -50,10 +53,7 @@ const handleAPIRequest = async <T>(url: string, options?: RequestInit): Promise<
     const res = await fetch(url, options);
     const data = handleRespone<T>(res);
 
-    if (data) {
-      return delayRespone(data);
-    }
-
+    if (data) return delayRespone(data);
     return data;
   } catch (err) {
     return handleError(err);

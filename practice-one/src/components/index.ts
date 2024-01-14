@@ -1,22 +1,16 @@
-export {
-  Avatar,
-  Drawer,
-  Icon,
-  Status,
-  Table,
-  Modal,
-  Panel
-} from '@components/DataDisplay/index';
-
-export {
-  Button,
-  SearchBar,
-  TextArea,
-  TextField,
-  ToggleSwitch,
-  UploadImage
-} from '@components/Inputs/index';
-
-export { ViewDetails } from '@components/Surfaces/index';
-
-export { Progress } from '@components/FeedBack/index';
+export { default as Avatar } from '@components/Avatar';
+export { default as Button } from '@components/Button';
+export { default as ViewDetails } from '@components/ViewDetails';
+export { default as Drawer } from '@components/Drawer';
+export { default as Icon } from '@components/Icon';
+export { default as Modal } from '@components/Modal';
+export { default as Panel } from '@components/Panel';
+export { default as Progress } from '@components/Progress';
+export { default as SearchBar } from '@components/SearchBar';
+export { default as Status } from '@components/Status';
+export { default as Table } from '@components/Table';
+export { default as TextArea } from '@components/TextArea';
+export { default as TextField } from '@components/TextField';
+export { default as Toast } from '@components/Toast';
+export { default as ToggleSwitch } from '@components/ToggleSwitch';
+export { default as UploadImage } from '@components/UploadImage';

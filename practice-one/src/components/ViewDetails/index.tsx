@@ -9,7 +9,7 @@ import { Avatar, Icon, Status } from '@components';
 import InfoItem from '@components/ViewDetails/InfoItem';
 
 // SCSS
-import '@components/Card/ViewDetails/ViewDetails.scss';
+import '@components/ViewDetails/ViewDetails.scss';
 
 type ViewDetailsProps = {
   title?: string;

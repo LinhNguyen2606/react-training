@@ -3,7 +3,7 @@
 
   &--primary,
   &--secondary {
-    font-weight: 600;
+    font-weight: $fw-semi-bold;
   }
 
   &--primary {
@@ -38,7 +38,7 @@
 
   &__drawer {
     border: 1px solid $primary-color;
-    margin: 18px 0 0 20px
+    margin: 18px 0 0 14px;
   }
 
   &__save {
@@ -49,9 +49,9 @@
 
   &__cancel,
   &__delete {
-    font-weight: $fw-medium;
     font-size  : $fs-small;
     padding    : 6px 25px;
+    font-weight: $fw-semi-bold;
   }
 
   &__remove {

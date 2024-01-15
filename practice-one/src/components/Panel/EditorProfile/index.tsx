@@ -129,7 +129,13 @@ const EditorProfile = ({
    * Handles the action of update a user.
    * @returns {void}
    */
-  const handleOnUpdate = () => onSubmit(dataChanged);
+  const handleOnUpdate = () => {
+    const hasErrors = Object.values(errorMessages).some((message) => message !== null);
+    
+    if (hasErrors) return;
+
+    if (onSubmit) onSubmit(dataChanged);
+  }
 
   return (
     <>

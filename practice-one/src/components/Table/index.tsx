@@ -22,8 +22,7 @@ const Table = <T,>({
   selectedRow
 }: TableProps<T>) => {
   return (
-    <div className="table">
-      <table className="table__wrapper">
+    <table className="table">
         <thead className="table__head">
           <TableHeader columns={columns} />
         </thead>
@@ -36,8 +35,7 @@ const Table = <T,>({
             selectedRow={selectedRow}
           />
         </tbody>
-      </table>
-    </div>
+    </table>
   );
 };
 

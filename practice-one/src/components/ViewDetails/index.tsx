@@ -32,7 +32,6 @@ const ViewDetails = ({
 }: ViewDetailsProps) => {
   return (
     <div className="view-details">
-      <div className="view-details__wrapper">
         <article className="view-details__header">
           <h2 className="text--primary">{title}</h2>
           <Status isActive={isActive} />
@@ -58,7 +57,6 @@ const ViewDetails = ({
             />
           ))}
         </div>
-      </div>
     </div>
   );
 };

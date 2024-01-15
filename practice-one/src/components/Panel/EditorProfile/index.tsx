@@ -63,11 +63,11 @@ const EditorProfile = ({
 
   const validateInput = (key: string, value: string | boolean) => {
     if (key === 'userName') {
-      return validateUsername(value as string);
+      return validateUsername(value as string) || null;
     }
 
     if (key === 'email') {
-      return validateEmail(value as string);
+      return validateEmail(value as string) || null;
     }
 
     return null;

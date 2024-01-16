@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react';
+import { useEffect, useState } from 'react';
 
 // Components
 import {
@@ -11,16 +8,12 @@ import {
   TextArea,
   TextField,
   ToggleSwitch,
-  UploadImage
+  UploadImage,
 } from '@components';
 import TextView from '@components/Panel/TextView';
 
 // Helpers
-import {
-  dateFormat,
-  validateEmail,
-  validateUsername
-} from '@helpers';
+import { dateFormat, validateEmail, validateUsername } from '@helpers';
 
 // Interface
 import { DataItems } from '@interfaces';
@@ -42,11 +35,13 @@ const EditorProfile = ({
   dataItems,
   onRemove,
   onSubmit,
-  bgColor
+  bgColor,
 }: EditorProfileProps) => {
   const [dataChanged, setDataChanged] = useState<KeyIndexType>({});
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [errorMessages, setErrorMessages] = useState<{ [key: string]: string | null }>({});
+  const [errorMessages, setErrorMessages] = useState<{
+    [key: string]: string | null;
+  }>({});
 
   useEffect(() => {
     const newDataChanged = dataItems.reduce((acc, item) => {
@@ -81,7 +76,7 @@ const EditorProfile = ({
    */
   const handleChange = (key: string, value: string | boolean) => {
     const errorMessage = validateInput(key, value);
-    
+
     setDataChanged((prevState) => ({
       ...prevState,
       [key]: value,
@@ -113,7 +108,8 @@ const EditorProfile = ({
   /**
    * Handle events when the user presses the Modal open or close button.
    */
-  const handleToggleModal = () => setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
+  const handleToggleModal = () =>
+    setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
 
   /**
    * Handles the action of removing a user.
@@ -130,27 +126,33 @@ const EditorProfile = ({
    * @returns {void}
    */
   const handleOnUpdate = () => {
-    const hasErrors = Object.values(errorMessages).some((message) => message !== null);
-    
+    const hasErrors = Object.values(errorMessages).some(
+      (message) => message !== null
+    );
+
     if (hasErrors) return;
 
     if (onSubmit) onSubmit(dataChanged);
-  }
+  };
 
   return (
     <>
       <div className="panel__actions-btn">
         <Button
           additionalClass="remove"
-          size="md" variants="secondary"
-          onClick={handleToggleModal}>
-            Delete
+          size="md"
+          variants="secondary"
+          onClick={handleToggleModal}
+        >
+          Delete
         </Button>
         <Button
           additionalClass="store"
-          size="md" variants="primary"
-          onClick={handleOnUpdate}>
-            Save
+          size="md"
+          variants="primary"
+          onClick={handleOnUpdate}
+        >
+          Save
         </Button>
       </div>
 
@@ -167,14 +169,20 @@ const EditorProfile = ({
                     value={dataChanged[item.key] as string}
                     onChange={(value) => handleChange(item.key, value)}
                   />
-                  {errorMessages[item.key] && <span className="panel__error">{errorMessages[item.key]}</span>}
+                  {errorMessages[item.key] && (
+                    <span className="panel__error">
+                      {errorMessages[item.key]}
+                    </span>
+                  )}
                 </div>
               );
 
             case 'AVATAR_FIELD':
               return (
                 <div className="panel__form-group" key={item.key}>
-                  <label className="panel__form-group--label">{item.label}</label>
+                  <label className="panel__form-group--label">
+                    {item.label}
+                  </label>
                   <UploadImage
                     originalImage={item.value as string}
                     alt={getAvatarAlt(item)}
@@ -187,7 +195,9 @@ const EditorProfile = ({
             case 'STATUS_FIELD':
               return (
                 <div className="panel__form-group" key={item.key}>
-                  <label className="panel__form-group--label">{item.label}</label>
+                  <label className="panel__form-group--label">
+                    {item.label}
+                  </label>
                   <ToggleSwitch
                     isChecked={dataChanged[item.key] as boolean}
                     onChange={(value) => handleChange(item.key, value)}
@@ -204,7 +214,9 @@ const EditorProfile = ({
                   key={item.key}
                   label={item.label}
                   value={
-                    item.key === 'registered' ? (dataChanged[item.key] as string) : dateFormat(new Date().toString())
+                    item.key === 'registered'
+                      ? (dataChanged[item.key] as string)
+                      : dateFormat(new Date().toString())
                   }
                 />
               );

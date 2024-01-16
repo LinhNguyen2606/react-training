@@ -1,0 +1,21 @@
+.drawer {
+  background-color: #4a4e58;
+  border-color    : #4a4e58;
+  min-width       : 210px;
+
+  &__item {
+    box-shadow      : inset 2px 0 $primary-color;
+    color           : $primary-color;
+    background-color: #3b3e46;
+    align-items     : center;
+    display         : flex;
+    gap             : 10px;
+    margin-top      : 18px;
+    padding-left    : 12px;
+    min-height      : 44px;
+
+    &--text {
+      font-size: $fs-x-small;
+    }
+  }
+}

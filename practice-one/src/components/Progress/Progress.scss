@@ -1,0 +1,20 @@
+.spinner {
+  justify-content: flex-end;
+  align-items    : center;
+  display        : flex;
+
+  &--icon {
+    background: url('../../assets/icons/yin-yang-solid.svg') no-repeat;
+    animation : spinner-anim 3s linear infinite;
+  }
+}
+
+@keyframes spinner-anim {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

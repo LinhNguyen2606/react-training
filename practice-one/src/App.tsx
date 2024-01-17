@@ -231,7 +231,7 @@ const App = () => {
       avatar: userData.avatar,
       isActive: userData.isActive,
       email: userData.email,
-      registered: selectedRowData?.registered || '',
+      registered: selectedRowData?.registered || 'Unknown',
       lastVisited: dateFormat(new Date().toString()),
       details: userData.details,
       bgColor: selectedRowData ? selectedRowData.bgColor : '',

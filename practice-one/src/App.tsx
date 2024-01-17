@@ -226,17 +226,22 @@ const App = () => {
   const handleUpdateUser = async (userData: User): Promise<void> => {
     setIsShowProgress('processing');
     
-    const bgColor = selectedRowData ? selectedRowData.bgColor : '';
     const updatedUserData = {
-      ...userData,
-      bgColor
+      userName: userData.userName,
+      avatar: userData.avatar,
+      isActive: userData.isActive,
+      email: userData.email,
+      registered: selectedRowData?.registered || '',
+      lastVisited: dateFormat(new Date().toString()),
+      details: userData.details,
+      bgColor: selectedRowData ? selectedRowData.bgColor : '',
     };
 
-    const res = await editUser(Number(selectedRowData?.id) , updatedUserData);
+    const res = await editUser(Number(selectedRowData?.id), updatedUserData);
     const data = extractData(res);
   
     if (data) {
-      handleGetUsers();
+      handleGetUsers();   
       setSelectedRow({ index: selectedRow.index, data }); 
       setDataItems([...generateUserInfo(data), ...generateDataItems(data)]); 
       setIsShowProgress('success');

@@ -12,8 +12,8 @@ const Task = ({
   title,
   completed,
   onDelete,
-  onChangeTodo,
-  setTodos,
+  onToggle,
+  onUpdate,
 }: TaskProps) => {
   const [editId, setEditId] = useState<string | undefined>(undefined);
   const [editTitle, setEditTitle] = useState('');
@@ -26,8 +26,7 @@ const Task = ({
 
   const handleDeleteTodo = () => onDelete(id);
 
-  const handleOnChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
-    onChangeTodo(id, e.target.checked);
+  const handleOnChangeTodo = () => onToggle(id);
 
   const handleEditTodo = () => {
     setEditId(id);
@@ -35,23 +34,9 @@ const Task = ({
     setError('');
   };
 
-  const handleSaveEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (editTitle.trim() === '') {
-      setError('Title cannot be empty');
-      return;
-    } else {
-      setTodos((currentTodo) =>
-        currentTodo.map((todo) => {
-          if (todo.id === id) return { ...todo, title: editTitle };
-          return todo;
-        })
-      );
-      setEditId(undefined);
-      setEditTitle('');
-      setError('');
-    }
+  const handleSaveEdit = () => {
+    onUpdate(id, editTitle);
+    setEditId(undefined);
   };
 
   return (

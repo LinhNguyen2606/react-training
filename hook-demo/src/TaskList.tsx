@@ -1,18 +1,18 @@
-import { Todo } from './App';
+import { Todo } from './interface';
 import Task from './Task';
 
 export type TaskListProps = {
   todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   onDelete: (id: string) => void;
-  onChangeTodo: (id: string, completed: boolean) => void;
+  onToggle: (id: string) => void;
+  onUpdate: (id: string, title: string) => void;
 };
 
 const TaskList = ({
   todos,
-  setTodos,
   onDelete,
-  onChangeTodo,
+  onToggle,
+  onUpdate
 }: TaskListProps) => {
   return (
     <ul className="list">
@@ -22,9 +22,9 @@ const TaskList = ({
           {...todo}
           key={todo.id}
           todos={todos}
-          setTodos={setTodos}
           onDelete={onDelete}
-          onChangeTodo={onChangeTodo}
+          onToggle={onToggle}
+          onUpdate={onUpdate}
         />
       ))}
     </ul>

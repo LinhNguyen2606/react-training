@@ -1,17 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { Todo } from './interface';
 
 type AddTodoProps = {
   onSubmit: (title: string) => void;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  todos: Todo[];
 };
 
-const AddTodo = ({ onSubmit }: AddTodoProps) => {
-  const [title, setTitle] = useState('');
+const AddTodo = ({
+  onSubmit,
+  value,
+  onChange,
+  todos
+}: AddTodoProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
+  }, [todos]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    onSubmit(title);
-    setTitle('');
+    onSubmit(value);
   };
 
   return (
@@ -19,8 +30,9 @@ const AddTodo = ({ onSubmit }: AddTodoProps) => {
       <div className="form-row">
         <label htmlFor="item">New Item</label>
         <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          ref={inputRef}
+          value={value}
+          onChange={onChange}
           type="text"
           id="item"
         />

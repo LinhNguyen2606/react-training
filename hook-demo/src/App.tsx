@@ -1,54 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useReducer } from 'react';
+import { addTodo, deleteTodo, editTodo, setTodo, toggleTodo } from './actions';
 import AddTodo from './AddTodo';
+import reducer, { initialState } from './reducer';
 import TaskList from './TaskList';
 
-export type Todo = {
-  id: string;
-  title: string;
-  completed: boolean;
-};
-
 const App = () => {
-  const [todos, setTodos] = useState<Todo[]>(() => {
-    const localValue = localStorage.getItem('ITEMS');
-    return localValue ? JSON.parse(localValue) : [];
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { todo, todos } = state;
 
-  useEffect(() => {
-    localStorage.setItem('ITEMS', JSON.stringify(todos));
-  }, [todos]);
-
-  const addTodo = (title: string) => {
-    if (title === '') {
-      alert('Please, fill in the input if you wanna add');
-    } else {
-      setTodos([
-        ...todos,
-        { id: crypto.randomUUID(), title, completed: false },
-      ]);
-    }
+  const setTodoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setTodo(e.target.value));
   };
 
-  const deleteTodo = (id: string) =>
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const addTodoHandler = () => {
+    dispatch(addTodo());
+    dispatch(setTodo(''));
+  };
 
-  const onChangeTodo = (id: string, completed: boolean) =>
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) return { ...todo, completed };
-        return todo;
-      })
-    );
+  const deleteTodoHandler = (id: string) => dispatch(deleteTodo(id));
+
+  const toggleTodoHandler = (id: string) => dispatch(toggleTodo(id));
+
+  const editTodoHandler = (id: string, title: string) =>
+    dispatch(editTodo(id, title));
 
   return (
     <>
-      <AddTodo onSubmit={addTodo} />
+      <AddTodo
+        onSubmit={addTodoHandler}
+        value={todo}
+        onChange={setTodoHandler}
+        todos={todos}
+      />
       <h1 className="header">Todo List</h1>
       <TaskList
         todos={todos}
-        setTodos={setTodos}
-        onDelete={deleteTodo}
-        onChangeTodo={onChangeTodo}
+        onDelete={deleteTodoHandler}
+        onToggle={toggleTodoHandler}
+        onUpdate={editTodoHandler}
       />
     </>
   );

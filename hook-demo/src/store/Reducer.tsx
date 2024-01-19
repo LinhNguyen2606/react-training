@@ -4,8 +4,8 @@ import {
   EDIT_TODO,
   SET_TODO,
   TOGGLE_TODO,
-} from './constant';
-import { saveTodosToLocalStorage } from './helpers';
+} from '../constants';
+import { saveTodosToLocalStorage } from '../helpers';
 import {
   AddTodoAction,
   DeleteTodoAction,
@@ -14,7 +14,7 @@ import {
   State,
   Todo,
   ToggleTodoAction,
-} from './interface';
+} from '../interfaces';
 
 type Action =
   | SetTodoAction
@@ -30,7 +30,7 @@ export const initialState: State = {
   todos: initialTodos,
 };
 
-const reducer = (state: State, action: Action): State => {  
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case SET_TODO:
       return {
@@ -67,7 +67,7 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         todos: deletedTodo,
       };
-    
+
     case TOGGLE_TODO:
       const toggleTodo = state.todos.map((todo) => {
         if (todo.id === action.payload) {
@@ -79,7 +79,7 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         todos: toggleTodo,
       };
-    
+
     case EDIT_TODO:
       const updatedTodo = state.todos.map((todo) => {
         if (action.payload.title === '') {

@@ -4,7 +4,7 @@ import {
   EDIT_TODO,
   SET_TODO,
   TOGGLE_TODO,
-} from './constant';
+} from '../constants';
 
 export interface Todo {
   id: string;

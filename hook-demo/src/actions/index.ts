@@ -4,14 +4,15 @@ import {
   EDIT_TODO,
   SET_TODO,
   TOGGLE_TODO,
-} from './constant';
+} from '../constants';
+
 import {
   AddTodoAction,
   DeleteTodoAction,
   EditTodoAction,
   SetTodoAction,
   ToggleTodoAction,
-} from './interface';
+} from '../interfaces';
 
 export const setTodo = (title: string): SetTodoAction => {
   return {

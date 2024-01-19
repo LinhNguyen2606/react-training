@@ -1,28 +1,23 @@
-import { useEffect, useRef } from 'react';
-import { Todo } from './interface';
+import { useContext, useEffect, useRef } from 'react';
+import { addTodo, setTodo } from './actions';
+import { ContextStorage } from './store';
 
-type AddTodoProps = {
-  onSubmit: (title: string) => void;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  todos: Todo[];
-};
-
-const AddTodo = ({
-  onSubmit,
-  value,
-  onChange,
-  todos
-}: AddTodoProps) => {
+const AddTodo = () => {
+  const { state, dispatch } = useContext(ContextStorage);
+  const { todo, todos } = state;
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, [todos]);
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    dispatch(setTodo(e.target.value));
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(value);
+    dispatch(addTodo());
+    dispatch(setTodo(''));
   };
 
   return (
@@ -31,8 +26,8 @@ const AddTodo = ({
         <label htmlFor="item">New Item</label>
         <input
           ref={inputRef}
-          value={value}
-          onChange={onChange}
+          value={todo}
+          onChange={handleOnChange}
           type="text"
           id="item"
         />

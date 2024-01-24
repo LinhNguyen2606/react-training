@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { ContextStorage } from './store';
+import { useTodos } from './hooks';
 import Task from './Task';
 
 const TaskList = () => {
-  const { state } = useContext(ContextStorage);
-  const { todos } = state;
+  const { todos, isError } = useTodos();
+
+  if (isError) return <p>Have an error when loading the todo list.</p>;
 
   return (
     <ul className="list">

@@ -9,7 +9,6 @@ import {
 export interface Todo {
   id: string;
   title: string;
-  completed: boolean;
 }
 
 export interface State {
@@ -39,4 +38,9 @@ export interface ToggleTodoAction {
 export interface EditTodoAction {
   type: typeof EDIT_TODO;
   payload: { id: string; title: string };
+}
+
+export interface APIResponse<T> {
+  data: T | null,
+  errMsg: string | null
 }

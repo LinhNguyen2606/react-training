@@ -14,16 +14,16 @@ import {
   Status,
   Table,
   Toast,
-  ViewDetails
+  ViewDetails,
 } from '@components';
 import EditorProfile from '@components/Panel/EditorProfile';
 
 // Helpers
-import { 
+import {
   dateFormat,
   extractData,
   generateRandomColor,
-  highlightKeyword
+  highlightKeyword,
 } from '@helpers';
 
 // Interfaces
@@ -51,7 +51,9 @@ import {
  * @param {string} searchKeyword The keyword used for highlighting in the table.
  * @returns {Array<EnitityColumn<User>>} The array of column configurations.
  */
-const generateUserTableColumns = (searchKeyword: string): EnitityColumn<User>[] => {
+const generateUserTableColumns = (
+  searchKeyword: string
+): EnitityColumn<User>[] => {
   return [
     {
       key: 'avatar',
@@ -98,13 +100,18 @@ const generateUserTableColumns = (searchKeyword: string): EnitityColumn<User>[] 
 const App = () => {
   // Variables related to user data and state
   const [users, setUsers] = useState<User[]>([]);
-  const [selectedRow, setSelectedRow] = useState<{ index: number; data: User | null }>({ index: -1, data: null });
+  const [selectedRow, setSelectedRow] = useState<{
+    index: number;
+    data: User | null;
+  }>({ index: -1, data: null });
   const selectedRowData = selectedRow.data;
   const [dataItems, setDataItems] = useState<any>([]);
 
   // Variables related to UI state
   const [keyword, setKeyword] = useState('');
-  const [isShowProgress, setIsShowProgress] = useState<'idle' | 'processing' | 'success' | 'failure'>('idle');
+  const [isShowProgress, setIsShowProgress] = useState<
+    'idle' | 'processing' | 'success' | 'failure'
+  >('idle');
   const [showCard, setShowCard] = useState(true);
   const isShowDetails = showCard && selectedRowData !== null;
   const isShowEdit = !showCard && selectedRowData !== null;
@@ -121,14 +128,15 @@ const App = () => {
 
   useEffect(() => {
     const filtered = users.filter((user) =>
-      user.userName?.toLowerCase().includes(keyword.toLowerCase()));
+      user.userName?.toLowerCase().includes(keyword.toLowerCase())
+    );
     setFilteredUsers(filtered);
   }, [users, keyword]);
 
   /**
    * Asynchronously fetches users from an external service and updates the state of `users`.
    * If the response is successful and contains data, the state of `users` is updated with the fetched data.
-  */
+   */
   const handleGetUsers = async () => {
     const res = await fetchUsers();
     const data = extractData(res);
@@ -140,7 +148,7 @@ const App = () => {
    * Updates the state of `keyword` with the provided search keyword.
    *
    * @param {string} keyword - The search keyword.
-  */
+   */
   const handleSearch = (keyword: string) => setKeyword(keyword);
 
   /**
@@ -149,7 +157,7 @@ const App = () => {
    *
    * @param {number} index - The index of the clicked row.
    * @param {User} user - The data of the user corresponding to the clicked row.
-  */
+   */
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
@@ -159,7 +167,7 @@ const App = () => {
       setDataItems([...generateUserInfo(user), ...generateDataItems(user)]);
     }
   };
-  
+
   /**
    * Handle events to show the panel and hide the card
    */
@@ -169,7 +177,7 @@ const App = () => {
    * Add a new user.
    * @param {string} userName - New user name.
    * @returns {Promise<void>} - Promise when finished processing.
-  */
+   */
   const handleAddUser = async (userName: string): Promise<void> => {
     setIsShowProgress('processing');
 
@@ -201,12 +209,11 @@ const App = () => {
    * This function sets the progress state to 'processing',
    * sends a request to delete the user with the specified ID,
    * and updates the UI based on the response.
-  */
+   */
   const handleRemoveUser = async () => {
     setIsShowProgress('processing');
 
-    const userId = selectedRowData?.id;
-    const res = await deleteUser(Number(userId));
+    const res = await deleteUser(Number(selectedRowData?.id));
     const data = extractData(res);
 
     if (data) {
@@ -222,10 +229,10 @@ const App = () => {
    * Edit a user.
    * @param {string} userData - The user's data after updated.
    * @returns {Promise<void>} - Promise when finished processing.
-  */
+   */
   const handleUpdateUser = async (userData: User): Promise<void> => {
     setIsShowProgress('processing');
-    
+
     const updatedUserData = {
       userName: userData.userName,
       avatar: userData.avatar,
@@ -239,11 +246,11 @@ const App = () => {
 
     const res = await editUser(Number(selectedRowData?.id), updatedUserData);
     const data = extractData(res);
-  
+
     if (data) {
-      handleGetUsers();   
-      setSelectedRow({ index: selectedRow.index, data }); 
-      setDataItems([...generateUserInfo(data), ...generateDataItems(data)]); 
+      handleGetUsers();
+      setSelectedRow({ index: selectedRow.index, data });
+      setDataItems([...generateUserInfo(data), ...generateDataItems(data)]);
       setIsShowProgress('success');
     } else {
       setIsShowProgress('failure');
@@ -269,8 +276,11 @@ const App = () => {
     <>
       <header className="header">
         <h1 className="header__heading text--primary">User Manager</h1>
-        {isShowProgress === 'processing' && <Progress isProcessing={true} delay={1000} />}
-        {isShowProgress !== 'processing' && <Toast status={isShowProgress} delay={2000} />}
+        {isShowProgress === 'processing' ? (
+          <Progress isProcessing={true} delay={1000} />
+        ) : (
+          <Toast status={isShowProgress} delay={2000} />
+        )}
       </header>
       <main className="main">
         <Drawer onSubmit={handleAddUser} />
@@ -298,12 +308,12 @@ const App = () => {
             onShowPanel={handleTogglePanel}
           />
         )}
-        {isShowEdit &&
+        {isShowEdit && (
           <Panel
             tabs={tabsContent}
             onBackClick={handleTogglePanel}
           />
-        }
+        )}
       </main>
     </>
   );

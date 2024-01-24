@@ -1,7 +1,6 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { deleteTodo, editTodo, toggleTodo } from './actions';
+import { useEffect, useRef, useState } from 'react';
+import { useTodos } from './hooks';
 import { Todo } from './interfaces';
-import { ContextStorage } from './store';
 
 type TaskProps = {
   todo: Todo;
@@ -11,17 +10,18 @@ const Task = ({ todo }: TaskProps) => {
   const [editId, setEditId] = useState<string | undefined>(undefined);
   const [editTitle, setEditTitle] = useState('');
   const [error, setError] = useState<boolean | string>(false);
-  const { dispatch } = useContext(ContextStorage);
+
   const inputRef = useRef<HTMLInputElement>(null);
-  const { id, title, completed } = todo;
+
+  const { id, title } = todo;
+  const { handleDeleteTodo, handleUpdateTodo } = useTodos();
 
   useEffect(() => {
     editId && inputRef.current?.focus();
   }, [editId]);
 
-  const handleDelete = () => dispatch(deleteTodo(id));
+  const handleDelete = () => handleDeleteTodo(id);
 
-  const handleOnChange = () => dispatch(toggleTodo(id));
 
   const handleEditTodo = () => {
     setEditId(id);
@@ -30,7 +30,7 @@ const Task = ({ todo }: TaskProps) => {
   };
 
   const handleSaveEdit = () => {
-    dispatch(editTodo(id, editTitle));
+    handleUpdateTodo(id, editTitle);
     setEditId(undefined);
   };
 
@@ -62,11 +62,6 @@ const Task = ({ todo }: TaskProps) => {
         <>
           <li key={id}>
             <label>
-              <input
-                checked={completed}
-                onChange={handleOnChange}
-                type="checkbox"
-              />
               {title}
             </label>
             <button className="btn btn-danger" onClick={handleDelete}>

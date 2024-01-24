@@ -49,9 +49,9 @@
 
   &__cancel,
   &__delete {
+    font-weight: $fw-semi-bold;
     font-size  : $fs-small;
     padding    : 6px 25px;
-    font-weight: $fw-semi-bold;
   }
 
   &__remove {

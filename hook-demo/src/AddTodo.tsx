@@ -1,23 +1,24 @@
-import { useContext, useEffect, useRef } from 'react';
-import { addTodo, setTodo } from './actions';
-import { ContextStorage } from './store';
+import { useEffect, useRef, useState } from 'react';
+import { useTodos } from './hooks';
 
 const AddTodo = () => {
-  const { state, dispatch } = useContext(ContextStorage);
-  const { todo, todos } = state;
+  const [todo, setTodo] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const { isLoading, handleAddTodo, todos } = useTodos();
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, [todos]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(setTodo(e.target.value));
+    setTodo(e.target.value);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addTodo());
-    dispatch(setTodo(''));
+    if (isLoading) return;
+
+    handleAddTodo({ id: crypto.randomUUID(), title: todo });
+    setTodo('');
   };
 
   return (

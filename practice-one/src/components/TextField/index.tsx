@@ -36,7 +36,7 @@ const TextField = ({
         type="text"
         className="text--field"
         placeholder={placeholder}
-        value={value || ''}
+        defaultValue={value}
         onChange={handleInputChange}
         autoFocus={autoFocus}
       />

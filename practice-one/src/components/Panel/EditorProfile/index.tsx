@@ -11,6 +11,7 @@ import {
   UploadImage,
 } from '@components';
 import TextView from '@components/Panel/TextView';
+import FormGroup from '@components/Panel/FormGroup';
 
 // Helpers
 import { dateFormat, validateEmail, validateUsername } from '@helpers';
@@ -161,10 +162,8 @@ const EditorProfile = ({
           switch (item.type) {
             case 'TEXT_FIELD':
               return (
-                <div className="panel__form-group" key={item.key}>
+                <FormGroup item={item} key={item.key}>
                   <TextField
-                    label={item.label}
-                    additionalClass="panel__form-group--label"
                     isShowLabel={true}
                     value={dataChanged[item.key] as string}
                     onChange={(value) => handleChange(item.key, value)}
@@ -174,30 +173,24 @@ const EditorProfile = ({
                       {errorMessages[item.key]}
                     </span>
                   )}
-                </div>
+                </FormGroup>
               );
 
             case 'AVATAR_FIELD':
               return (
-                <div className="panel__form-group" key={item.key}>
-                  <label className="panel__form-group--label">
-                    {item.label}
-                  </label>
+                <FormGroup item={item} key={item.key}>
                   <UploadImage
                     originalImage={item.value as string}
                     alt={getAvatarAlt(item)}
                     bgColor={bgColor}
                     onChange={(value) => handleChange(item.key, value)}
                   />
-                </div>
+                </FormGroup>
               );
 
             case 'STATUS_FIELD':
               return (
-                <div className="panel__form-group" key={item.key}>
-                  <label className="panel__form-group--label">
-                    {item.label}
-                  </label>
+                <FormGroup item={item} key={item.key}>
                   <ToggleSwitch
                     isChecked={dataChanged[item.key] as boolean}
                     onChange={(value) => handleChange(item.key, value)}
@@ -205,7 +198,7 @@ const EditorProfile = ({
                   <span className="panel__form-group--status">
                     <Status isActive={dataChanged[item.key] as boolean} />
                   </span>
-                </div>
+                </FormGroup>
               );
 
             case 'DATE_FIELD':
@@ -223,13 +216,12 @@ const EditorProfile = ({
 
             case 'DETAILS_FIELD':
               return (
-                <div className="panel__form-group" key={item.key}>
-                  <span className="panel__form-group--label">{item.label}</span>
+                <FormGroup item={item} key={item.key}>
                   <TextArea
                     value={dataChanged[item.key] as string}
                     onChange={(value) => handleChange(item.key, value)}
                   />
-                </div>
+                </FormGroup>
               );
             default:
               return null;

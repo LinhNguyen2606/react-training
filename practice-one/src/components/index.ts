@@ -5,7 +5,7 @@ export { default as Drawer } from '@components/Drawer';
 export { default as Icon } from '@components/Icon';
 export { default as Modal } from '@components/Modal';
 export { default as Panel } from '@components/Panel';
-export { default as Progress } from '@components/Progress';
+export { default as Spin } from '@components/Spin';
 export { default as SearchBar } from '@components/SearchBar';
 export { default as Status } from '@components/Status';
 export { default as Table } from '@components/Table';

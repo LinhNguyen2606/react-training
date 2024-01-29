@@ -1,14 +1,14 @@
 // SCSS
-import '@components/Progress/Progress.scss';
+import '@components/Spin/Spin.scss';
 
 import { useEffect, useState } from 'react';
 
-type ProgressProps = {
+type SpinProps = {
   isProcessing: boolean;
   delay: number;
 };
 
-const Progress = ({ isProcessing, delay }: ProgressProps) => {
+const Spin = ({ isProcessing, delay }: SpinProps) => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Progress = ({ isProcessing, delay }: ProgressProps) => {
   return (
     <>
       {showSpinner && isProcessing && (
-        <div className="spinner">
+        <div className="spin">
           <span className="icon spinner--icon" />
         </div>
       )}
@@ -41,4 +41,4 @@ const Progress = ({ isProcessing, delay }: ProgressProps) => {
   );
 };
 
-export default Progress;
+export default Spin;

@@ -9,7 +9,7 @@ import {
   Avatar,
   Drawer,
   Panel,
-  Progress,
+  Spin,
   SearchBar,
   Status,
   Table,
@@ -277,7 +277,7 @@ const App = () => {
       <header className="header">
         <h1 className="header__heading text--primary">User Manager</h1>
         {isShowProgress === 'processing' ? (
-          <Progress isProcessing={true} delay={1000} />
+          <Spin isProcessing={true} delay={1000} />
         ) : (
           <Toast status={isShowProgress} delay={2000} />
         )}

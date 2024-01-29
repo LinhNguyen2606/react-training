@@ -16,8 +16,8 @@
   }
 
   &--secondary {
+    background-color: $bg-tertiary-color;
     color           : $primary-color;
-    background-color: #f4f5f9;
 
     &:hover {
       background-color: #e7e9f2;

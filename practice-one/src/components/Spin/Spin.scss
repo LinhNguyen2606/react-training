@@ -1,15 +1,15 @@
-.spinner {
+.spin {
   justify-content: flex-end;
   align-items    : center;
   display        : flex;
 
   &--icon {
     background: url('../../assets/icons/yin-yang-solid.svg') no-repeat;
-    animation : spinner-anim 3s linear infinite;
+    animation : spin-anim 3s linear infinite;
   }
 }
 
-@keyframes spinner-anim {
+@keyframes spin-anim {
   from {
     transform: rotate(0);
   }

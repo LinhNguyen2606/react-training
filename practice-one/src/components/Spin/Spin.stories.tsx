@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import { Progress } from '@components';
+import { Spin } from '@components';
 
 export default {
-  title: 'Components/Progress',
-  component: Progress,
+  title: 'Components/Spin',
+  component: Spin,
   tags: ['autodocs'],
   argTypes: {
     isProcessing: {
-      description: 'The process of the spinner',
+      description: 'The process of the spin',
       table: {
         defaultValue: { summary: 'true' },
       },
     },
     delay: {
-      description: 'The delay time of the spinner',
+      description: 'The delay time of the spin',
       table: {
         defaultValue: { summary: 1000 },
       },
@@ -23,7 +23,7 @@ export default {
   },
 } as Meta;
 
-type Story = StoryObj<typeof Progress>;
+type Story = StoryObj<typeof Spin>;
 
 export const Default: Story = {
   args: {

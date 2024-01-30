@@ -1,0 +1,23 @@
+@font-face {
+  font-family : $primary-font;
+  font-style  : normal;
+  font-weight : $fw-normal;
+  src         : url("../fonts/Roboto-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family : $primary-font;
+  font-style  : normal;
+  font-weight : $fw-medium;
+  src         : url("../fonts/Roboto-Medium.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family : $primary-font;
+  font-style  : normal;
+  font-weight : $fw-bold;
+  src         : url("../fonts/Roboto-Bold.ttf") format("truetype");
+  font-display: swap;
+}

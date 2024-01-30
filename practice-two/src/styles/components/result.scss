@@ -1,0 +1,132 @@
+.page404 {
+  background-color: #1d3041;
+  justify-content : center;
+  align-items     : center;
+  flex-direction  : column;
+  display         : flex;
+  height          : 100%;
+
+  &__title {
+    color         : $secondary-color;
+    line-height   : calc(22/30);
+    font-weight   : $fw-normal;
+    text-transform: uppercase;
+    text-align    : center;
+    margin-bottom : 25px;
+    font-size     : 30px;
+  }
+
+  &__text {
+    line-height: calc(24/16);
+    font-weight: $fw-normal;
+    font-size  : $fs-small;
+    margin     : 25px auto;
+    color      : #bcecf2;
+    text-align : center;
+    display    : block;
+    max-width  : 776px;
+  }
+
+  &__wrapper {
+    margin    : 10px auto 10px;
+    position  : relative;
+    max-width : 440px;
+    min-height: 410px;
+    width     : 100%;
+  }
+
+  &__link {
+    box-shadow      : 0 5px 0 #9c1007, inset 0 0 18px rgba(253, 60, 0, 0.75);
+    color           : $secondary-color;
+    line-height     : calc(64/24);
+    background-color: #f95801;
+    text-transform  : uppercase;
+    font-weight     : $fw-bold;
+    margin          : 0 auto;
+    text-align      : center;
+    display         : block;
+    width           : 260px;
+    height          : 64px;
+    font-size       : 24px;
+    text-decoration : none;
+    border-radius   : 30px;
+
+    &:hover,
+    &:focus {
+      background-color: #ff7400;
+    }
+  }
+
+  &__el {
+    position: absolute;
+    height  : 106px;
+    opacity : 1;
+    z-index : 2;
+
+    &:nth-of-type(1) {
+      background: url("../assets/images/404-1.png") 50% 50% no-repeat;
+      animation : el1Move 800ms linear infinite;
+      top       : 108px;
+      left      : 102px;
+      width     : 84px;
+    }
+
+    &:nth-of-type(2) {
+      background: url("../assets/images/404-2.png") 50% 50% no-repeat;
+      animation : el2Move 800ms linear infinite;
+      left      : 136px;
+      width     : 184px;
+      top       : 92px;
+    }
+
+    &:nth-of-type(3) {
+      background: url("../assets/images/404-3.png") 50% 50% no-repeat;
+      animation : el3Move 800ms linear infinite;
+      top       : 108px;
+      left      : 180px;
+      width     : 284px;
+    }
+  }
+}
+
+@keyframes el1Move {
+  0% {
+    top    : 108px;
+    left   : 102px;
+    opacity: 1;
+  }
+
+  100% {
+    top    : -10px;
+    left   : 22px;
+    opacity: 0;
+  }
+}
+
+@keyframes el2Move {
+  0% {
+    left   : 136px;
+    top    : 92px;
+    opacity: 1;
+  }
+
+  100% {
+    top    : -10px;
+    left   : 108px;
+    opacity: 0;
+  }
+}
+
+@keyframes el3Move {
+  0% {
+    top    : 108px;
+    left   : 180px;
+    opacity: 1;
+  }
+
+  100% {
+    left   : 276px;
+    top    : 28px;
+    opacity: 0;
+  }
+}

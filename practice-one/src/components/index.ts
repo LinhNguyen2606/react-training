@@ -14,3 +14,4 @@ export { default as TextField } from '@components/TextField';
 export { default as Toast } from '@components/Toast';
 export { default as ToggleSwitch } from '@components/ToggleSwitch';
 export { default as UploadImage } from '@components/UploadImage';
+export { default as Popover } from '@components/Popover';

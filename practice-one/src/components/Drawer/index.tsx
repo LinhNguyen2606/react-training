@@ -9,7 +9,7 @@ import {
 import {
   Icon,
   Modal,
-  Button
+  Popover
 } from '@components';
 import DrawerItem from '@components/Drawer/DrawerItem';
 
@@ -18,6 +18,9 @@ import { UserGroup } from '@assets/icons';
 
 // SCSS
 import '@components/Drawer/Drawer.scss';
+
+// Type
+import { PopoverContent } from '@components/Popover';
 
 type DrawerProps = {
   width?: number;
@@ -45,7 +48,8 @@ const Drawer: FC<DrawerProps> = ({
    * Handle events when the value of an input field changes.
    * @param {ChangeEvent<HTMLInputElement>} event - Input field value change event.
    */
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => setInputField(event.target.value);
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setInputField(event.target.value);
 
   /**
    * Handle the event when the user presses the submit button in Modal.
@@ -58,19 +62,22 @@ const Drawer: FC<DrawerProps> = ({
   /**
    * Handle events when the user presses the Modal open or close button.
    */
-  const handleToggleModal = () => setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
+  const handleToggleModal = () =>
+  {
+    console.log('log');
+    setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
+    
+    }
+
+  const popoverContent: PopoverContent[] = [
+    { id: 1, text: 'Add new user' },
+    { id: 2, text: 'Add new role' },
+  ];
 
   return (
     <>
       <aside className="drawer" style={{ ...widthDrawer, ...heightDrawer }}>
-        <Button
-          variants="primary"
-          size="lg"
-          additionalClass="drawer"
-          onClick={handleToggleModal}
-        >
-          <span className="btn__text">+ New</span>
-        </Button>
+        <Popover content={popoverContent} onClick={handleToggleModal} />
         <DrawerItem additionalClass="drawer__item">
           <div className="drawer__item--icon">
             <Icon src={UserGroup} />

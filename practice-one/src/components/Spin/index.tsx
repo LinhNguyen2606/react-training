@@ -34,7 +34,7 @@ const Spin = ({ isProcessing, delay }: SpinProps) => {
     <>
       {showSpinner && isProcessing && (
         <div className="spin">
-          <span className="icon spinner--icon" />
+          <span className="icon spin--icon" />
         </div>
       )}
     </>

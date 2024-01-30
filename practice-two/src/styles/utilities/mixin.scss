@@ -1,0 +1,35 @@
+.common-text {
+  color      : $text-primary;
+  font-weight: $fw-medium;
+  font-size  : $fs-small;
+}
+
+.common-btn {
+  font-size    : $fs-small;
+  padding      : 0 30px;
+  outline      : none;
+  border       : none;
+  border-radius: 2px;
+}
+
+.common-input {
+  border     : 1px solid #ccd7e6;
+  width      : 100%;
+  min-height : 32px;
+  text-indent: 12px;
+  outline    : none;
+
+  &:focus {
+    border: 1px solid $primary-color;
+  }
+}
+
+.common-modal {
+  box-shadow      : 0 3px 10px 0 rgba(0, 0, 0, 0.1), 0 1px 7px 0 rgba(0, 0, 0, 0.1);
+  transform       : translate(-50%, -50%);
+  background-color: $secondary-color;
+  position        : fixed;
+  z-index         : 10000;
+  top             : 50%;
+  left            : 50%;
+}

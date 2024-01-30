@@ -1,0 +1,23 @@
+.popover {
+  position: relative;
+
+  &__content {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color     : $secondary-color;
+    background: #4a4e58;
+    position  : absolute;
+    width     : 176px;
+    top       : 100%;
+    left      : 14px;
+    margin-top: 3px;
+
+    &-text {
+      padding: 10px;
+
+      &:hover {
+        background-color: #3f424a;
+        cursor          : pointer;
+      }
+    }
+  }
+}

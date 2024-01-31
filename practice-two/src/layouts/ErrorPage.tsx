@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 const ErrorPage = () => {
   return (
     <section className="page404">
-      <h1 className='page404__title'>Error 404. The page does not exist</h1>
-      <p className='page404__text'>
+      <h1 className="page404__title">Error 404. The page does not exist</h1>
+      <p className="page404__text">
         Sorry! The page you are looking for can not be found. Perhaps the page
         you requested was moved or deleted. It is also possible that you made a
         small typo when entering the address. Go to the main page.

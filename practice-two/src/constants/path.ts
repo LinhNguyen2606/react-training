@@ -1,4 +1,6 @@
-export const HOME_PATH = "/";
-export const ROLES_PATH = "/roles";
-export const RULES_PATH = "/rules";
-export const ERROR_PATH = "*";
+export const path = {
+  HOME_PATH: '/',
+  ROLES_PATH: '/roles',
+  RULES_PATH: '/rules',
+  ERROR_PATH: '*',
+};

@@ -12,22 +12,18 @@ import {
   RulePage
 } from '@layouts';
 
-// Constants
-import {
-  ERROR_PATH,
-  HOME_PATH,
-  ROLES_PATH,
-  RULES_PATH
-} from '@constants';
+// Constant
+import { path } from '@constants';
+
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path={HOME_PATH} element={<HomePage />} />
-        <Route path={ROLES_PATH} element={<RolePage />} />
-        <Route path={RULES_PATH} element={<RulePage />} />
-        <Route path={ERROR_PATH} element={<ErrorPage />} />
+        <Route path={path.HOME_PATH} element={<HomePage />} />
+        <Route path={path.ROLES_PATH} element={<RolePage />} />
+        <Route path={path.RULES_PATH} element={<RulePage />} />
+        <Route path={path.ERROR_PATH} element={<ErrorPage />} />
       </Routes>
     </Router>
   );

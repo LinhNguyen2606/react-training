@@ -1,5 +1,5 @@
 // Image
-import cloudWarmCasino from '@assets/images/cloud_warmcasino.png';
+import cloudWarmCasino from '/images/cloud_warmcasino.png';
 
 import { Link } from 'react-router-dom';
 

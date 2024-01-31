@@ -1,3 +1,3 @@
-export { default as Context } from '@stores/Context';
-export { default as Provider } from '@stores/Provider';
-export { default as Reducer } from '@stores/Reducer';
+export { default as Context } from '@stores/context';
+export { default as Provider } from '@stores/provider';
+export { default as reducer } from '@stores/reducer';

@@ -3,11 +3,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // Routes
 import { AppRoutes } from '@routes';
 
+// Store
+import { Provider } from '@stores';
+
 const App = () => {
   return (
-    <Router>
-      <AppRoutes />
-    </Router>
+    <Provider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </Provider>
   );
 };
 

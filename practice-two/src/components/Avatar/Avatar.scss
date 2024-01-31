@@ -1,0 +1,42 @@
+.avatar {
+  text-align: center;
+
+  &--sm {
+    width : 41px;
+    height: 41px;
+  }
+
+  &--md {
+    width : 95px;
+    height: 95px;
+  }
+
+  &--lg {
+    width : 180px;
+    height: 180px;
+  }
+
+  &--circle {
+    border-radius: 50%;
+  }
+
+  &__initial {
+    color      : rgba(255, 255, 255, 0.5);
+    font-weight: $fw-medium;
+  }
+
+  &__text--lg {
+    line-height: calc(180/120);
+    font-size  : 120px;
+  }
+
+  &__text--md {
+    line-height: calc(95/70);
+    font-size  : 70px;
+  }
+
+  &__text--sm {
+    line-height: calc(41/20);
+    font-size  : $fs-medium;
+  }
+}

@@ -1,10 +1,5 @@
-.page404 {
+.error-page {
   background-color: #1d3041;
-  justify-content : center;
-  align-items     : center;
-  flex-direction  : column;
-  display         : flex;
-  height          : 100%;
 
   &__title {
     color         : $secondary-color;
@@ -45,8 +40,6 @@
     margin          : 0 auto;
     text-align      : center;
     display         : block;
-    width           : 260px;
-    height          : 64px;
     font-size       : 24px;
     text-decoration : none;
     border-radius   : 30px;

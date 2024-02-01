@@ -9,7 +9,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from '@components';
 
 // Constant
-import { path } from '@constants';
+import { PATH } from '@constants';
 
 // Layouts
 import {
@@ -28,10 +28,10 @@ const AppRoutes = () => {
       resetKeys={[location.pathname]}
     >
       <Routes>
-        <Route path={path.HOME_PATH} element={<HomePage />} />
-        <Route path={path.ROLES_PATH} element={<RolePage />} />
-        <Route path={path.RULES_PATH} element={<RulePage />} />
-        <Route path={path.ERROR_PATH} element={<ErrorPage />} />
+        <Route path={PATH.HOME_PATH} element={<HomePage />} />
+        <Route path={PATH.ROLES_PATH} element={<RolePage />} />
+        <Route path={PATH.RULES_PATH} element={<RulePage />} />
+        <Route path={PATH.ERROR_PATH} element={<ErrorPage />} />
       </Routes>
     </ErrorBoundary>
   );

@@ -13,7 +13,7 @@ export default {
       table: {
         defaultValue: { summary: 'left' },
       },
-    }
+    },
   },
 } as Meta;
 
@@ -22,6 +22,6 @@ type Story = StoryObj<typeof Drawer>;
 /** The drawer is a sidebar that appears on the left side. Inside the sidebar there are items for each specific action. */
 export const Default: Story = {
   args: {
-      position: 'left'
+    position: 'left',
   },
 };

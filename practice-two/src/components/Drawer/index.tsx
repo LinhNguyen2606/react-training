@@ -12,7 +12,7 @@ import '@components/Drawer/Drawer.scss';
 
 type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
 
-type DrawerProps = {
+interface DrawerProps {
   position?: DrawerPosition;
 };
 

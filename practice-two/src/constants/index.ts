@@ -1,1 +1,1 @@
-export { path } from '@constants/path';
+export { PATH } from '@constants/path';

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
 import { Button } from '@components';
+import { Clock, Plus, UserGroup } from '@assets/icons';
 
 export default {
   title: 'Components/Button',
@@ -41,7 +42,8 @@ type Story = StoryObj<typeof Button>;
 export const Default: Story = {
   args: {
     size: 'lg',
-    children: '+ New',
+    startIcon: Plus,
+    children: 'New',
     variants: 'primary',
     additionalClass: 'drawer',
   },

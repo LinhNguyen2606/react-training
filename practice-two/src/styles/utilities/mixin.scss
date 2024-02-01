@@ -7,8 +7,10 @@
 .common-btn {
   font-size    : $fs-small;
   padding      : 0 30px;
+  display      : flex;
   outline      : none;
   border       : none;
+  gap          : 6px;
   border-radius: 2px;
 }
 

@@ -6,7 +6,7 @@ type IconProps = {
 
 const Icon = ({
   src,
-  size = '20',
+  size = '16',
   onClick
 }: IconProps) => {
   return (

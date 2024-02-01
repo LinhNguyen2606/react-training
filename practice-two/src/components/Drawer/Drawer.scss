@@ -1,0 +1,57 @@
+.drawer {
+  background-color: #4a4e58;
+  border-color    : #4a4e58;
+  position        : fixed;
+  min-width       : 212px;
+  height          : 100%;
+
+  &--left,
+  &--right {
+    top: 0;
+
+  }
+
+  &--left {
+    left: 0;
+  }
+
+  &--right {
+    right: 0;
+  }
+
+  &--top,
+  &--bottom {
+    height: 212px;
+    width : 100%;
+    left  : 0;
+  }
+
+  &--top {
+    top: 0;
+  }
+
+  &--bottom {
+    bottom: 0;
+  }
+
+  &__item {
+    box-shadow      : inset 2px 0 $primary-color;
+    color           : $primary-color;
+    background-color: #3b3e46;
+    align-items     : center;
+    display         : flex;
+    gap             : 10px;
+    margin-top      : 18px;
+    padding-left    : 12px;
+    min-height      : 44px;
+
+    &--text {
+      font-size: $fs-x-small;
+    }
+  }
+
+  &__btn {
+    border: 1px solid $primary-color;
+    margin: 18px 0 0 14px;
+  }
+}

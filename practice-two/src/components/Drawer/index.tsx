@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
 // Icons
-import { Plus, UserGroup } from '@assets/icons';
+import { UserGroup } from '@assets/icons';
 
 // Components
-import { Button, Icon } from '@components';
+import { Popover, Icon } from '@components';
 import DrawerItem from '@components/Drawer/DrawerItem';
+import { PopoverContentProps } from '@components/Popover/PopoverContent';
 
 // SCSS
 import '@components/Drawer/Drawer.scss';
@@ -14,7 +15,7 @@ type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
 
 interface DrawerProps {
   position?: DrawerPosition;
-};
+}
 
 const Drawer = ({ position = 'left' }: DrawerProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -25,18 +26,19 @@ const Drawer = ({ position = 'left' }: DrawerProps) => {
   const handleToggleModal = () =>
     setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
 
+  const popoverContent: PopoverContentProps[] = [
+    { id: 1, text: 'Add new user' },
+    { id: 2, text: 'Add new role' },
+  ];
+
   return (
     <>
       <aside className={`drawer drawer--${position}`}>
-        <Button
-          variants="primary"
-          size="lg"
-          additionalClass="drawer__btn"
-          onClick={handleToggleModal}
-          startIcon={Plus}
-        >
-          <span className="drawer__text">New</span>
-        </Button>
+        <Popover
+          content={popoverContent}
+          children="New"
+          additionalClass='drawer--pop-over'
+        />
         <DrawerItem additionalClass="drawer__item">
           <Icon src={UserGroup} size="20" />
           <span className="drawer__item--text">Users</span>

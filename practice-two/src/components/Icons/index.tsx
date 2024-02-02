@@ -1,11 +1,13 @@
-type IconsProps = {
+interface IconsProps {
   src: string;
+  alt?: string;
   size?: string;
   onClick?: () => void;
 };
 
 const Icons = ({
   src,
+  alt,
   size = '16',
   onClick
 }: IconsProps) => {
@@ -15,7 +17,7 @@ const Icons = ({
         className="icon"
         src={src}
         width={size}
-        alt="The icon"
+        alt={alt}
         height={size}
         onClick={onClick}
       />

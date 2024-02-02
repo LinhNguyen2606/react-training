@@ -1,7 +1,7 @@
 .drawer {
   background-color: #4a4e58;
   border-color    : #4a4e58;
-  position        : fixed;
+  position        : absolute;
   min-width       : 212px;
   height          : 100%;
 
@@ -35,15 +35,13 @@
   }
 
   &__item {
-    box-shadow      : inset 2px 0 $primary-color;
-    color           : $primary-color;
-    background-color: #3b3e46;
-    align-items     : center;
-    display         : flex;
-    gap             : 10px;
-    margin-top      : 18px;
-    padding-left    : 12px;
-    min-height      : 44px;
+    color       : $secondary-color;
+    cursor      : pointer;
+    align-items : center;
+    display     : flex;
+    gap         : 10px;
+    padding-left: 12px;
+    min-height  : 44px;
 
     &--text {
       font-size: $fs-x-small;
@@ -51,6 +49,12 @@
   }
 
   &--pop-over {
-    margin: 18px 0 0 14px;
+    margin: 18px 0 18px 14px;
+  }
+
+  .active {
+    box-shadow      : inset 2px 0 $primary-color;
+    color           : $primary-color;
+    background-color: #3b3e46;
   }
 }

@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import { Drawer } from '@components';
+import { Drawer, Icons } from '@components';
+
+// Icon
+import { UserGroup } from '@assets/icons';
 
 export default {
   title: 'Components/Drawer',
@@ -23,5 +26,13 @@ type Story = StoryObj<typeof Drawer>;
 export const Default: Story = {
   args: {
     position: 'left',
+    navigations: [
+      {
+        id: 1,
+        label: 'Users',
+        action: () => {},
+        icon: <Icons src={UserGroup} size="20"/>,
+      },
+    ],
   },
 };

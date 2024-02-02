@@ -21,10 +21,10 @@ type Story = StoryObj<typeof Popover>;
 
 export const Default: Story = {
   args: {
-    children: 'New',
+    buttonText: 'New',
     content: [
-      { id: 1, text: 'Add new user' },
-      { id: 2, text: 'Add new role' },
+      { id: 1, label: 'Add new user' },
+      { id: 2, label: 'Add new role' },
     ],
     placement: 'bottom',
   },

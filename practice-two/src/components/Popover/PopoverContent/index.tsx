@@ -1,12 +1,12 @@
 export interface PopoverContentProps {
   id: number;
-  text: string;
+  label: string;
   onClick?: () => void;
 }
 
 const PopoverContent = ({
   id,
-  text,
+  label,
   onClick
 }: PopoverContentProps) => {
   return (
@@ -14,7 +14,7 @@ const PopoverContent = ({
       key={id}
       className="popover__content-text"
       onClick={onClick}>
-        {text}
+        {label}
     </p>
   );
 };

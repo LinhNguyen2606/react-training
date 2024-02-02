@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
 import { Button } from '@components';
-import { Clock, Plus, UserGroup } from '@assets/icons';
+import { Plus } from '@assets/icons';
 
 export default {
   title: 'Components/Button',

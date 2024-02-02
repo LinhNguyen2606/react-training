@@ -1,8 +1,8 @@
 // Hooks
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 // Components
-import Button from '@components/Button';
+import { Button } from '@components';
 import PopoverContent, {
   PopoverContentProps,
 } from '@components/Popover/PopoverContent';
@@ -13,50 +13,44 @@ import '@components/Popover/Popover.scss';
 // Icon
 import { Plus } from '@assets/icons';
 
+// Custom hook
+import { useClickOutside } from '@hooks';
+
 type PopoverPlacement = 'top' | 'center' | 'bottom';
 
 interface PopoverProps {
-  children: ReactNode;
+  buttonText: string;
+  onClick?: () => void;
   additionalClass?: string;
   placement?: PopoverPlacement;
   content: PopoverContentProps[];
 }
 
 const Popover = ({
-  children,
+  onClick,
   content,
+  buttonText,
   additionalClass,
   placement = 'bottom',
 }: PopoverProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const popoverRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (isOpen) document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
   /**
    * Handle events when the user presses the Popover.
    */
   const handleClick = () => setIsOpen(!isOpen);
 
-  /**
-   * Handles the click outside of the popover.
-   * @param e - The MouseEvent object representing the click event.
-   */
-  const handleClickOutside = (e: MouseEvent) => {
-    if (popoverRef.current && !popoverRef.current.contains(e.target as Node))
-      setIsOpen(false);
-  };
+  useClickOutside(popoverRef, handleClick, isOpen);
 
   const popoverContent = isOpen && (
     <div className={`popover__content popover__content--${placement}`}>
       {content.map((item) => (
-        <PopoverContent key={item.id} {...item} />
+        <PopoverContent
+          key={item.id}
+          onClick={onClick}
+          {...item}
+        />
       ))}
     </div>
   );
@@ -69,7 +63,7 @@ const Popover = ({
         onClick={handleClick}
         startIcon={Plus}
       >
-        {children}
+        {buttonText}
       </Button>
       {popoverContent}
     </div>

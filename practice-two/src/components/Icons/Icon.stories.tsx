@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
-import { Icon } from '@components';
+import { Icons } from '@components';
 
 // Icon
 import { Pencil } from '@assets/icons';
 
 export default {
-  title: 'Components/Icon',
-  component: Icon,
+  title: 'Components/Icons',
+  component: Icons,
   tags: ['autodocs'],
   argTypes: {
     src: {
@@ -32,7 +32,7 @@ export default {
   },
 } as Meta;
 
-type Story = StoryObj<typeof Icon>;
+type Story = StoryObj<typeof Icons>;
 
 /** Icons appear on this site.  */
 export const Default: Story = {

@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Component
 import { Button } from '@components';
+
+// Icon
 import { Plus } from '@assets/icons';
 
 export default {

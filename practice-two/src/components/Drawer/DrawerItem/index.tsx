@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-type DrawerItemProps = {
+interface DrawerItemProps {
   children: ReactNode;
   additionalClass?: string;
   onClick: () => void;

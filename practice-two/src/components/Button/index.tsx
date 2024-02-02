@@ -8,7 +8,7 @@ import { Icons } from '@components';
 
 type ButtonSize = 'lg' | 'md' | 'sm';
 
-type ButtonProps = {
+interface ButtonProps {
   endIcon?: string;
   size: ButtonSize;
   startIcon?: string;

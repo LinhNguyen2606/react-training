@@ -23,7 +23,11 @@ const ModalHeader = ({
       {type === 'submit' ? (
         <>
           <h2 className="text--primary">{title}</h2>
-          <Icons src={Xmark} onClick={onHide} />
+          <Icons
+            src={Xmark}
+            onClick={onHide}
+            alt="Xmark icon"
+          />
         </>
       ) : (
         <h2 className="text--primary">{title}</h2>

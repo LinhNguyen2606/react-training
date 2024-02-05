@@ -1,0 +1,33 @@
+.switch {
+  background        : $bg-secondary-color;
+  position          : relative;
+  cursor            : pointer;
+  width             : 60px;
+  height            : 30px;
+  -webkit-appearance: none;
+  appearance        : none;
+  outline           : none;
+  border-radius     : 2rem;
+
+  &::before {
+    box-shadow   : 0 1px 5px rgba(0, 0, 0, 0.3);
+    background   : $secondary-color;
+    position     : absolute;
+    transition   : 0.5s;
+    width        : 30px;
+    height       : 30px;
+    border-radius: 50%;
+    content      : "";
+    left         : 0;
+    top          : 0;
+  }
+
+  &:checked::before {
+    transform : translateX(100%);
+    background: $secondary-color;
+  }
+
+  &:checked {
+    background: $bg-primary-color;
+  }
+}

@@ -11,3 +11,4 @@ export { default as Status } from '@components/Status';
 export { default as Table } from '@components/Table';
 export { default as TextArea } from '@components/TextArea';
 export { default as Spin } from '@components/Spin';
+export { default as Toast } from '@components/Toast';

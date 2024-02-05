@@ -40,7 +40,7 @@ const AppRoutes = () => {
       id: 1,
       label: 'Users',
       action: () => {
-        navigate('/');
+        navigate(PATH.HOME_PATH);
       },
       icon: <FontAwesomeIcon icon={faUserGroup} />,
     },
@@ -48,7 +48,7 @@ const AppRoutes = () => {
       id: 2,
       label: 'Roles',
       action: () => {
-        navigate('/roles');
+        navigate(PATH.ROLES_PATH);
       },
       icon: <FontAwesomeIcon icon={faShield} />,
     },
@@ -56,7 +56,7 @@ const AppRoutes = () => {
       id: 3,
       label: 'Rules',
       action: () => {
-        navigate('/rules');
+        navigate(PATH.RULES_PATH);
       },
       icon: <FontAwesomeIcon icon={faListCheck} />,
     },

@@ -8,7 +8,7 @@ import { PATH } from '@constants';
 
 const ErrorPage = () => {
   return (
-    <section className="error-page flex-column-center full-height">
+    <section className="error-page flex-column-center full-height full-width">
       <h1 className="error-page__title">Error 404. The page does not exist</h1>
       <p className="error-page__text">
         Sorry! The page you are looking for can not be found. Perhaps the page

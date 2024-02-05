@@ -9,3 +9,4 @@ export { default as TextField } from '@components/TextField';
 export { default as SearchBar } from '@components/SearchBar';
 export { default as Status } from '@components/Status';
 export { default as Table } from '@components/Table';
+export { default as TextArea } from '@components/TextArea';

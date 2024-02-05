@@ -3,11 +3,14 @@ import { ChangeEvent, useState } from 'react';
 // Components
 import { Popover, Modal } from '@components';
 import DrawerItem from '@components/Drawer/DrawerItem';
-import { PopoverContentProps } from '@components/Popover/PopoverContent';
+
 
 // SCSS
 import '@components/Drawer/Drawer.scss';
+
+// Interfaces
 import { NavigationItem } from '@interfaces';
+import { PopoverContentProps } from '@components/Popover/PopoverContent';
 
 type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
 
@@ -21,6 +24,7 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [inputField, setInputField] = useState('');
   const [itemActive, setItemActive] = useState(navigations[0].id);
+  const [modalTitle, setModalTitle] = useState('');
 
   /**
    * Handle events when the value of an input field changes.
@@ -44,8 +48,22 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
     setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
 
   const popoverContent: PopoverContentProps[] = [
-    { id: 1, label: 'Add new user' },
-    { id: 2, label: 'Add new role' },
+    { 
+      id: 1, 
+      label: 'Add new user',
+      onClick: () => { 
+        setModalTitle('Enter user name');
+        handleToggleModal();
+      }
+    },
+    { 
+      id: 2, 
+      label: 'Add new role',
+      onClick: () => { 
+        setModalTitle('Enter role name');
+        handleToggleModal();
+      }
+    },
   ];
 
   const handleItemClick = (item: NavigationItem) => () => {
@@ -83,7 +101,7 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
         <Modal
           isOpen={isOpenModal}
           type="submit"
-          title="Enter user name"
+          title={modalTitle}
           onChange={handleOnChange}
           onSubmit={handleOnSubmit}
           onHide={handleToggleModal}

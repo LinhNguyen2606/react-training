@@ -13,3 +13,4 @@ export { default as TextArea } from '@components/TextArea';
 export { default as Spin } from '@components/Spin';
 export { default as Toast } from '@components/Toast';
 export { default as Switch } from '@components/Switch';
+export { default as UploadImage } from '@components/UploadImage';

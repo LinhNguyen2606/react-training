@@ -3,6 +3,9 @@ import cloudWarmCasino from '/images/cloud_warmcasino.png';
 
 import { Link } from 'react-router-dom';
 
+// Constant
+import { PATH } from '@constants';
+
 const ErrorPage = () => {
   return (
     <section className="error-page flex-column-center full-height">
@@ -17,7 +20,7 @@ const ErrorPage = () => {
         <div className="error-page__el"></div>
         <div className="error-page__el"></div>
         <div className="error-page__el"></div>
-        <Link to="/" className="error-page__link">
+        <Link to={PATH.HOME_PATH} className="error-page__link">
           Go home
         </Link>
       </div>

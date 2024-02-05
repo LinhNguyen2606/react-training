@@ -7,3 +7,4 @@ export { default as Popover } from '@components/Popover';
 export { default as Modal } from '@components/Modal';
 export { default as TextField } from '@components/TextField';
 export { default as SearchBar } from '@components/SearchBar';
+export { default as Status } from '@components/Status';

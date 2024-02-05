@@ -8,3 +8,4 @@ export { default as Modal } from '@components/Modal';
 export { default as TextField } from '@components/TextField';
 export { default as SearchBar } from '@components/SearchBar';
 export { default as Status } from '@components/Status';
+export { default as Table } from '@components/Table';

@@ -1,0 +1,14 @@
+.toast {
+  align-items    : center;
+  display        : flex;
+  gap            : 6px;
+  justify-content: end;
+
+  &--success {
+    background: url('/icons/circle-check-solid.svg') no-repeat center;
+  }
+
+  &--failure {
+    background: url('/icons/circle-xmark-solid.svg') no-repeat center;
+  }
+}

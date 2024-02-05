@@ -82,7 +82,7 @@ export const Default: Story = {
       {
         key: 'isActive',
         title: 'Status',
-        render: (_, item: User) => <Status checkedLabel={item.isActive} />,
+        render: (_, item: User) => <Status checked={item.isActive} />,
         width: '160px',
       },
       {

@@ -3,19 +3,19 @@ import '@components/Status/Status.scss';
 
 interface StatusProps {
   active?: string;
-  checkedLabel: boolean;
+  checked: boolean;
   notActive?: string;
 }
 
 const Status = ({
   active = 'Active',
-  checkedLabel,
+  checked,
   notActive = 'Not active',
 }: StatusProps) => {
   return (
-    <div className={`status ${checkedLabel ? 'active' : 'not-active'}`}>
+    <div className={`status ${checked ? 'active' : 'not-active'}`}>
       <span className="status__text">{` ${
-        checkedLabel ? active : notActive
+        checked ? active : notActive
       }`}</span>
     </div>
   );

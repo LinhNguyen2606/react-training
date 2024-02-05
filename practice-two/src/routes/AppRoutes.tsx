@@ -7,10 +7,7 @@ import {
 import { ErrorBoundary } from 'react-error-boundary';
 
 // Component
-import {
-  Drawer,
-  ErrorFallback
-} from '@components';
+import { Drawer, ErrorFallback } from '@components';
 
 // Constant
 import { PATH } from '@constants';
@@ -28,10 +25,20 @@ import {
   faShield,
   faListCheck,
 } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 
 const AppRoutes = () => {
+  const [isNotContentPage, setIsNotContentPage] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsNotContentPage(![
+      PATH.HOME_PATH,
+      PATH.ROLES_PATH,
+      PATH.RULES_PATH,
+    ].includes(location.pathname));
+  }, [location.pathname]);
 
   const handleAdd = () => {};
 
@@ -64,15 +71,19 @@ const AppRoutes = () => {
 
   return (
     <>
-      <header className="header">
-        <h1 className="header__heading text--primary">User Manager</h1>
-      </header>
+      {!isNotContentPage && (
+        <header className="header">
+          <h1 className="header__heading text--primary">User Manager</h1>
+        </header>
+      )}
       <main className="main">
-        <Drawer
-          position="left"
-          onSubmit={handleAdd}
-          navigations={navigations}
-        />
+        {!isNotContentPage && (
+          <Drawer
+            position="left"
+            onSubmit={handleAdd}
+            navigations={navigations}
+          />
+        )}
         <ErrorBoundary
           FallbackComponent={ErrorFallback}
           resetKeys={[location.pathname]}

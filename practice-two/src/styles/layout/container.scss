@@ -1,9 +1,13 @@
 .main {
-  height         : calc(100% - 60px);
   position       : relative;
   background     : #ebedf0;
   justify-content: center;
   display        : flex;
+  height         : 100%;
+}
+
+.header+.main {
+  height: calc(100% - 60px);
 }
 
 .content__wrapper {

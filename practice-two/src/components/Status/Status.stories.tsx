@@ -8,19 +8,19 @@ export default {
   component: Status,
   tags: ['autodocs'],
   argTypes: {
-    checkedLabel: {
+    checked: {
       description: 'Shows whether the status is active or inactive',
       table: {
         defaultValue: { summary: true },
       },
     },
-    active: {
+    checkedLabel: {
       description: 'Short text to describe the status',
       table: {
         defaultValue: { summary: 'Active' },
       },
     },
-    notActive: {
+    unCheckedLabel: {
       description: 'Short text to describe the status',
       table: {
         defaultValue: { summary: 'Not active' },
@@ -34,8 +34,8 @@ type Story = StoryObj<typeof Status>;
 /** Status is an expression of the user's status as being active or inactive. */
 export const Default: Story = {
   args: {
-    checkedLabel: true,
-    active: 'Active',
-    notActive: 'Not active',
+    checked: true,
+    checkedLabel: 'Active',
+    unCheckedLabel: 'Not active',
   },
 };

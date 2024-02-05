@@ -43,7 +43,7 @@ const ModalBody = ({
     setInputValue(value);
 
     if (value.trim() === '') {
-      setErrorMessage(ERROR_MESSAGE.USER_NAME);
+      setErrorMessage(ERROR_MESSAGE.EMPTY_INPUT);
       return;
     }
 
@@ -57,7 +57,7 @@ const ModalBody = ({
    */
   const handleSubmit = () => {
     if (inputValue.trim() === '') {
-      setErrorMessage(ERROR_MESSAGE.USER_NAME);
+      setErrorMessage(ERROR_MESSAGE.EMPTY_INPUT);
       return;
     }
 

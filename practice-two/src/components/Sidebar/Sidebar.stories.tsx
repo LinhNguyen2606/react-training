@@ -15,6 +15,9 @@ import {
   Shield
 } from '@assets/icons';
 
+// Constant
+import { VIEWTYPES } from '@constants';
+
 export default {
   title: 'Components/Sidebar',
   component: Sidebar,
@@ -44,37 +47,41 @@ export const Default: Story = {
     isActive: true,
     data: [
       {
-        type: 'AVATAR_LABEL_VIEW',
+        type: VIEWTYPES.AVATAR_LABEL_VIEW,
         src: '',
-        alt: 'Linh Nguyen',
+        alt: 'User',
         desc: 'Can see user details and access levels',
         label: 'Daenerys Stormborn Targaryen',
         bgColor: generateRandomColor(),
       },
       {
-        type: 'TEXT_VIEW',
+        type: VIEWTYPES.TEXT_VIEW,
         icon: Envelope,
         label: 'Email:',
         value: 'breaker.of.chains@gm.com',
       },
       {
-        type: 'TEXT_VIEW',
+        type: VIEWTYPES.TEXT_VIEW,
         icon: Clock,
         label: 'Last visited:',
         value: dateFormat(new Date().toString()),
       },
       {
-        type: 'LIST_VIEW',
+        type: VIEWTYPES.LIST_VIEW,
         values: [
           {
             icon: Shield,
             label: 'Roles (3)',
-            value: ['Admin', 'Manager', 'Reporting']
+            values: [
+              { text: 'Admin', link: '/' },
+              { text: 'Manager', link: '/' },
+              { text: 'Reporting', link: '/' },
+            ],
           },
           {
             icon: ListCheck,
             label: 'Rules (1)',
-            value: ['Can see reports'],
+            values: [{ text: 'Can see reports', link: '/' }],
           },
         ],
       },

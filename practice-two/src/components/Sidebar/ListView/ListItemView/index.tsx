@@ -1,16 +1,21 @@
+import { Link } from 'react-router-dom';
+
 // Component
 import { Icons } from '@components';
 
 export interface ListItemViewProps {
   icon: string;
   label: string;
-  value: string[];
+  values: Array<{
+    text: string;
+    link: string;
+  }>;
 }
 
 const ListItemView = ({
   icon,
   label,
-  value
+  values
 }: ListItemViewProps) => {
   return (
     <>
@@ -19,13 +24,14 @@ const ListItemView = ({
         <label>{label}</label>
       </div>
       <div className="sidebar--values">
-        {value.map((item, index) => (
-          <label
+        {values.map((item, index) => (
+          <Link
             key={index}
+            to={item.link}
             className="text--primary sidebar--values__label"
           >
-            {item}
-          </label>
+            {item.text}
+          </Link>
         ))}
       </div>
     </>

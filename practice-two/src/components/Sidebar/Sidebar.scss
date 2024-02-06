@@ -1,4 +1,4 @@
-.view-details {
+.sidebar {
   background    : $secondary-color;
   flex-direction: column;
   display       : flex;
@@ -15,17 +15,12 @@
     padding-bottom : 10px;
   }
 
-  &__avatar {
-    margin: 0 auto;
-    width : 180px;
-    height: 180px;
-  }
-
-  &__username {
+  &__label-name {
     color      : $tertiary-color;
     font-size  : $fs-x-small;
     font-weight: $fw-medium;
     text-align : center;
+    display    : block;
   }
 
   &--icon {
@@ -49,28 +44,41 @@
   }
 
   &__permission {
-    cursor        : pointer;
-    flex-direction: column;
-    max-width     : 324px;
-    display       : flex;
-    gap           : 3px;
+    display: flex;
+    gap    : 10px;
+  }
 
-    &--label {
-      background  : $bg-tertiary-color;
-      color       : $primary-color;
-      font-size   : $fs-x-small;
-      line-height : calc(28/14);
-      font-weight : $fw-normal;
-      padding-left: 25px;
+  &--values {
+    &__label {
+      background   : $bg-tertiary-color;
+      color        : $primary-color;
+      font-size    : $fs-x-small;
+      line-height  : calc(28/14);
+      font-weight  : $fw-normal;
+      cursor       : pointer;
+      max-width    : 324px;
+      display      : flex;
+      padding-left : 25px;
+      margin-bottom: 3px;
 
       &:hover {
         color          : #17839d;
         text-decoration: underline;
       }
 
+      &:first-child {
+        margin-top: 10px;
+      }
+
       &:last-child {
         margin-bottom: 10px;
       }
     }
+  }
+
+  &__rule-description {
+    font-size  : $fs-x-small;
+    font-weight: $fw-normal;
+    margin     : 10px 0;
   }
 }

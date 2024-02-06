@@ -14,4 +14,4 @@ export { default as Spin } from '@components/Spin';
 export { default as Toast } from '@components/Toast';
 export { default as Switch } from '@components/Switch';
 export { default as UploadImage } from '@components/UploadImage';
-export { default as ViewDetails } from '@components/ViewDetails';
+export { default as Sidebar } from '@components/Sidebar';

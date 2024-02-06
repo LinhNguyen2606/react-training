@@ -1,6 +1,6 @@
 import '@components/Avatar/Avatar.scss';
 
-type AvatarSize = 'lg' | 'md' | 'sm';
+export type AvatarSize = 'lg' | 'md' | 'sm';
 
 interface AvatarProps {
   src: string;

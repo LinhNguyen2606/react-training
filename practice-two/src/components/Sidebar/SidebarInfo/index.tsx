@@ -4,6 +4,9 @@ import TextView from '@components/Sidebar/TextView';
 import ListView from '@components/Sidebar/ListView';
 import { ListItemViewProps } from '@components/Sidebar/ListView/ListItemView';
 
+// Constant
+import { VIEWTYPES } from '@constants';
+
 export interface SidebarProps {
   data: Array<{
     type: string;
@@ -16,18 +19,19 @@ const SidebarInfo = ({ data }: SidebarProps) => {
     <div>
       {data.map((item, index) => {
         switch (item.type) {
-          case 'AVATAR_LABEL_VIEW':
+          case VIEWTYPES.AVATAR_LABEL_VIEW:
             return (
               <AvatarLabelView
-                key={item.index}
+                key={index}
                 src={item.src}
+                size={item.size}
                 alt={item.alt}
                 desc={item.desc}
                 label={item.label}
                 bgColor={item.bgColor}
               />
             );
-          case 'TEXT_VIEW':
+          case VIEWTYPES.TEXT_VIEW:
             return (
               <TextView
                 key={index}
@@ -36,7 +40,7 @@ const SidebarInfo = ({ data }: SidebarProps) => {
                 value={item.value}
               />
             );
-          case 'LIST_VIEW':
+          case VIEWTYPES.LIST_VIEW:
             return (
               <ListView
                 key={index}

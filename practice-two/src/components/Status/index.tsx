@@ -2,7 +2,7 @@
 import '@components/Status/Status.scss';
 
 interface StatusProps {
-  checked: boolean;
+  checked?: boolean;
   checkedLabel?: string;
   unCheckedLabel?: string;
 }

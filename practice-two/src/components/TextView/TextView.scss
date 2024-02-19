@@ -1,0 +1,13 @@
+.text-view {
+  &--icon {
+    align-items  : center;
+    display      : flex;
+    gap          : 10px;
+    margin-bottom: 10px;
+
+    span {
+      font-size: $fs-x-small;
+      color    : #313131;
+    }
+  }
+}

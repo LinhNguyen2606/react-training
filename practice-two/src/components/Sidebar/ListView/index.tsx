@@ -8,12 +8,12 @@ interface ListViewProps {
 const ListView = ({ values }: ListViewProps) => {
   return (
     <>
-      {values.map(({ icon, label, value }, index) => (
+      {values.map(({ icon, label, values }, index) => (
         <ListItemView
           key={index}
           icon={icon}
           label={label}
-          value={value}
+          values={values}
         />
       ))}
     </>

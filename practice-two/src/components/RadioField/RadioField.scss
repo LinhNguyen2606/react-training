@@ -1,0 +1,29 @@
+.radio-field {
+  align-items: center;
+  display    : flex;
+  gap        : 7px;
+
+  &--input {
+    box-shadow: 0px 0px 0px 2.5px #94a1b3;
+    width     : 16px;
+    height    : 16px;
+
+    transition     : background-color 0.3s, box-shadow 0.3s;
+    border         : 3.5px solid $secondary-color;
+    background-clip: border-box;
+    appearance     : none;
+    border-radius  : 50%;
+
+    &:checked {
+      box-shadow      : 0px 0px 0px 2px $primary-color;
+      background-color: $primary-color;
+    }
+  }
+
+  &--label {
+    color      : $text-primary;
+    font-size  : $fs-x-small;
+    font-weight: $fw-normal;
+    align-self : flex-end;
+  }
+}

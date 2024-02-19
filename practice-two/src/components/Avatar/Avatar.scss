@@ -1,6 +1,11 @@
 .avatar {
   text-align: center;
 
+  &--x-sm {
+    width : 31px;
+    height: 31px;
+  }
+
   &--sm {
     width : 41px;
     height: 41px;
@@ -38,6 +43,11 @@
 
   &__text--sm {
     line-height: calc(41/20);
+    font-size  : $fs-medium;
+  }
+
+  &__text--x-sm {
+    line-height: calc(31/20);
     font-size  : $fs-medium;
   }
 }

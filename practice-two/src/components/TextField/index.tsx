@@ -9,7 +9,6 @@ interface TextFieldProps {
   autoFocus?: boolean;
   placeholder?: string;
   isShowLabel?: boolean;
-  additionalClass?: string;
   onChange: (value: string) => void;
 }
 
@@ -19,7 +18,6 @@ const TextField = ({
   autoFocus,
   placeholder,
   isShowLabel,
-  additionalClass,
   onChange,
 }: TextFieldProps) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -28,7 +26,7 @@ const TextField = ({
   return (
     <>
       <label
-        className={`label__input ${additionalClass}`}
+        className="label__input"
         style={{ display: `${!isShowLabel && 'none'}` }}
       >
         {label}

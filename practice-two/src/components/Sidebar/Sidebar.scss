@@ -8,7 +8,7 @@
   width         : 50%;
 
   &__header {
-    border-bottom  : 1px solid #dadee0;
+    border-bottom  : 1px solid $border-primary-color;
     justify-content: space-between;
     align-items    : center;
     display        : flex;

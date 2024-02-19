@@ -16,7 +16,7 @@ import {
 } from '@assets/icons';
 
 // Constant
-import { VIEWTYPES } from '@constants';
+import { TYPES } from '@constants';
 
 export default {
   title: 'Components/Sidebar',
@@ -47,7 +47,7 @@ export const Default: Story = {
     isActive: true,
     data: [
       {
-        type: VIEWTYPES.AVATAR_LABEL_VIEW,
+        type: TYPES.AVATAR_LABEL_VIEW,
         src: '',
         alt: 'User',
         desc: 'Can see user details and access levels',
@@ -55,19 +55,19 @@ export const Default: Story = {
         bgColor: generateRandomColor(),
       },
       {
-        type: VIEWTYPES.TEXT_VIEW,
+        type: TYPES.TEXT_VIEW,
         icon: Envelope,
         label: 'Email:',
         value: 'breaker.of.chains@gm.com',
       },
       {
-        type: VIEWTYPES.TEXT_VIEW,
+        type: TYPES.TEXT_VIEW,
         icon: Clock,
         label: 'Last visited:',
         value: dateFormat(new Date().toString()),
       },
       {
-        type: VIEWTYPES.LIST_VIEW,
+        type: TYPES.LIST_VIEW,
         values: [
           {
             icon: Shield,

@@ -39,4 +39,15 @@
   &--save {
     padding: 7px 30px;
   }
+
+  &--remove,
+  &--store {
+    padding: 7px 34px;
+  }
+
+  &.disabled {
+    background-color: $bg-tertiary-color;
+    cursor          : not-allowed;
+    color           : #94a1b3;
+  }
 }

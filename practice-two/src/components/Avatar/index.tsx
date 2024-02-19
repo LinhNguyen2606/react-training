@@ -1,23 +1,23 @@
 import '@components/Avatar/Avatar.scss';
 
-export type AvatarSize = 'lg' | 'md' | 'sm';
+export type AvatarSize = 'lg' | 'md' | 'sm' | 'x-sm';
 
 interface AvatarProps {
-  src: string;
+  src?: string;
   alt: string;
   size: AvatarSize;
   bgColor?: string;
-};
+}
 
 const Avatar = ({
   src,
   alt,
   bgColor,
-  size = 'sm'
+  size = 'sm',
 }: AvatarProps) => {
   const initial = alt?.charAt(0).toUpperCase();
-  const circleClass = size === 'sm' ? 'avatar--circle' : '';
-  
+  const circleClass = size === 'sm' || size === 'x-sm' ? 'avatar--circle' : '';
+
   return (
     <div
       className={`avatar avatar--${size} ${circleClass}`}
@@ -30,7 +30,9 @@ const Avatar = ({
           className={`full-width full-height ${circleClass}`}
         />
       ) : (
-        <span className={`avatar__initial avatar__text--${size}`}>{initial}</span>
+        <span className={`avatar__initial avatar__text--${size}`}>
+          {initial}
+        </span>
       )}
     </div>
   );

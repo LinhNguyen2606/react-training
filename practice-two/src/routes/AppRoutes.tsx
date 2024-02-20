@@ -28,16 +28,16 @@ import {
 import { useEffect, useState } from 'react';
 
 const AppRoutes = () => {
-  const [isNotContentPage, setIsNotContentPage] = useState(true);
+  const [isNotErrorPage, setIsNotErrorPage] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsNotContentPage(![
-      PATH.HOME_PATH,
-      PATH.ROLES_PATH,
-      PATH.RULES_PATH,
-    ].includes(location.pathname));
+    setIsNotErrorPage(
+      ![PATH.HOME_PATH, PATH.ROLES_PATH, PATH.RULES_PATH].includes(
+        location.pathname
+      )
+    );
   }, [location.pathname]);
 
   const handleAdd = () => {};
@@ -71,13 +71,13 @@ const AppRoutes = () => {
 
   return (
     <>
-      {!isNotContentPage && (
+      {!isNotErrorPage && (
         <header className="header">
           <h1 className="header__heading text--primary">User Manager</h1>
         </header>
       )}
       <main className="main">
-        {!isNotContentPage && (
+        {!isNotErrorPage && (
           <Drawer
             position="left"
             onSubmit={handleAdd}
@@ -89,7 +89,10 @@ const AppRoutes = () => {
           resetKeys={[location.pathname]}
         >
           <Routes>
-            <Route path={PATH.HOME_PATH} element={<HomePage />} />
+            <Route
+              path={PATH.HOME_PATH}
+              element={<HomePage position="left" />}
+            />
             <Route path={PATH.ROLES_PATH} element={<RolePage />} />
             <Route path={PATH.RULES_PATH} element={<RulePage />} />
             <Route path={PATH.ERROR_PATH} element={<ErrorPage />} />

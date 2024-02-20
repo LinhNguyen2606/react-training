@@ -37,10 +37,12 @@ const Toast = ({ delay, size = 20, status }: ToastProps) => {
     <>
       {toastVisible && (status === 'success' || status === 'failure') && (
         <div className="toast">
-          <span className="text--primary">{toastText}</span>
+          <span style={{ fontSize: size }} className="text--primary">
+            {toastText}
+          </span>
           <span
             className={`${toastIconClass}`}
-            style={{ width: size, height: size }}
+            style={{ backgroundSize: size, width: size, height: size }}
           />
         </div>
       )}

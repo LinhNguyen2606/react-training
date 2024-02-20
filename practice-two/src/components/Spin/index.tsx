@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import '@components/Spin/Spin.scss';
 
 interface SpinProps {
-  delay: number;
+  delay?: number;
   size?: number;
   isProcessing: boolean;
 }

@@ -3,16 +3,15 @@ import { ChangeEvent, useState } from 'react';
 // Components
 import { Popover, Modal } from '@components';
 import DrawerItem from '@components/Drawer/DrawerItem';
-
+import { PopoverContentProps } from '@components/Popover/PopoverContent';
 
 // SCSS
 import '@components/Drawer/Drawer.scss';
 
-// Interfaces
+// Interface
 import { NavigationItem } from '@interfaces';
-import { PopoverContentProps } from '@components/Popover/PopoverContent';
 
-type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
+export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
 
 interface DrawerProps {
   position: DrawerPosition;

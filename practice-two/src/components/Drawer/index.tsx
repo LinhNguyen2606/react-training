@@ -15,11 +15,12 @@ export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
 
 interface DrawerProps {
   position: DrawerPosition;
-  onSubmit: (value: string) => void;
+  onSubmit: (value: { type: string; value: string }) => void;
   navigations: NavigationItem[];
 }
 
 const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
+  const [type, setType] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [inputField, setInputField] = useState('');
   const [itemActive, setItemActive] = useState(navigations[0].id);
@@ -36,7 +37,7 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
    * Handle the event when the user presses the submit button in Modal.
    */
   const handleOnSubmit = () => {
-    onSubmit(inputField);
+    onSubmit({ type, value: inputField });
     setIsOpenModal(false);
   };
 
@@ -47,21 +48,23 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
     setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
 
   const popoverContent: PopoverContentProps[] = [
-    { 
-      id: 1, 
+    {
+      id: 1,
       label: 'Add new user',
-      onClick: () => { 
+      onClick: () => {
         setModalTitle('Enter user name');
+        setType('user');
         handleToggleModal();
-      }
+      },
     },
-    { 
-      id: 2, 
+    {
+      id: 2,
       label: 'Add new role',
-      onClick: () => { 
+      onClick: () => {
         setModalTitle('Enter role name');
+        setType('role');
         handleToggleModal();
-      }
+      },
     },
   ];
 

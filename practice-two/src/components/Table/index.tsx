@@ -11,7 +11,7 @@ import '@components/Table/Table.scss';
 
 type TableProps<T> = {
   rowData: T[];
-  loading: boolean;
+  isLoading: boolean;
   columns: EnitityColumn<T>[];
   onRowClick: (index: number, item: T) => void;
   selectedRow: { index: number; data: T | null };
@@ -19,7 +19,7 @@ type TableProps<T> = {
 
 const Table = <T,>({
   rowData,
-  loading,
+  isLoading,
   columns,
   onRowClick,
   selectedRow,
@@ -31,7 +31,7 @@ const Table = <T,>({
       </thead>
 
       <tbody>
-        {loading ? (
+        {isLoading ? (
           <tr>
             <td colSpan={columns.length}>
               <Spin

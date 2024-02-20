@@ -4,3 +4,5 @@ export { dateFormat } from '@helpers/date';
 export { validateUsername, validateEmail } from '@helpers/validate';
 export { highlightKeyword } from '@helpers/highlight';
 export { fetcher } from '@helpers/fetcher';
+export { delayRespone } from '@helpers/delay';
+export { extractData } from '@helpers/extract';

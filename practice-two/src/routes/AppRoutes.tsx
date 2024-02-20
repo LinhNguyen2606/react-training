@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Routes,
   Route,
@@ -5,8 +6,14 @@ import {
   useNavigate
 } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faUserGroup,
+  faShield,
+  faListCheck,
+} from '@fortawesome/free-solid-svg-icons';
 
-// Component
+// Components
 import { Drawer, ErrorFallback } from '@components';
 
 // Constant
@@ -19,21 +26,14 @@ import {
   RolePage,
   RulePage
 } from '@layouts';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faUserGroup,
-  faShield,
-  faListCheck,
-} from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
 
 const AppRoutes = () => {
-  const [isNotErrorPage, setIsNotErrorPage] = useState(true);
+  const [isErrorPage, setIsErrorPage] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsNotErrorPage(
+    setIsErrorPage(
       ![PATH.HOME_PATH, PATH.ROLES_PATH, PATH.RULES_PATH].includes(
         location.pathname
       )
@@ -71,13 +71,13 @@ const AppRoutes = () => {
 
   return (
     <>
-      {!isNotErrorPage && (
+      {!isErrorPage && (
         <header className="header">
           <h1 className="header__heading text--primary">User Manager</h1>
         </header>
       )}
       <main className="main">
-        {!isNotErrorPage && (
+        {!isErrorPage && (
           <Drawer
             position="left"
             onSubmit={handleAdd}

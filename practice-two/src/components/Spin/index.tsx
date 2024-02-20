@@ -4,15 +4,17 @@ import { useEffect, useState } from 'react';
 import '@components/Spin/Spin.scss';
 
 interface SpinProps {
-  delay?: number;
   size?: number;
+  delay?: number;
   isProcessing: boolean;
+  style?: React.CSSProperties;
 }
 
 const Spin = ({
-  isProcessing,
+  size = 20,
   delay,
-  size = 20
+  isProcessing,
+  style
 }: SpinProps) => {
   const [showSpin, setShowSpin] = useState(false);
 
@@ -35,7 +37,7 @@ const Spin = ({
   return (
     <>
       {showSpin && isProcessing && (
-        <div className="spin">
+        <div className="spin" style={style}>
           <span className="spin--icon" style={{ width: size, height: size }} />
         </div>
       )}

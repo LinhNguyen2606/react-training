@@ -8,18 +8,16 @@ import { EnitityColumn, User } from '@interfaces';
 import {
   Avatar,
   SearchBar,
-  Spin,
   Status,
-  Table,
-  Toast
+  Table
 } from '@components';
+import { DrawerPosition } from '@components/Drawer';
 
 // Helpers
 import { fetcher, highlightKeyword } from '@helpers';
 
 // Constants
 import { API_BASE_URL, USER_API_ENDPOINT } from '@constants';
-import { DrawerPosition } from '@components/Drawer';
 
 /**
  * Defines the columns configuration for the user table.
@@ -85,11 +83,10 @@ const UserPage = ({ position }: { position: DrawerPosition }) => {
   // Variables related to data processing
   const columns = generateUserTableColumns(keyword);
 
-  const {
-    data: users,
-    error,
-    isValidating,
-  } = useSWR<User[]>(`${API_BASE_URL}/${USER_API_ENDPOINT}`, fetcher);
+  const getUsers = () =>
+    useSWR<User[]>(`${API_BASE_URL}/${USER_API_ENDPOINT}`, fetcher);
+
+  const { data: users, isValidating } = getUsers();
 
   /**
    * Handles the search operation in the application.
@@ -121,14 +118,11 @@ const UserPage = ({ position }: { position: DrawerPosition }) => {
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
-    } else {
-      setSelectedRow({ index, data: user });
+      return;
     }
+
+    setSelectedRow({ index, data: user });
   };
-
-  if (error) return <Toast status='failure' delay={2000} size={40} />;
-
-  if (isValidating) return <Spin isProcessing={true} size={40} />;
 
   const placements = {
     left: '10px 10px 10px 222px',
@@ -143,19 +137,16 @@ const UserPage = ({ position }: { position: DrawerPosition }) => {
   };
 
   return (
-    <div style={contentWrapperStyle}>
-      <SearchBar
-        label="Users"
-        placeholder="Search"
-        onChange={handleSearch}
-      />
-      <Table
-        rowData={filteredUsers}
-        columns={columns}
-        onRowClick={handleRowClick}
-        selectedRow={selectedRow}
-      />
-    </div>
+      <div style={contentWrapperStyle}>
+        <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
+        <Table
+          rowData={filteredUsers}
+          columns={columns}
+          onRowClick={handleRowClick}
+          selectedRow={selectedRow}
+          loading={isValidating}
+        />
+      </div>
   );
 };
 

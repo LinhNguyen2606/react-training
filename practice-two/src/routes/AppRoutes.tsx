@@ -1,105 +1,36 @@
-import { useEffect, useState } from 'react';
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigate
-} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faUserGroup,
-  faShield,
-  faListCheck,
-} from '@fortawesome/free-solid-svg-icons';
 
-// Components
-import { Drawer, ErrorFallback } from '@components';
+// Component
+import { ErrorFallback } from '@components';
 
 // Constant
 import { PATH } from '@constants';
 
-// Layouts
+// Pages
 import {
-  ErrorPage,
-  HomePage,
-  RolePage,
-  RulePage
-} from '@layouts';
+  Home,
+  Error,
+  Role,
+  Rule,
+  Layout
+} from '@pages';
 
 const AppRoutes = () => {
-  const [isErrorPage, setIsErrorPage] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setIsErrorPage(
-      ![PATH.HOME_PATH, PATH.ROLES_PATH, PATH.RULES_PATH].includes(
-        location.pathname
-      )
-    );
-  }, [location.pathname]);
-
-  const handleAdd = () => {};
-
-  const navigations = [
-    {
-      id: 1,
-      label: 'Users',
-      action: () => {
-        navigate(PATH.HOME_PATH);
-      },
-      icon: <FontAwesomeIcon icon={faUserGroup} />,
-    },
-    {
-      id: 2,
-      label: 'Roles',
-      action: () => {
-        navigate(PATH.ROLES_PATH);
-      },
-      icon: <FontAwesomeIcon icon={faShield} />,
-    },
-    {
-      id: 3,
-      label: 'Rules',
-      action: () => {
-        navigate(PATH.RULES_PATH);
-      },
-      icon: <FontAwesomeIcon icon={faListCheck} />,
-    },
-  ];
-
   return (
-    <>
-      {!isErrorPage && (
-        <header className="header">
-          <h1 className="header__heading text--primary">User Manager</h1>
-        </header>
-      )}
-      <main className="main">
-        {!isErrorPage && (
-          <Drawer
-            position="left"
-            onSubmit={handleAdd}
-            navigations={navigations}
-          />
-        )}
-        <ErrorBoundary
-          FallbackComponent={ErrorFallback}
-          resetKeys={[location.pathname]}
-        >
-          <Routes>
-            <Route
-              path={PATH.HOME_PATH}
-              element={<HomePage position="left" />}
-            />
-            <Route path={PATH.ROLES_PATH} element={<RolePage />} />
-            <Route path={PATH.RULES_PATH} element={<RulePage />} />
-            <Route path={PATH.ERROR_PATH} element={<ErrorPage />} />
-          </Routes>
-        </ErrorBoundary>
-      </main>
-    </>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      resetKeys={[location.pathname]}
+    >
+      <Routes>
+        <Route path={PATH.HOME_PATH} element={<Layout />}>
+          <Route index element={<Home position="left" />} />
+          <Route path={PATH.ROLES_PATH} element={<Role />} />
+          <Route path={PATH.RULES_PATH} element={<Rule />} />
+        </Route>
+        <Route path={PATH.ERROR_PATH} element={<Error />} />
+      </Routes>
+    </ErrorBoundary>
   );
 };
 

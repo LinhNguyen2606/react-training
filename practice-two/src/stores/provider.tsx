@@ -17,11 +17,11 @@ type ProviderProps = {
 
 const Provider: React.FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
     data: User | null;
   }>({ index: -1, data: null });
+  const [dataItems, setDataItems] = useState<any>([]);
 
   return (
     <Context.Provider
@@ -30,6 +30,8 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
         dispatch,
         selectedRow,
         setSelectedRow,
+        dataItems,
+        setDataItems
       }}
     >
       {children}

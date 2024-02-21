@@ -17,9 +17,9 @@ import {
 
 // Constants
 import {
-  API_BASE_URL,
+  API,
   PATH,
-  USER_API_ENDPOINT
+  USER_INFORMATION
 } from '@constants';
 
 // Helpers
@@ -34,6 +34,7 @@ import { createUser, getUsers } from '@services';
 
 // Store
 import { Context } from '@stores';
+import { User } from '@interfaces';
 
 const Layout = () => {
   const [isShowProgress, setIsShowProgress] = useState<
@@ -44,7 +45,9 @@ const Layout = () => {
 
   const { data: users } = getUsers();
 
-  const { setSelectedRow } = useContext(Context);
+  const { setSelectedRow, setDataItems } = useContext(Context);
+
+  const generateUserInfo = (data: User) => USER_INFORMATION(data);
 
   const handleAdd = async ({
     type,
@@ -60,21 +63,25 @@ const Layout = () => {
         userName: value,
         avatar: '',
         isActive: false,
-        email: '',
+        email: 'Unknown',
         registered: dateFormat(new Date().toString()),
         lastVisited: dateFormat(new Date().toString()),
         details: '',
         bgColor: generateRandomColor(),
+        roles: [],
+        rules: [],
       });
 
       const data = extractData(res);
 
       if (users && data) {
-        mutate(`${API_BASE_URL}/${USER_API_ENDPOINT}`, [...users, data], false);
+        mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
         setSelectedRow({ index: users.length, data });
+        setDataItems([...generateUserInfo(data)]);
         setIsShowProgress('success');
         return;
       }
+
       setIsShowProgress('failure');
     }
   };

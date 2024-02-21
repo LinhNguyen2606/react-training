@@ -6,3 +6,4 @@ export { highlightKeyword } from '@helpers/highlight';
 export { fetcher } from '@helpers/fetcher';
 export { delayRespone } from '@helpers/delay';
 export { extractData } from '@helpers/extract';
+export { getUserRolesAndRules } from '@helpers/get';

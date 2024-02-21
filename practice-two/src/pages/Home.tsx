@@ -11,17 +11,38 @@ import { EnitityColumn, User } from '@interfaces';
 import {
   Avatar,
   SearchBar,
+  Sidebar,
   Status,
   Table
 } from '@components';
 import { DrawerPosition } from '@components/Drawer';
+import { SidebarProps } from '@components/Sidebar/SidebarInfo';
 
 // Helpers
-import { highlightKeyword } from '@helpers';
+import { getUserRolesAndRules, highlightKeyword } from '@helpers';
 
 // Context
 import { Context } from '@stores';
-import { getUsers } from '@services';
+
+// Services
+import {
+  getRoles,
+  getRules,
+  getUserRoles,
+  getUserRules,
+  getUsers,
+} from '@services';
+
+// Constants
+import { TYPES, USER_INFORMATION } from '@constants';
+
+// Icons
+import {
+  Clock,
+  Envelope,
+  ListCheck,
+  Shield
+} from '@assets/icons';
 
 /**
  * Defines the columns configuration for the user table.
@@ -75,14 +96,32 @@ const generateUserTableColumns = (
 };
 
 const Home = ({ position }: { position: DrawerPosition }) => {
+  // Variables related to user data and state
+  const { selectedRow, setSelectedRow, setDataItems } = useContext(Context);
+  const selectedRowData = selectedRow.data;
+
   // Variables related to UI state
   const [keyword, setKeyword] = useState('');
+  const [showCard, setShowCard] = useState(true);
+  const isShowDetails = showCard && selectedRowData !== null;
 
   // Variables related to data processing
   const columns = generateUserTableColumns(keyword);
+  const generateUserInfo = (data: User) => USER_INFORMATION(data);
 
   const { data: users, isValidating } = getUsers();
-  const { selectedRow, setSelectedRow } = useContext(Context);
+  const { data: roleData } = getRoles();
+  const { data: ruleData } = getRules();
+  const { data: userRolesData } = getUserRoles();
+  const { data: userRulesData } = getUserRules();
+
+  const { userRolesItem, userRulesItem } = getUserRolesAndRules(
+    Number(selectedRowData?.id!),
+    roleData!,
+    ruleData!,
+    userRolesData!,
+    userRulesData!
+  );
 
   /**
    * Handles the search operation in the application.
@@ -114,11 +153,18 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
+      setDataItems([]);
       return;
     }
 
     setSelectedRow({ index, data: user });
+    setDataItems([...generateUserInfo(user)]);
   };
+
+  /**
+   * Handle events to show the panel and hide the card
+   */
+  const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard);
 
   const placements = {
     left: '10px 10px 10px 222px',
@@ -132,17 +178,70 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     width: '100%',
   };
 
+  const userDetailsInfo = [
+    {
+      type: TYPES.AVATAR_LABEL_VIEW,
+      src: selectedRowData?.avatar,
+      alt: selectedRowData?.userName,
+      label: selectedRowData?.userName,
+      bgColor: selectedRowData?.bgColor,
+    },
+    {
+      type: TYPES.TEXT_VIEW,
+      icon: Envelope,
+      label: 'Email:',
+      value: selectedRowData?.email,
+    },
+    {
+      type: TYPES.TEXT_VIEW,
+      icon: Clock,
+      label: 'Last visited:',
+      value: selectedRowData?.lastVisited,
+    },
+    {
+      type: TYPES.LIST_VIEW,
+      values: [
+        {
+          icon: Shield,
+          label: `Roles (${userRolesItem?.length})`,
+          values: userRolesItem?.map((role) => ({
+            text: role?.name,
+            link: '/',
+          })),
+        },
+        {
+          icon: ListCheck,
+          label: `Rules (${userRulesItem?.length})`,
+          values: userRulesItem?.map((rule) => ({
+            text: rule?.description,
+            link: '/',
+          })),
+        },
+      ],
+    },
+  ] as SidebarProps['data'];
+
   return (
-    <div style={contentWrapperStyle}>
-      <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
-      <Table
-        rowData={filteredUsers}
-        columns={columns}
-        onRowClick={handleRowClick}
-        selectedRow={selectedRow}
-        isloading={isValidating}
-      />
-    </div>
+    <>
+      <div style={contentWrapperStyle}>
+        <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
+        <Table
+          rowData={filteredUsers}
+          columns={columns}
+          onRowClick={handleRowClick}
+          selectedRow={selectedRow}
+          isLoading={isValidating}
+        />
+      </div>
+      {isShowDetails && (
+        <Sidebar
+          title="User information"
+          isActive={selectedRowData.isActive}
+          onShowPanel={handleTogglePanel}
+          data={userDetailsInfo}
+        />
+      )}
+    </>
   );
 };
 

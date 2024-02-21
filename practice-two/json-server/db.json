@@ -30,5 +30,51 @@
       "lastVisited": "Jun 02, 2020 21:27:53",
       "details": ""
     }
+  ],
+  "roles": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "avatar": "",
+      "bgColor": "#ddd"
+    }
+  ],
+  "rules": [
+    {
+      "id": 1,
+      "name": "CanSeeUsers",
+      "description": "Can see user details and access levels"
+    },
+    {
+      "id": 2,
+      "name": "CanEditUsers",
+      "description": "Can modify user details and access levels"
+    }
+  ],
+  "userRules": [
+    {
+      "id": 1,
+      "userId": 1,
+      "ruleId": 1
+    },
+    {
+      "id": 1,
+      "userId": 1,
+      "ruleId": 2
+    }
+  ],
+  "userRoles": [
+    {
+      "id": 1,
+      "userId": 1,
+      "roleId": 1
+    }
+  ],
+  "roleRules": [
+    {
+      "id": 1,
+      "ruleId": 1,
+      "roleId": 1
+    }
   ]
 }

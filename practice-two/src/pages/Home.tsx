@@ -10,6 +10,7 @@ import { EnitityColumn, User } from '@interfaces';
 // Components
 import {
   Avatar,
+  Panel,
   SearchBar,
   Sidebar,
   Status,
@@ -17,11 +18,13 @@ import {
 } from '@components';
 import { DrawerPosition } from '@components/Drawer';
 import { SidebarProps } from '@components/Sidebar/SidebarInfo';
+import EditorProfile from '@components/Panel/EditorProfile';
 
 // Helpers
 import {
   getUserRolesAndRules,
-  highlightKeyword
+  highlightKeyword,
+  transformDataItems,
 } from '@helpers';
 
 // Context
@@ -102,14 +105,17 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   // Variables related to user data and state
   const { selectedRow, setSelectedRow } = useContext(Context);
   const selectedRowData = selectedRow.data;
+  const [dataItems, setDataItems] = useState<any>([]);
 
   // Variables related to UI state
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
   const isShowDetails = showCard && selectedRowData !== null;
+  const isShowEdit = !showCard && selectedRowData !== null;
 
   // Variables related to data processing
   const columns = generateUserTableColumns(keyword);
+  const generateDataItems = (data: User) => transformDataItems(data);
 
   const { data: users, isValidating } = getUsers();
   const { data: roleData } = getRoles();
@@ -155,10 +161,12 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
+      setDataItems([]);
       return;
     }
 
     setSelectedRow({ index, data: user });
+    setDataItems([...generateDataItems(user)]);
   };
 
   /**
@@ -221,6 +229,25 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     },
   ] as SidebarProps['data'];
 
+  const handleRemove = () => {};
+
+  const handleSubmit = () => {};
+
+  const tabsContent = [
+    {
+      content: (
+        <EditorProfile
+          id={selectedRowData?.id}
+          bgColor={selectedRowData?.bgColor}
+          dataItems={dataItems}
+          onRemove={handleRemove}
+          onSubmit={handleSubmit}
+        />
+      ),
+      title: 'General',
+    },
+  ];
+
   return (
     <>
       <div style={contentWrapperStyle}>
@@ -240,6 +267,9 @@ const Home = ({ position }: { position: DrawerPosition }) => {
           onShowPanel={handleTogglePanel}
           data={userDetailsInfo}
         />
+      )}
+      {isShowEdit && (
+        <Panel tabs={tabsContent} onBackClick={handleTogglePanel} />
       )}
     </>
   );

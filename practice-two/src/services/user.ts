@@ -3,8 +3,8 @@ import useSWR from 'swr';
 // Constants
 import { API } from '@constants';
 
-// Helpers
-import { delayRespone, fetcher } from '@helpers';
+// Helper
+import { fetcher } from '@helpers';
 
 // Interfaces
 import {
@@ -61,7 +61,6 @@ const handleAPIRequest = async <T>(
     const res = await fetch(url, options);
     const data = handleRespone<T>(res);
 
-    if (data) return delayRespone(data);
     return data;
   } catch (err) {
     return handleError(err);

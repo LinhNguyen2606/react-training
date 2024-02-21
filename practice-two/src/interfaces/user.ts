@@ -1,3 +1,6 @@
+// Interfaces
+import { Role, Rule } from '@interfaces';
+
 export interface User {
   id?: number;
   userName: string;
@@ -8,4 +11,6 @@ export interface User {
   lastVisited: string;
   details: string;
   bgColor: string;
+  roles: Role[];
+  rules: Rule[];
 }

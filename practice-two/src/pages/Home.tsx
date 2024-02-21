@@ -19,7 +19,10 @@ import { DrawerPosition } from '@components/Drawer';
 import { SidebarProps } from '@components/Sidebar/SidebarInfo';
 
 // Helpers
-import { getUserRolesAndRules, highlightKeyword } from '@helpers';
+import {
+  getUserRolesAndRules,
+  highlightKeyword
+} from '@helpers';
 
 // Context
 import { Context } from '@stores';
@@ -33,8 +36,8 @@ import {
   getUsers,
 } from '@services';
 
-// Constants
-import { TYPES, USER_INFORMATION } from '@constants';
+// Constant
+import { TYPES } from '@constants';
 
 // Icons
 import {
@@ -97,7 +100,7 @@ const generateUserTableColumns = (
 
 const Home = ({ position }: { position: DrawerPosition }) => {
   // Variables related to user data and state
-  const { selectedRow, setSelectedRow, setDataItems } = useContext(Context);
+  const { selectedRow, setSelectedRow } = useContext(Context);
   const selectedRowData = selectedRow.data;
 
   // Variables related to UI state
@@ -107,7 +110,6 @@ const Home = ({ position }: { position: DrawerPosition }) => {
 
   // Variables related to data processing
   const columns = generateUserTableColumns(keyword);
-  const generateUserInfo = (data: User) => USER_INFORMATION(data);
 
   const { data: users, isValidating } = getUsers();
   const { data: roleData } = getRoles();
@@ -153,12 +155,10 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
-      setDataItems([]);
       return;
     }
 
     setSelectedRow({ index, data: user });
-    setDataItems([...generateUserInfo(user)]);
   };
 
   /**

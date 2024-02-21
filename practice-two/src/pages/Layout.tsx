@@ -18,8 +18,7 @@ import {
 // Constants
 import {
   API,
-  PATH,
-  USER_INFORMATION
+  PATH
 } from '@constants';
 
 // Helpers
@@ -34,7 +33,6 @@ import { createUser, getUsers } from '@services';
 
 // Store
 import { Context } from '@stores';
-import { User } from '@interfaces';
 
 const Layout = () => {
   const [isShowProgress, setIsShowProgress] = useState<
@@ -45,10 +43,14 @@ const Layout = () => {
 
   const { data: users } = getUsers();
 
-  const { setSelectedRow, setDataItems } = useContext(Context);
+  const { setSelectedRow } = useContext(Context);
 
-  const generateUserInfo = (data: User) => USER_INFORMATION(data);
-
+  /**
+   * Add a new user or new role.
+   * @param {string} type - the type (user or role) you want to add.
+   * @param {string} value - the value you fill in.
+   * @returns {Promise<void>} - Promise when finished processing.
+   */
   const handleAdd = async ({
     type,
     value,
@@ -77,7 +79,6 @@ const Layout = () => {
       if (users && data) {
         mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
         setSelectedRow({ index: users.length, data });
-        setDataItems([...generateUserInfo(data)]);
         setIsShowProgress('success');
         return;
       }

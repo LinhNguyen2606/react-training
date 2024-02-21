@@ -5,4 +5,4 @@ export interface DataItems {
   key: string;
   value: string | boolean;
   keyImageDefault?: string;
-};
+}

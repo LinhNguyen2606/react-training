@@ -45,9 +45,17 @@
   }
 
   &__permission {
-    display   : flex;
-    gap       : 10px;
-    margin-top: 20px;
+    align-items: center;
+    display    : flex;
+    gap        : 10px;
+    margin-top : 20px;
+
+    &--label {
+      color      : $tertiary-color;
+      line-height: calc(25/14);
+      font-size  : $fs-x-small;
+      font-weight: $fw-medium;
+    }
   }
 
   &-values {

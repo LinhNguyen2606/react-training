@@ -1,4 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
 // Component
@@ -17,6 +21,8 @@ import {
 } from '@pages';
 
 const AppRoutes = () => {
+  const location = useLocation();
+
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}

@@ -233,7 +233,7 @@ const EditorProfile = ({
           isOpen={isOpenModal}
           type="confirm"
           title="Delete"
-          textConfirmation="Are you sure you want to delete this user?"
+          textConfirmation="Are you sure to delete this user?"
           onHide={handleToggleModal}
           onRemove={handleOnRemove}
         />

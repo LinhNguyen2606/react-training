@@ -23,12 +23,12 @@ const ListItemView = ({
         <Icons src={icon} />
         <label>{label}</label>
       </div>
-      <div className="sidebar--values">
-        {values.map((item, index) => (
+      <div className="sidebar-values">
+        {values?.map((item, index) => (
           <Link
             key={index}
             to={item.link}
-            className="text--primary sidebar--values__label"
+            className="sidebar-values__label"
           >
             {item.text}
           </Link>

@@ -21,7 +21,7 @@ const ListItemView = ({
     <>
       <div className="sidebar__permission">
         <Icons src={icon} />
-        <label>{label}</label>
+        <label className='sidebar__permission--label'>{label}</label>
       </div>
       <div className="sidebar-values">
         {values?.map((item, index) => (

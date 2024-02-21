@@ -21,7 +21,7 @@ const TextView = ({
     <>
       <div className="text-view--icon">
         {icon && <Icons src={icon} />}
-        {label && <label>{label}</label>}
+        {label && <label className='text-view--label'>{label}</label>}
       </div>
       {value && (
         <span className={`${additionalClass}`}>{value}</span>

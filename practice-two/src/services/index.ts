@@ -2,6 +2,7 @@ export {
   getUsers,
   createUser,
   deleteUser,
+  editUser,
   getRoleRules,
   getUserRoles,
   getUserRules,

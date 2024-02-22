@@ -1,5 +1,5 @@
 export interface UserRule {
-  id: number;
-  userId: number;
-  ruleId: number;
+  id: string;
+  userId: string;
+  ruleId: string;
 }

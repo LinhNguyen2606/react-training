@@ -1,37 +1,34 @@
-import {
-  ReactNode,
-  useReducer,
-  useState
-} from 'react';
+import { ReactNode, useState } from 'react';
 
 // Stores
-import { Context, reducer } from '@stores';
-import { initialState } from '@stores/reducer';
+import { Context } from '@stores';
 
 // Interface
-import { User } from '@interfaces';
+import { DataItems, User } from '@interfaces';
 
 type ProviderProps = {
   children: ReactNode;
 };
 
 const Provider: React.FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
     data: User | null;
   }>({ index: -1, data: null });
-  const [dataItems, setDataItems] = useState<any>([]);
+  const [dataItems, setDataItems] = useState<DataItems[]>([]);
+  const [isShowProgress, setIsShowProgress] = useState<
+    'idle' | 'processing' | 'success' | 'failure'
+  >('idle');
 
   return (
     <Context.Provider
       value={{
-        state,
-        dispatch,
         selectedRow,
         setSelectedRow,
         dataItems,
-        setDataItems
+        setDataItems,
+        isShowProgress,
+        setIsShowProgress,
       }}
     >
       {children}

@@ -1,26 +1,27 @@
 import React, { createContext } from 'react';
 
 // Interface
-import { State, User } from '@interfaces';
+import { DataItems, User } from '@interfaces';
 
-import { initialState } from '@stores/Reducer';
 
 type ContextProps = {
-  state: State;
-  dispatch: React.Dispatch<any>;
   selectedRow: { index: number; data: User | null };
   setSelectedRow: (selectedRow: { index: number; data: User | null }) => void;
-  dataItems: any;
+  dataItems: DataItems[];
   setDataItems: React.Dispatch<React.SetStateAction<any>>;
+  isShowProgress: 'idle' | 'processing' | 'success' | 'failure';
+  setIsShowProgress: React.Dispatch<
+    React.SetStateAction<'idle' | 'processing' | 'success' | 'failure'>
+  >;
 };
 
 const Context = createContext<ContextProps>({
-  state: initialState,
-  dispatch: () => {},
   selectedRow: { index: -1, data: null },
   setSelectedRow: () => {},
   dataItems: [],
   setDataItems: () => {},
+  isShowProgress: 'idle',
+  setIsShowProgress: () => {},
 });
 
 export default Context;

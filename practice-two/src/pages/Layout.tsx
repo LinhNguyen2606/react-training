@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -16,16 +16,14 @@ import {
 } from '@components';
 
 // Constants
-import {
-  API,
-  PATH
-} from '@constants';
+import { API, PATH } from '@constants';
 
 // Helpers
 import {
   dateFormat,
   extractData,
-  generateRandomColor
+  generateRandomColor,
+  transformDataItems,
 } from '@helpers';
 
 // Services
@@ -33,17 +31,22 @@ import { createUser, getUsers } from '@services';
 
 // Store
 import { Context } from '@stores';
+import { User } from '@interfaces';
 
 const Layout = () => {
-  const [isShowProgress, setIsShowProgress] = useState<
-    'idle' | 'processing' | 'success' | 'failure'
-  >('idle');
-
   const navigate = useNavigate();
 
   const { data: users } = getUsers();
 
-  const { setSelectedRow } = useContext(Context);
+  const {
+    setSelectedRow,
+    isShowProgress,
+    setIsShowProgress,
+    setDataItems
+  } =
+    useContext(Context);
+
+  const generateDataItems = (data: User) => transformDataItems(data);
 
   /**
    * Add a new user or new role.
@@ -79,6 +82,7 @@ const Layout = () => {
       if (users && data) {
         mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
         setSelectedRow({ index: users.length, data });
+        setDataItems([...generateDataItems(data)]);
         setIsShowProgress('success');
         return;
       }

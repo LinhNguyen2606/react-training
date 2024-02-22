@@ -2,7 +2,7 @@
 import { Role, Rule } from '@interfaces';
 
 export interface User {
-  id?: number;
+  id?: string;
   userName: string;
   isActive: boolean;
   email: string;

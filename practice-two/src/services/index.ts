@@ -1,6 +1,7 @@
 export {
   getUsers,
   createUser,
+  deleteUser,
   getRoleRules,
   getUserRoles,
   getUserRules,

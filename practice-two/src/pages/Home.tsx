@@ -3,6 +3,7 @@ import {
   useMemo,
   useState
 } from 'react';
+import { mutate } from 'swr';
 
 // Interfaces
 import { EnitityColumn, User } from '@interfaces';
@@ -22,6 +23,7 @@ import EditorProfile from '@components/Panel/EditorProfile';
 
 // Helpers
 import {
+  extractData,
   getUserRolesAndRules,
   highlightKeyword,
   transformDataItems,
@@ -32,6 +34,7 @@ import { Context } from '@stores';
 
 // Services
 import {
+  deleteUser,
   getRoles,
   getRules,
   getUserRoles,
@@ -40,7 +43,7 @@ import {
 } from '@services';
 
 // Constant
-import { TYPES } from '@constants';
+import { API, TYPES } from '@constants';
 
 // Icons
 import {
@@ -103,9 +106,14 @@ const generateUserTableColumns = (
 
 const Home = ({ position }: { position: DrawerPosition }) => {
   // Variables related to user data and state
-  const { selectedRow, setSelectedRow } = useContext(Context);
+  const {
+    selectedRow,
+    setSelectedRow,
+    setIsShowProgress,
+    dataItems,
+    setDataItems,
+  } = useContext(Context);
   const selectedRowData = selectedRow.data;
-  const [dataItems, setDataItems] = useState<any>([]);
 
   // Variables related to UI state
   const [keyword, setKeyword] = useState('');
@@ -124,7 +132,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const { data: userRulesData } = getUserRules();
 
   const { userRolesItem, userRulesItem } = getUserRolesAndRules(
-    Number(selectedRowData?.id!),
+    selectedRowData?.id!,
     roleData!,
     ruleData!,
     userRolesData!,
@@ -229,7 +237,28 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     },
   ] as SidebarProps['data'];
 
-  const handleRemove = () => {};
+  /**
+   * Handles the removal of a user.
+   * This function sets the progress state to 'processing',
+   * sends a request to delete the user with the specified ID,
+   * and updates the UI based on the response.
+   */
+  const handleRemove = async () => {
+    setIsShowProgress('processing');
+
+    const res = await deleteUser(selectedRowData?.id!);
+
+    const data = extractData(res);
+
+    if (data) {
+      mutate(`${API.BASE}/${API.USER}`, false);
+      setSelectedRow({ index: -1, data: null });
+      setIsShowProgress('success');
+      return;
+    }
+
+    setIsShowProgress('failure');
+  };
 
   const handleSubmit = () => {};
 

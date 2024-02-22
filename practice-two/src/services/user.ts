@@ -103,6 +103,19 @@ export const createUser = (userData: User): Promise<ApiResponse<User>> =>
   });
 
 /**
+ * Delete a user with corresponding id.
+ * @param {User} userId - The ID of the user to delete.
+ * @returns {Promise<APIResponse<User>>} A promise that resolves to the API response containing the deleted user, or an error message.
+ */
+export const deleteUser = (userId: string): Promise<ApiResponse<User>> =>
+  handleAPIRequest(`${API.BASE}/${API.USER}/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+/**
  * Retrieves a list of user roles from the API.
  * @returns {{
  *   data: UserRole[] | undefined; - The array of UserRole objects or undefined.

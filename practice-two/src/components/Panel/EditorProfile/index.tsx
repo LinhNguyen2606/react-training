@@ -31,10 +31,10 @@ type KeyIndexType = {
 };
 
 interface EditorProfileProps {
-  id?: number;
+  id?: string;
   bgColor?: string;
   dataItems: DataItems[];
-  onRemove: (id: number) => void;
+  onRemove: (id: string) => void;
   onSubmit: (userData: any) => void;
 }
 
@@ -122,7 +122,8 @@ const EditorProfile = ({
    */
   const handleOnRemove = () => {
     setIsOpenModal(false);
-    if (typeof id === 'number') onRemove(id);
+
+    if (id) onRemove(id);
   };
 
   /**

@@ -68,7 +68,7 @@ const Layout = () => {
         userName: value,
         avatar: '',
         isActive: false,
-        email: 'Unknown',
+        email: '',
         registered: dateFormat(new Date().toString()),
         lastVisited: dateFormat(new Date().toString()),
         details: '',
@@ -76,7 +76,7 @@ const Layout = () => {
         roles: [],
         rules: [],
       });
-
+      
       const data = extractData(res);
 
       if (users && data) {

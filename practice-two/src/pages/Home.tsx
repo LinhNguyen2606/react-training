@@ -23,6 +23,7 @@ import EditorProfile from '@components/Panel/EditorProfile';
 
 // Helpers
 import {
+  dateFormat,
   extractData,
   getUserRolesAndRules,
   highlightKeyword,
@@ -35,6 +36,7 @@ import { Context } from '@stores';
 // Services
 import {
   deleteUser,
+  editUser,
   getRoles,
   getRules,
   getUserRoles,
@@ -260,7 +262,41 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     setIsShowProgress('failure');
   };
 
-  const handleSubmit = () => {};
+  /**
+   * Edit a user.
+   * @param {string} userData - The user's data after updated.
+   * @returns {Promise<void>} - Promise when finished processing.
+   */
+  const handleUpdate = async (userData: User) => {
+    setIsShowProgress('processing');
+
+    const updatedUserData = {
+      userName: userData.userName,
+      avatar: userData.avatar,
+      isActive: userData.isActive,
+      email: userData.email,
+      registered: selectedRowData?.registered || '',
+      lastVisited: dateFormat(new Date().toString()),
+      details: userData.details,
+      bgColor: selectedRowData ? selectedRowData.bgColor : '',
+      roles: [],
+      rules: []
+    }
+
+    const res = await editUser(selectedRowData?.id!, updatedUserData)
+
+    const data = extractData(res);
+
+    if (data) {
+      mutate(`${API.BASE}/${API.USER}`, false);
+      setSelectedRow({ index: selectedRow.index, data });
+      setDataItems([...generateDataItems(data)]);
+      setIsShowProgress('success');
+      return;
+    }
+
+    setIsShowProgress('failure');
+  };
 
   const tabsContent = [
     {
@@ -270,7 +306,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
           bgColor={selectedRowData?.bgColor}
           dataItems={dataItems}
           onRemove={handleRemove}
-          onSubmit={handleSubmit}
+          onSubmit={handleUpdate}
         />
       ),
       title: 'General',

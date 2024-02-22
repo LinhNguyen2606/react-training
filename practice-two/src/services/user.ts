@@ -116,6 +116,24 @@ export const deleteUser = (userId: string): Promise<ApiResponse<User>> =>
   });
 
 /**
+ * Edit a user with corresponding data.
+ * @param {number} userId - The users'id.
+ * @param {User} userData - The data for the user.
+ * @returns {Promise<APIResponse<User>>} A promise that resolves to the API response containing the data to edit user, or an error message.
+ */
+export const editUser = (
+  userId: string,
+  userData: User
+): Promise<ApiResponse<User>> =>
+  handleAPIRequest(`${API.BASE}/${API.USER}/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+
+/**
  * Retrieves a list of user roles from the API.
  * @returns {{
  *   data: UserRole[] | undefined; - The array of UserRole objects or undefined.

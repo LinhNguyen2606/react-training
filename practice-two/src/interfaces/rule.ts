@@ -1,5 +1,5 @@
 export interface Rule {
-  id: number;
+  id: string;
   name: string;
   description: string;
 }

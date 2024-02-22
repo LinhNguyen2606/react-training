@@ -20,7 +20,7 @@ import {
  * `userRulesItem` is an array of rules that the user has.
  */
 export const getUserRolesAndRules = (
-  userId: number,
+  userId: string,
   roles: Role[],
   rules: Rule[],
   userRoles: UserRole[],
@@ -28,22 +28,22 @@ export const getUserRolesAndRules = (
 ) => {
   // Get the userRoles for the specified user
   const userRoleRelations = userRoles?.filter(
-    (item) => Number(item.userId) === userId
+    (item) => item.userId === userId
   );
 
   // Get roles for user based on userRolesRelations
   const userRolesItem = userRoleRelations?.map((item) =>
-    roles.find((role) => Number(role.id) === Number(item.roleId))
+    roles.find((role) => role.id === item.roleId)
   );
 
   // Get roleRules for roles of user
   const userRuleRelations = userRules?.filter(
-    (item) => Number(item.userId) === userId
+    (item) => item.userId === userId
   );
 
   // Get rules for user based on userRoleRuleRelations
   const userRulesItem = userRuleRelations?.map((item) =>
-    rules.find((rule) => Number(rule.id) === Number(item.ruleId))
+    rules.find((rule) => rule.id === item.ruleId)
   );
 
   return { userRolesItem, userRulesItem };

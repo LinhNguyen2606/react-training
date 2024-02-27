@@ -35,7 +35,7 @@ export const Default: Story = {
         title: 'General',
         content: (
           <EditorProfile
-            id={1}
+            id="1"
             bgColor={generateRandomColor()}
             dataItems={[
               {
@@ -101,25 +101,25 @@ export const Default: Story = {
             heading="Elly Soyer"
             rules={[
               {
-                id: 1,
+                id: "1",
                 name: 'CanAdminProjects',
                 description: 'Can create projects',
                 isAssigned: true,
                 isAssignedDirectly: true,
                 assignedTo: [
                   {
-                    id: 2,
+                    id: "2",
                     name: 'Admin',
                   },
                 ],
               },
               {
-                id: 2,
+                id: "2",
                 name: 'CanEditUsers',
                 description: 'Can modify user details and access levels',
                 isAssigned: false,
                 isAssignedDirectly: true,
-                assignedTo: [{ id: 1, name: 'Admin' }],
+                assignedTo: [{ id: "1", name: 'Admin' }],
               },
             ]}
           />
@@ -132,18 +132,18 @@ export const Default: Story = {
             heading="Elly Soyer"
             roles={[
               {
-                id: 1,
+                id: "1",
                 name: 'Admin',
                 bgColor: generateRandomColor(),
                 isAssigned: true,
-                assignedTo: [{ id: 2, name: 'Admin' }],
+                assignedTo: [{ id: "2", name: 'Admin' }],
               },
               {
-                id: 2,
+                id: "2",
                 name: 'Team Lead',
                 bgColor: generateRandomColor(),
                 isAssigned: false,
-                assignedTo: [{ id: 1, name: 'Admin' }],
+                assignedTo: [{ id: "1", name: 'Admin' }],
               },
             ]}
           />

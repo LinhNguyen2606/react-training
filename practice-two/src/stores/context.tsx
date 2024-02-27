@@ -1,12 +1,11 @@
 import React, { createContext } from 'react';
 
 // Interface
-import { DataItems, User } from '@interfaces';
-
+import { DataItems } from '@interfaces';
 
 type ContextProps = {
-  selectedRow: { index: number; data: User | null };
-  setSelectedRow: (selectedRow: { index: number; data: User | null }) => void;
+  selectedRow: { index: number; data: any | null };
+  setSelectedRow: (selectedRow: { index: number; data: any | null }) => void;
   dataItems: DataItems[];
   setDataItems: React.Dispatch<React.SetStateAction<any>>;
   isShowProgress: 'idle' | 'processing' | 'success' | 'failure';

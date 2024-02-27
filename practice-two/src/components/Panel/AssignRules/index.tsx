@@ -1,5 +1,10 @@
+import { memo } from 'react';
+
 // Component
-import AssignItem, { Item } from '@components/Panel/AssignItems';
+import AssignItem from '@components/Panel/AssignItems';
+
+// Interface
+import { Item } from '@interfaces';
 
 interface AssignRulesProps {
   rules: Item[];
@@ -16,4 +21,4 @@ const AssignRules = ({ rules, heading }: AssignRulesProps) => {
   )
 };
 
-export default AssignRules;
+export default memo(AssignRules);

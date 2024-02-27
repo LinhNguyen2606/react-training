@@ -1,9 +1,10 @@
-import { ChangeEvent } from 'react';
-
 // Components
-import { Item, AssignmentOptions } from '@components/Panel/AssignItems';
+import { AssignmentOptions } from '@components/Panel/AssignItems';
 import AssignItemAvatarText from '@components/Panel/AssignBody/AssignItemAvatarText';
 import AssignItemTextTags from '@components/Panel/AssignBody/AssignItemTextTags';
+
+// Interface
+import { Item } from '@interfaces';
 
 interface AssignBodyProps {
   src?: string;
@@ -11,8 +12,8 @@ interface AssignBodyProps {
   isModifying: boolean;
   selectedType: AssignmentOptions;
   handleItemSelect: (
-    id: number
-  ) => (event: ChangeEvent<HTMLInputElement>) => void;
+    id: string
+  ) => () => void;
 }
 
 const AssignBody = ({
@@ -22,7 +23,6 @@ const AssignBody = ({
   selectedType,
   handleItemSelect,
 }: AssignBodyProps) => {
-  
   const style =
     selectedType === AssignmentOptions.AssignedDirectly ? '#f4f5f9' : '#fff';
 

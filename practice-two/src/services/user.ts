@@ -53,7 +53,7 @@ const handleError = (err: unknown): { data: null; errMsg: string } => {
  * @param {RequestInit} options - The options for the fetch request.
  * @returns {Promise<APIResponse<T>>} - The response data or an error message.
  */
-const handleAPIRequest = async <T>(
+export const handleAPIRequest = async <T>(
   url: string,
   options?: RequestInit
 ): Promise<ApiResponse<T>> => {

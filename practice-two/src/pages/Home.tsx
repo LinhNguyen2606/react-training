@@ -6,7 +6,11 @@ import {
 import { mutate } from 'swr';
 
 // Interfaces
-import { EnitityColumn, User } from '@interfaces';
+import {
+  EnitityColumn,
+  Item,
+  User
+} from '@interfaces';
 
 // Components
 import {
@@ -27,7 +31,7 @@ import {
   extractData,
   getUserRolesAndRules,
   highlightKeyword,
-  transformDataItems,
+  transformUserInfo,
 } from '@helpers';
 
 // Context
@@ -37,6 +41,7 @@ import { Context } from '@stores';
 import {
   deleteUser,
   editUser,
+  getRoleRules,
   getRoles,
   getRules,
   getUserRoles,
@@ -54,6 +59,7 @@ import {
   ListCheck,
   Shield
 } from '@assets/icons';
+import AssignRules from '@components/Panel/AssignRules';
 
 /**
  * Defines the columns configuration for the user table.
@@ -107,7 +113,6 @@ const generateUserTableColumns = (
 };
 
 const Home = ({ position }: { position: DrawerPosition }) => {
-  // Variables related to user data and state
   const {
     selectedRow,
     setSelectedRow,
@@ -123,15 +128,14 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const isShowDetails = showCard && selectedRowData !== null;
   const isShowEdit = !showCard && selectedRowData !== null;
 
-  // Variables related to data processing
   const columns = generateUserTableColumns(keyword);
-  const generateDataItems = (data: User) => transformDataItems(data);
 
   const { data: users, isValidating } = getUsers();
   const { data: roleData } = getRoles();
   const { data: ruleData } = getRules();
   const { data: userRolesData } = getUserRoles();
   const { data: userRulesData } = getUserRules();
+  const { data: roleRulesData } = getRoleRules();
 
   const { userRolesItem, userRulesItem } = getUserRolesAndRules(
     selectedRowData?.id!,
@@ -140,6 +144,47 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     userRolesData!,
     userRulesData!
   );
+
+  let userRules: Item[] = [];
+
+  if (ruleData && userRulesData) {
+    userRules = ruleData.map((rule) => {
+      // Check if the current user is assigned this rule or not
+      let isAssigned = userRulesData.some(
+        (userRule) =>
+          userRule.userId === selectedRowData?.id && userRule.ruleId === rule.id
+      );
+
+      // Find all roles assigned to this rule
+      let assignedTo = roleRulesData
+        ?.filter((roleRule) => roleRule.ruleId === rule.id)
+        .map((roleRule) => {
+          let role = roleData?.find((role) => role.id === roleRule.roleId);
+          return role ? { id: role.id, name: role.name } : undefined;
+        })
+        .filter(
+          (role): role is { id: string; name: string } => role !== undefined
+        );
+
+      // Check if the current user is assigned roles corresponding to this rule
+      if (assignedTo) {
+        assignedTo = assignedTo.filter((role) =>
+          userRolesData?.some(
+            (userRole) =>
+              userRole.userId === selectedRowData?.id &&
+              userRole.roleId === role.id
+          )
+        );
+      }
+
+      // Returns a new rule with the isAssigned and assignedTo properties set
+      return {
+        ...rule,
+        isAssigned: isAssigned,
+        assignedTo: assignedTo,
+      };
+    });
+  }
 
   /**
    * Handles the search operation in the application.
@@ -176,7 +221,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     }
 
     setSelectedRow({ index, data: user });
-    setDataItems([...generateDataItems(user)]);
+    setDataItems([...transformUserInfo(user)]);
   };
 
   /**
@@ -221,19 +266,27 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       values: [
         {
           icon: Shield,
-          label: `Roles (${userRolesItem?.length})`,
-          values: userRolesItem?.map((role) => ({
-            text: role?.name,
-            link: '/',
-          })),
+          label: `Roles (${
+            Array.isArray(userRolesItem) ? userRolesItem.length : 0
+          })`,
+          values: Array.isArray(userRolesItem)
+            ? userRolesItem.map((role) => ({
+                text: role?.name,
+                link: '/',
+              }))
+            : [],
         },
         {
           icon: ListCheck,
-          label: `Rules (${userRulesItem?.length})`,
-          values: userRulesItem?.map((rule) => ({
-            text: rule?.description,
-            link: '/',
-          })),
+          label: `Rules (${
+            Array.isArray(userRulesItem) ? userRulesItem.length : 0
+          })`,
+          values: Array.isArray(userRulesItem)
+            ? userRulesItem.map((rule) => ({
+                text: rule?.description,
+                link: '/',
+              }))
+            : [],
         },
       ],
     },
@@ -252,14 +305,15 @@ const Home = ({ position }: { position: DrawerPosition }) => {
 
     const data = extractData(res);
 
-    if (data) {
-      mutate(`${API.BASE}/${API.USER}`, false);
-      setSelectedRow({ index: -1, data: null });
-      setIsShowProgress('success');
+    if (!data) {
+      setIsShowProgress('failure');
       return;
     }
 
-    setIsShowProgress('failure');
+    mutate(`${API.BASE}/${API.USER}`);
+    setSelectedRow({ index: -1, data: null });
+    setDataItems([...transformUserInfo(data)]);
+    setIsShowProgress('success');
   };
 
   /**
@@ -280,28 +334,30 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       details: userData.details,
       bgColor: selectedRowData ? selectedRowData.bgColor : '',
       roles: [],
-      rules: []
-    }
+      rules: [],
+    };
 
-    const res = await editUser(selectedRowData?.id!, updatedUserData)
+    const res = await editUser(selectedRowData?.id!, updatedUserData);
 
     const data = extractData(res);
 
-    if (data) {
-      mutate(`${API.BASE}/${API.USER}`, false);
-      setSelectedRow({ index: selectedRow.index, data });
-      setDataItems([...generateDataItems(data)]);
-      setIsShowProgress('success');
+    if (!data) {
+      setIsShowProgress('failure');
       return;
     }
 
-    setIsShowProgress('failure');
+    mutate(`${API.BASE}/${API.USER}`);
+    setSelectedRow({ index: selectedRow.index, data });
+    setDataItems([...transformUserInfo(data)]);
+    setIsShowProgress('success');
   };
 
   const tabsContent = [
     {
+      title: 'General',
       content: (
         <EditorProfile
+          key={selectedRowData?.id}
           id={selectedRowData?.id}
           bgColor={selectedRowData?.bgColor}
           dataItems={dataItems}
@@ -309,7 +365,16 @@ const Home = ({ position }: { position: DrawerPosition }) => {
           onSubmit={handleUpdate}
         />
       ),
-      title: 'General',
+    },
+    {
+      title: 'Rules',
+      content: (
+        <AssignRules
+          key={selectedRowData?.id}
+          heading={selectedRowData?.userName}
+          rules={userRules}
+        />
+      ),
     },
   ];
 
@@ -327,6 +392,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       </div>
       {isShowDetails && (
         <Sidebar
+          key={selectedRowData.id}
           title="User information"
           isActive={selectedRowData.isActive}
           onShowPanel={handleTogglePanel}

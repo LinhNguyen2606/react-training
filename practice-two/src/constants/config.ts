@@ -5,5 +5,5 @@ export const API = {
   RULE: 'rules',
   USER_ROLES: 'userRoles',
   USER_RULES: 'userRules',
-  ROLE_RULES: 'userRules',
+  ROLE_RULES: 'roleRules',
 };

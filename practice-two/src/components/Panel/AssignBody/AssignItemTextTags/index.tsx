@@ -1,5 +1,3 @@
-import { ChangeEvent } from 'react';
-
 // Components
 import { Icons } from '@components';
 import { AssignmentOptions } from '@components/Panel/AssignItems';
@@ -8,21 +6,19 @@ import { AssignmentOptions } from '@components/Panel/AssignItems';
 import { Shield } from '@assets/icons';
 
 interface AssignItemTextTagsProps {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   isAssigned: boolean;
   isModifying: boolean;
-  assignedTo: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
+  assignedTo?: {
+    id?: string;
+    name?: string;
+  }[];
   selectedType: AssignmentOptions;
   handleItemSelect: (
-    id: number
-  ) => (event: ChangeEvent<HTMLInputElement>) => void;
+    id: string
+  ) => () => void;
 }
 
 const AssignItemTextTags = ({
@@ -91,23 +87,28 @@ const AssignItemTextTags = ({
               className="panel-assign--input"
             />
           )}
+
           <div>
-            <span
-              className="panel-assign__item-name"
-              style={{ fontWeight: '400' }}
-            >
-              {name}
-            </span>
-            <p
-              className="panel-assign__item-desc"
-              style={{
-                lineHeight: 'calc(15/13)',
-                color: '#8693a5',
-                fontSize: '13px',
-              }}
-            >
-              {description}
-            </p>
+            {isModifying || isAssigned ? (
+              <>
+                <span
+                  className="panel-assign__item-name"
+                  style={{ fontWeight: '400' }}
+                >
+                  {name}
+                </span>
+                <p
+                  className="panel-assign__item-desc"
+                  style={{
+                    lineHeight: 'calc(15/13)',
+                    color: '#8693a5',
+                    fontSize: '13px',
+                  }}
+                >
+                  {description}
+                </p>
+              </>
+            ) : null}
           </div>
         </div>
       )}

@@ -1,8 +1,15 @@
 import { ChangeEvent } from 'react';
 
 // Components
-import { Button, RadioField, TextView } from '@components';
-import { AssignmentOptions, Item } from '@components/Panel/AssignItems';
+import {
+  Button,
+  RadioField,
+  TextView
+} from '@components';
+import { AssignmentOptions } from '@components/Panel/AssignItems';
+
+// Interface
+import { Item } from '@interfaces';
 
 export enum SingleOptionTypes {
   RolesAssigned = 'Roles assigned',

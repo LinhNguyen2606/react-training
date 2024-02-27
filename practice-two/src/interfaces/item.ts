@@ -3,12 +3,10 @@ export interface Item {
   name: string;
   bgColor?: string;
   description?: string;
-  isAssigned?: boolean;
+  isAssigned: boolean;
   isAssignedDirectly?: boolean;
-  assignedTo?: [
-    {
-      id: string;
-      name: string;
-    }
-  ];
+  assignedTo?: {
+    id?: string;
+    name?: string;
+  }[];
 }

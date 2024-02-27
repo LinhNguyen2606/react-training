@@ -1,6 +1,11 @@
+import { memo } from 'react';
+
 // Components
-import AssignItem, { Item } from '@components/Panel/AssignItems';
+import AssignItem from '@components/Panel/AssignItems';
 import { SingleOptionTypes } from '@components/Panel/AssignHeader';
+
+// Interfaces
+import { Item } from '@interfaces';
 
 interface AssignRolesProps {
   roles: Item[];
@@ -18,4 +23,4 @@ const AssignRoles = ({ roles, heading }: AssignRolesProps) => {
   );
 };
 
-export default AssignRoles;
+export default memo(AssignRoles);

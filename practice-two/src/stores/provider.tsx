@@ -28,7 +28,7 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
         dataItems,
         setDataItems,
         isShowProgress,
-        setIsShowProgress,
+        setIsShowProgress
       }}
     >
       {children}

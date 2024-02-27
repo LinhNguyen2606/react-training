@@ -1,18 +1,16 @@
-import { ChangeEvent } from 'react';
-
 // Component
 import { Avatar } from '@components';
 
 interface AssignItemAvatarTextProps {
-  id: number;
+  id: string;
   src?: string;
   name: string;
   bgColor?: string;
   isModifying: boolean;
   isAssigned: boolean;
   handleItemSelect: (
-    id: number
-  ) => (event: ChangeEvent<HTMLInputElement>) => void;
+    id: string
+  ) => () => void;
 }
 
 const AssignItemAvatarText = ({

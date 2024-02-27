@@ -1,5 +1,5 @@
 export interface RoleRule {
-  id: number;
-  roleId: number;
-  ruleId: number;
+  id: string;
+  roleId: string;
+  ruleId: string;
 }

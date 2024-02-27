@@ -23,7 +23,7 @@ import {
   dateFormat,
   extractData,
   generateRandomColor,
-  transformDataItems,
+  transformUserInfo,
 } from '@helpers';
 
 // Services
@@ -31,7 +31,6 @@ import { createUser, getUsers } from '@services';
 
 // Store
 import { Context } from '@stores';
-import { User } from '@interfaces';
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -45,8 +44,6 @@ const Layout = () => {
     setDataItems
   } =
     useContext(Context);
-
-  const generateDataItems = (data: User) => transformDataItems(data);
 
   /**
    * Add a new user or new role.
@@ -72,22 +69,22 @@ const Layout = () => {
         registered: dateFormat(new Date().toString()),
         lastVisited: dateFormat(new Date().toString()),
         details: '',
-        bgColor: generateRandomColor(),
-        roles: [],
-        rules: [],
+        bgColor: generateRandomColor()
       });
-      
+
       const data = extractData(res);
 
-      if (users && data) {
-        mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
-        setSelectedRow({ index: users.length, data });
-        setDataItems([...generateDataItems(data)]);
-        setIsShowProgress('success');
+      if (!data) {
+        setIsShowProgress('failure');
         return;
       }
 
-      setIsShowProgress('failure');
+      if (users) {
+        mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
+        setSelectedRow({ index: users.length, data });
+        setDataItems([...transformUserInfo(data)]);
+        setIsShowProgress('success');
+      }
     }
   };
 

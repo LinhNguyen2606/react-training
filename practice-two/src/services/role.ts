@@ -7,12 +7,21 @@ import { API } from '@constants';
 import { fetcher } from '@helpers';
 
 // Interface
-import { Role } from '@interfaces';
+import { Role, RoleRule } from '@interfaces';
 
 export const getRoles = (): {
   data: Role[] | undefined;
 } => {
   const { data } = useSWR<Role[]>(`${API.BASE}/${API.ROLE}`, fetcher);
+  return {
+    data,
+  };
+};
+
+export const getRoleRules = (): {
+  data: RoleRule[] | undefined;
+} => {
+  const { data } = useSWR<RoleRule[]>(`${API.BASE}/${API.ROLE_RULES}`, fetcher);
   return {
     data,
   };

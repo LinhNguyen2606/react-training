@@ -1,4 +1,5 @@
 export {
+  handleAPIRequest,
   getUsers,
   createUser,
   deleteUser,
@@ -7,5 +8,9 @@ export {
   getUserRoles,
   getUserRules,
 } from '@services/user';
-export { getRules } from '@services/rule';
+export {
+  getRules,
+  assignRuleToUser,
+  unAssignRuleFromUser
+} from '@services/rule';
 export { getRoles } from '@services/role';

@@ -1,6 +1,7 @@
 // Interfaces
 import {
   Role,
+  RoleRule,
   Rule,
   UserRole,
   UserRule
@@ -27,9 +28,7 @@ export const getUserRolesAndRules = (
   userRules: UserRule[]
 ) => {
   // Get the userRoles for the specified user
-  const userRoleRelations = userRoles?.filter(
-    (item) => item.userId === userId
-  );
+  const userRoleRelations = userRoles?.filter((item) => item.userId === userId);
 
   // Get roles for user based on userRolesRelations
   const userRolesItem = userRoleRelations?.map((item) =>
@@ -37,14 +36,44 @@ export const getUserRolesAndRules = (
   );
 
   // Get roleRules for roles of user
-  const userRuleRelations = userRules?.filter(
-    (item) => item.userId === userId
-  );
+  const userRuleRelations = userRules?.filter((item) => item.userId === userId);
 
   // Get rules for user based on userRoleRuleRelations
-  const userRulesItem = userRuleRelations?.map((item) =>
-    rules.find((rule) => rule.id === item.ruleId)
-  );
+  const userRulesItem =
+    Array.isArray(rules) &&
+    userRuleRelations?.map((item) =>
+      rules.find((rule) => rule.id === item.ruleId)
+    );
 
   return { userRolesItem, userRulesItem };
+};
+
+/**
+ * This function retrieves the roles and the rules .
+ *
+ * @param roleRules - An array of all available roleRu;es.
+ * @param rules - An array of all available rules.
+ *
+ * @returns An object containing  propertie: `roleRulesMap`.
+ * `roleRulesMap` is an array of roles that the roleRules has.
+ */
+export const getRoleRulesMap = (roleRules: RoleRule[], rules: Rule[]) => {
+  let roleRulesMap: { [key: string]: Rule[] } = {};
+
+  roleRules?.forEach((roleRules) => {
+    // Nếu role chưa có trong map, khởi tạo một mảng mới
+    if (!roleRulesMap[roleRules.roleId]) {
+      roleRulesMap[roleRules.roleId] = [];
+    }
+
+    let rule = rules.find((rule) => rule.id === roleRules.roleId);
+
+    if (rule) {
+      roleRulesMap[roleRules.roleId].push({
+        ...rule,
+      });
+    }
+  });
+
+  return roleRulesMap;
 };

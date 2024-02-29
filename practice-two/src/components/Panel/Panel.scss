@@ -1,8 +1,9 @@
 .panel {
   border    : 1px solid #ccd7e6;
   background: $secondary-color;
+  max-width : 647px;
+  width     : 100%;
   margin    : 10px;
-  width     : 50%;
 
   &__header {
     border-bottom: 1px solid #edeff0;
@@ -139,10 +140,9 @@
 
     &__roles-count {
       color      : $text-primary;
+      margin     : 10px 0 0 4px;
       font-size  : $fs-x-small;
       font-weight: $fw-normal;
-      margin-top : 10px;
-      margin-left: 4px;
     }
 
     &__section {
@@ -198,8 +198,7 @@
     }
 
     &__item {
-      border-bottom: 1px solid #EDEFF0;
-      padding      : 5px 12px 10px 12px;
+      padding: 5px 12px 10px 12px;
 
       &-name {
         color      : $text-primary;

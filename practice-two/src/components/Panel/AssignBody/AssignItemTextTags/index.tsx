@@ -16,9 +16,7 @@ interface AssignItemTextTagsProps {
     name?: string;
   }[];
   selectedType: AssignmentOptions;
-  handleItemSelect: (
-    id: string
-  ) => () => void;
+  handleItemSelect: (id: string) => () => void;
 }
 
 const AssignItemTextTags = ({

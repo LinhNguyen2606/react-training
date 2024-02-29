@@ -3,9 +3,11 @@ import {
   Role,
   RoleRule,
   Rule,
+  User,
   UserRole,
   UserRule
 } from '@interfaces';
+
 
 /**
  * This function retrieves the roles and rules for a specific user.
@@ -27,6 +29,8 @@ export const getUserRolesAndRules = (
   userRoles: UserRole[],
   userRules: UserRule[]
 ) => {
+  let userRuleRelations: UserRule[] = [];
+
   // Get the userRoles for the specified user
   const userRoleRelations = userRoles?.filter((item) => item.userId === userId);
 
@@ -36,7 +40,9 @@ export const getUserRolesAndRules = (
   );
 
   // Get roleRules for roles of user
-  const userRuleRelations = userRules?.filter((item) => item.userId === userId);
+  if (Array.isArray(userRules)) {
+    userRuleRelations = userRules?.filter((item) => item.userId === userId);
+  }
 
   // Get rules for user based on userRoleRuleRelations
   const userRulesItem =
@@ -61,7 +67,7 @@ export const getRoleRulesMap = (roleRules: RoleRule[], rules: Rule[]) => {
   let roleRulesMap: { [key: string]: Rule[] } = {};
 
   roleRules?.forEach((roleRules) => {
-    // Nếu role chưa có trong map, khởi tạo một mảng mới
+    // If role doesn't have in map, generate new array
     if (!roleRulesMap[roleRules.roleId]) {
       roleRulesMap[roleRules.roleId] = [];
     }
@@ -76,4 +82,26 @@ export const getRoleRulesMap = (roleRules: RoleRule[], rules: Rule[]) => {
   });
 
   return roleRulesMap;
+};
+
+/**
+ * Get a list of items corresponding to the user.
+ *
+ * @param userItems - Array containing items assigned to users.
+ * @param itemData - Data of items.
+ * @param userId - User ID.
+ * @returns Returns an array containing items corresponding to the user. If `userItems` is not an array, returns an empty array.
+ */
+export const getCorrespondingUserItems = (
+  userItems: any,
+  itemData: any,
+  userId: User
+) => {
+  return Array.isArray(userItems)
+    ? userItems
+        ?.filter((userItem) => userItem.userId === userId)
+        .map((userItem) =>
+          itemData?.find((item: any) => item.id === userItem.itemId)
+        )
+    : [];
 };

@@ -6,8 +6,15 @@ import { API } from '@constants';
 // Helper
 import { fetcher } from '@helpers';
 
-// Interface
-import { Role, RoleRule } from '@interfaces';
+// Interfaces
+import {
+  ApiResponse,
+  Item,
+  Role
+} from '@interfaces';
+
+// Service
+import { handleAPIRequest } from '@services';
 
 export const getRoles = (): {
   data: Role[] | undefined;
@@ -18,11 +25,27 @@ export const getRoles = (): {
   };
 };
 
-export const getRoleRules = (): {
-  data: RoleRule[] | undefined;
-} => {
-  const { data } = useSWR<RoleRule[]>(`${API.BASE}/${API.ROLE_RULES}`, fetcher);
-  return {
-    data,
-  };
-};
+export const assignRoleToUser = (
+  userId: string,
+  roleId: string
+): Promise<ApiResponse<Item>> =>
+  handleAPIRequest(`${API.BASE}/${API.USER_ROLES}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId: userId,
+      roleId: roleId,
+    }),
+  });
+
+export const unAssignRoleFromUser = (
+  userRoleId: string | null
+): Promise<ApiResponse<Item>> =>
+  handleAPIRequest(`${API.BASE}/${API.USER_ROLES}/${userRoleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });

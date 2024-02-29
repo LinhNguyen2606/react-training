@@ -8,9 +8,15 @@ export {
   getUserRoles,
   getUserRules,
 } from '@services/user';
+
 export {
   getRules,
   assignRuleToUser,
   unAssignRuleFromUser
 } from '@services/rule';
-export { getRoles } from '@services/role';
+
+export {
+  getRoles,
+  assignRoleToUser,
+  unAssignRoleFromUser,
+} from '@services/role';

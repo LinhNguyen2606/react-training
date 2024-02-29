@@ -24,6 +24,8 @@ import {
 import { DrawerPosition } from '@components/Drawer';
 import { SidebarProps } from '@components/Sidebar/SidebarInfo';
 import EditorProfile from '@components/Panel/EditorProfile';
+import AssignRules from '@components/Panel/AssignRules';
+import AssignRoles from '@components/Panel/AssignRoles';
 
 // Helpers
 import {
@@ -59,7 +61,6 @@ import {
   ListCheck,
   Shield
 } from '@assets/icons';
-import AssignRules from '@components/Panel/AssignRules';
 
 /**
  * Defines the columns configuration for the user table.
@@ -144,7 +145,21 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     userRolesData!,
     userRulesData!
   );
+  
+  let userRoles: Item[] = [];
 
+  if (roleData && userRolesData) {
+    userRoles = roleData.map((role) => {
+      // Check if the current user is assigned this role or not
+      let isAssigned = userRolesData.some((userRole) => userRole.userId === selectedRowData?.id && userRole.roleId === role.id);
+
+      return {
+        ...role,
+        isAssigned
+      }
+    })
+  }
+  
   let userRules: Item[] = [];
 
   if (ruleData && userRulesData) {
@@ -373,6 +388,16 @@ const Home = ({ position }: { position: DrawerPosition }) => {
           key={selectedRowData?.id}
           heading={selectedRowData?.userName}
           rules={userRules}
+        />
+      ),
+    },
+    {
+      title: 'Roles',
+      content: (
+        <AssignRoles
+          key={selectedRowData?.id}
+          heading={selectedRowData?.userName}
+          roles={userRoles}
         />
       ),
     },

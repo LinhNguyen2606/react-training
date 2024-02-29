@@ -11,9 +11,7 @@ interface AssignBodyProps {
   items: Item[];
   isModifying: boolean;
   selectedType: AssignmentOptions;
-  handleItemSelect: (
-    id: string
-  ) => () => void;
+  handleItemSelect: (id: string) => () => void;
 }
 
 const AssignBody = ({

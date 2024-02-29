@@ -8,9 +8,7 @@ interface AssignItemAvatarTextProps {
   bgColor?: string;
   isModifying: boolean;
   isAssigned: boolean;
-  handleItemSelect: (
-    id: string
-  ) => () => void;
+  handleItemSelect: (id: string) => () => void;
 }
 
 const AssignItemAvatarText = ({
@@ -32,13 +30,17 @@ const AssignItemAvatarText = ({
           className="panel-assign--input"
         />
       )}
-      <Avatar
-        src={src}
-        alt={name}
-        size="x-sm"
-        bgColor={bgColor}
-      />
-      <span className="panel-assign__avatar-text--name">{name}</span>
+      {isModifying || isAssigned ? (
+        <>
+          <Avatar
+            src={src}
+            alt={name}
+            size="x-sm"
+            bgColor={bgColor}
+          />
+          <span className="panel-assign__avatar-text--name">{name}</span>
+        </>
+      ) : null}
     </div>
   );
 };

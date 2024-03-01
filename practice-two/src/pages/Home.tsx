@@ -4,6 +4,7 @@ import {
   useState
 } from 'react';
 import { mutate } from 'swr';
+import { useNavigate } from 'react-router-dom';
 
 // Interfaces
 import {
@@ -51,8 +52,12 @@ import {
   getUsers,
 } from '@services';
 
-// Constant
-import { API, TYPES } from '@constants';
+// Constants
+import {
+  API,
+  PATH,
+  TYPES
+} from '@constants';
 
 // Icons
 import {
@@ -114,6 +119,7 @@ const generateUserTableColumns = (
 };
 
 const Home = ({ position }: { position: DrawerPosition }) => {
+  // Context and State
   const {
     selectedRow,
     setSelectedRow,
@@ -121,16 +127,16 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     dataItems,
     setDataItems,
   } = useContext(Context);
-  const selectedRowData = selectedRow.data;
-
-  // Variables related to UI state
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
+
+  const navigate = useNavigate();
+  const selectedRowData = selectedRow.data;
   const isShowDetails = showCard && selectedRowData !== null;
   const isShowEdit = !showCard && selectedRowData !== null;
-
   const columns = generateUserTableColumns(keyword);
 
+  // Get the data from API
   const { data: users, isValidating } = getUsers();
   const { data: roleData } = getRoles();
   const { data: ruleData } = getRules();
@@ -138,6 +144,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const { data: userRulesData } = getUserRules();
   const { data: roleRulesData } = getRoleRules();
 
+  // Handles the data
   const { userRolesItem, userRulesItem } = getUserRolesAndRules(
     selectedRowData?.id!,
     roleData!,
@@ -248,6 +255,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const handleTogglePanel = () =>
     setShowCard((prevShowPanel) => !prevShowPanel);
 
+  // Interface and display detailed information
   const placements = {
     left: '10px 10px 10px 222px',
     right: '10px 222px 10px 10px',
@@ -258,6 +266,45 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const contentWrapperStyle = {
     padding: placements[position],
     width: '100%',
+  };
+
+  /**
+   * Navigates to an item based on its ID and path.
+   *
+   * @param id - The ID of the item.
+   * @param path - The path to navigate to.
+   * @param findData - A function that finds the data item based on its ID.
+   */
+  const handleNavigateToItem = (
+    id: string,
+    path: string,
+    findData: (id: string) => any
+  ) => {
+    const dataItem = findData(id);
+    setSelectedRow({ index: selectedRow.index, data: dataItem });
+    navigate(path);
+  };
+
+  /**
+   * Handles the click event to navigate to the correspod role
+   *
+   * @param roleId - The ID of the role.
+   */
+  const handleRoleClick = (roleId: string) => {
+    handleNavigateToItem(roleId, PATH.ROLES_PATH, (id) =>
+      roleData?.find((role) => role.id === id)
+    );
+  };
+
+  /**
+   * Handles the click event to navigate to the correspod rule
+   *
+   * @param ruleId - The ID of the rule.
+   */
+  const handleRuleClick = (ruleId: string) => {
+    handleNavigateToItem(ruleId, PATH.RULES_PATH, (id) =>
+      ruleData?.find((rule) => rule.id === id)
+    );
   };
 
   const userDetailsInfo = [
@@ -285,15 +332,13 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       values: [
         {
           icon: Shield,
-          label: `Roles (${
-            Array.isArray(userRolesItem) ? userRolesItem.length : 0
-          })`,
-          values: Array.isArray(userRolesItem)
-            ? userRolesItem.map((role) => ({
-                text: role?.name,
-                link: '/',
-              }))
-            : [],
+          label: `Roles (${userRolesItem?.length})`,
+          values:
+            userRolesItem?.map((role) => ({
+              id: role?.id,
+              text: role?.name,
+              onClick: () => handleRoleClick(role?.id!),
+            })) ?? [],
         },
         {
           icon: ListCheck,
@@ -302,8 +347,9 @@ const Home = ({ position }: { position: DrawerPosition }) => {
           })`,
           values: Array.isArray(userRulesItem)
             ? userRulesItem.map((rule) => ({
+                id: rule?.id,
                 text: rule?.description,
-                link: '/',
+                onClick: () => handleRuleClick(rule?.id!),
               }))
             : [],
         },
@@ -408,7 +454,11 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   return (
     <>
       <div style={contentWrapperStyle}>
-        <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
+        <SearchBar
+          label="Users"
+          placeholder="Search"
+          onChange={handleSearch}
+        />
         <Table
           rowData={filteredUsers}
           columns={columns}
@@ -419,9 +469,9 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       </div>
       {isShowDetails && (
         <Sidebar
-          key={selectedRowData.id}
+          key={selectedRowData?.id}
           title="User information"
-          isActive={selectedRowData.isActive}
+          isActive={selectedRowData?.isActive}
           onShowPanel={handleTogglePanel}
           data={userDetailsInfo}
         />

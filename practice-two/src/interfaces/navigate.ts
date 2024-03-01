@@ -2,6 +2,6 @@ export interface NavigationItem {
   id: number;
   label: string;
   path: string;
-  action?: (item: NavigationItem) => void;
+  action: () => void;
   icon: React.ReactNode;
 }

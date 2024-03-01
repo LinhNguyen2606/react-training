@@ -4,8 +4,8 @@ import React, { createContext } from 'react';
 import { DataItems } from '@interfaces';
 
 type ContextProps = {
-  selectedRow: { index: number; data: any | null };
-  setSelectedRow: (selectedRow: { index: number; data: any | null }) => void;
+  selectedRow: { index: any; data: any | null };
+  setSelectedRow: (selectedRow: { index: any; data: any | null }) => void;
   dataItems: DataItems[];
   setDataItems: React.Dispatch<React.SetStateAction<any>>;
   isShowProgress: 'idle' | 'processing' | 'success' | 'failure';

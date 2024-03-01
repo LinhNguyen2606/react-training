@@ -80,6 +80,7 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
           <DrawerItem
             key={navItem.id}
             path={navItem.path}
+            action={navItem.action}
           >
             {navItem.icon}
             <span className="drawer__item--text">{navItem.label}</span>

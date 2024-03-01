@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 
 // Component
 import { Icons } from '@components';
@@ -7,8 +6,9 @@ export interface ListItemViewProps {
   icon: string;
   label: string;
   values: Array<{
+    id: string;
     text: string;
-    link: string;
+    onClick: () => void;
   }>;
 }
 
@@ -24,14 +24,15 @@ const ListItemView = ({
         <label className='sidebar__permission--label'>{label}</label>
       </div>
       <div className="sidebar-values">
-        {values?.map((item, index) => (
-          <Link
-            key={index}
-            to={item.link}
+        {values?.map((item) => (
+          <div
+            key={item.id}
+            id={item.id}
+            onClick={item.onClick}
             className="sidebar-values__label"
           >
             {item.text}
-          </Link>
+          </div>
         ))}
       </div>
     </>

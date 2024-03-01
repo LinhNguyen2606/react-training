@@ -145,21 +145,24 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     userRolesData!,
     userRulesData!
   );
-  
+
   let userRoles: Item[] = [];
 
   if (roleData && userRolesData) {
     userRoles = roleData.map((role) => {
       // Check if the current user is assigned this role or not
-      let isAssigned = userRolesData.some((userRole) => userRole.userId === selectedRowData?.id && userRole.roleId === role.id);
+      let isAssigned = userRolesData.some(
+        (userRole) =>
+          userRole.userId === selectedRowData?.id && userRole.roleId === role.id
+      );
 
       return {
         ...role,
-        isAssigned
-      }
-    })
+        isAssigned,
+      };
+    });
   }
-  
+
   let userRules: Item[] = [];
 
   if (ruleData && userRulesData) {
@@ -242,7 +245,8 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   /**
    * Handle events to show the panel and hide the card
    */
-  const handleTogglePanel = () => setShowCard((prevShowCard) => !prevShowCard);
+  const handleTogglePanel = () =>
+    setShowCard((prevShowPanel) => !prevShowPanel);
 
   const placements = {
     left: '10px 10px 10px 222px',
@@ -348,8 +352,6 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       lastVisited: dateFormat(new Date().toString()),
       details: userData.details,
       bgColor: selectedRowData ? selectedRowData.bgColor : '',
-      roles: [],
-      rules: [],
     };
 
     const res = await editUser(selectedRowData?.id!, updatedUserData);

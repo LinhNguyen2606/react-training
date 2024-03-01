@@ -1,4 +1,6 @@
-export interface User {
+import { EnitityUserRoles } from "./enitity";
+
+export interface User extends EnitityUserRoles {
   id?: string;
   userName: string;
   isActive: boolean;
@@ -8,4 +10,9 @@ export interface User {
   lastVisited: string;
   details: string;
   bgColor: string
+}
+
+export interface UserItem {
+  userId: string;
+  itemId?: string;
 }

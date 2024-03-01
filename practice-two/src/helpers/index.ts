@@ -14,12 +14,18 @@ export { extractData } from '@helpers/extract';
 
 export {
   getUserRolesAndRules,
-  getRoleRulesMap,
-  getCorrespondingUserItems
+  getUsersOfRole,
+  getRulesOfRole,
+  getCorrespondingUserItems,
+  getCorrespondingRoleItems,
 } from '@helpers/get';
 
-export { transformUserInfo, transformListViewInfo } from '@helpers/transform';
+export {
+  transformUserInfo,
+  transformListViewInfo,
+  transformListViewRoleInfo,
+} from '@helpers/transform';
 
 export { isItemAssignedToUser } from '@helpers/is';
 
-export { findUserItemId } from '@helpers/find';
+export { findUserIdFromAssigned } from '@helpers/find';

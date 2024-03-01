@@ -4,10 +4,10 @@ import {
   RoleRule,
   Rule,
   User,
+  UserItem,
   UserRole,
-  UserRule
+  UserRule,
 } from '@interfaces';
-
 
 /**
  * This function retrieves the roles and rules for a specific user.
@@ -54,34 +54,36 @@ export const getUserRolesAndRules = (
   return { userRolesItem, userRulesItem };
 };
 
-/**
- * This function retrieves the roles and the rules .
- *
- * @param roleRules - An array of all available roleRu;es.
- * @param rules - An array of all available rules.
- *
- * @returns An object containing  propertie: `roleRulesMap`.
- * `roleRulesMap` is an array of roles that the roleRules has.
- */
-export const getRoleRulesMap = (roleRules: RoleRule[], rules: Rule[]) => {
-  let roleRulesMap: { [key: string]: Rule[] } = {};
+export const getUsersOfRole = (
+  userRoles: UserRole[],
+  users: User[],
+  roleId: string
+) => {
+  const userRoleRelations = userRoles.filter(
+    (userRole) => userRole.roleId === roleId
+  );
 
-  roleRules?.forEach((roleRules) => {
-    // If role doesn't have in map, generate new array
-    if (!roleRulesMap[roleRules.roleId]) {
-      roleRulesMap[roleRules.roleId] = [];
-    }
+  const usersOfRole = userRoleRelations
+    .map((userRole) => users.find((user) => user.id === userRole.userId))
+    .filter((user) => user !== undefined);
 
-    let rule = rules.find((rule) => rule.id === roleRules.roleId);
+  return usersOfRole;
+};
 
-    if (rule) {
-      roleRulesMap[roleRules.roleId].push({
-        ...rule,
-      });
-    }
-  });
+export const getRulesOfRole = (
+  roleRules: RoleRule[],
+  rules: Rule[],
+  roleId: string
+) => {
+  const roleRulesRelations = roleRules.filter(
+    (roleRule) => roleRule.roleId === roleId
+  );
 
-  return roleRulesMap;
+  const rulesOfRole = roleRulesRelations
+    .map((roleRule) => rules.find((rule) => rule.id === roleRule.ruleId))
+    .filter((rule) => rule !== undefined);
+
+  return rulesOfRole;
 };
 
 /**
@@ -92,16 +94,35 @@ export const getRoleRulesMap = (roleRules: RoleRule[], rules: Rule[]) => {
  * @param userId - User ID.
  * @returns Returns an array containing items corresponding to the user. If `userItems` is not an array, returns an empty array.
  */
-export const getCorrespondingUserItems = (
-  userItems: any,
-  itemData: any,
-  userId: User
+export const getCorrespondingUserItems = <
+  T extends (UserRule & UserItem) | (UserRole & UserItem),
+  U extends Rule | Role
+>(
+  userItems: T[],
+  itemData: U[],
+  userId: string
 ) => {
   return Array.isArray(userItems)
     ? userItems
         ?.filter((userItem) => userItem.userId === userId)
-        .map((userItem) =>
-          itemData?.find((item: any) => item.id === userItem.itemId)
+        .flatMap(
+          (userItem) =>
+            itemData?.find((item: U) => item.id === userItem.itemId) || []
+        )
+    : [];
+};
+
+export const getCorrespondingRoleItems = <T extends RoleRule, U extends Rule>(
+  roleRules: T[],
+  ruleData: U[],
+  roleId: string
+) => {
+  return Array.isArray(roleRules)
+    ? roleRules
+        ?.filter((roleRule) => roleRule.roleId === roleId)
+        .flatMap(
+          (roleRule) =>
+            ruleData?.find((rule: U) => rule.id === roleRule.ruleId) || []
         )
     : [];
 };

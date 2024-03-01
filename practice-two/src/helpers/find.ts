@@ -6,15 +6,14 @@
  * @param userItems - Array containing items assigned to users.
  * @returns Returns the item ID if found, otherwise returns null.
  */
-export const findUserItemId = (
+export const findUserIdFromAssigned = <T extends { [key: string]: any }>(
   userId: string,
   itemId: string,
-  userItems: { userId: string; ruleId?: string; roleId?: string; id: string }[]
+  userItems: T[],
+  key: string
 ) => {
   const userItem = userItems.find(
-    (item) =>
-      item.userId === userId &&
-      (item.ruleId === itemId || item.roleId === itemId)
+    (item) => item.userId === userId && item[key] === itemId
   );
 
   return userItem ? userItem.id : null;

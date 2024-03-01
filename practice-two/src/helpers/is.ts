@@ -1,6 +1,6 @@
-export const isItemAssignedToUser = (
+export const isItemAssignedToUser = <T extends { [key: string]: any }>(
   userId: string,
   itemId: string,
-  userItems: any[],
+  userItems: T[],
   key: string
 ) => userItems?.some((item) => item.userId === userId && item[key] === itemId);

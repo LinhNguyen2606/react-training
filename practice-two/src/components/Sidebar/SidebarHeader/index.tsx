@@ -20,7 +20,7 @@ const SidebarHeader = ({
   return (
     <article className="sidebar__header">
       <h2 className="text--primary">{title}</h2>
-      <Status checked={isActive} />
+      {isActive &&  <Status checked={isActive} />}
       <div className="sidebar__header--icon">
         <Icons src={icon} onClick={onShowPanel} />
       </div>

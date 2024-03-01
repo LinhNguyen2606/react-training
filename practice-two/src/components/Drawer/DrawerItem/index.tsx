@@ -1,20 +1,16 @@
 import { ReactNode } from 'react';
+import { NavLink } from 'react-router-dom';
 
 interface DrawerItemProps {
   children: ReactNode;
-  additionalClass?: string;
-  onClick: () => void;
-};
+  path: string;
+}
 
-const DrawerItem = ({
-  children,
-  additionalClass,
-  onClick,
-}: DrawerItemProps) => {
+const DrawerItem = ({ children, path }: DrawerItemProps) => {
   return (
-    <div className={additionalClass} onClick={onClick}>
+    <NavLink className="drawer__item" to={path}>
       {children}
-    </div>
+    </NavLink>
   );
 };
 

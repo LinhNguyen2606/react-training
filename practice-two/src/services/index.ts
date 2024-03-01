@@ -17,6 +17,7 @@ export {
 
 export {
   getRoles,
+  createRole,
   assignRoleToUser,
   unAssignRoleFromUser,
 } from '@services/role';

@@ -31,7 +31,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path={PATH.HOME_PATH} element={<Layout />}>
           <Route index element={<Home position="left" />} />
-          <Route path={PATH.ROLES_PATH} element={<Role />} />
+          <Route path={PATH.ROLES_PATH} element={<Role position="left"/>} />
           <Route path={PATH.RULES_PATH} element={<Rule />} />
         </Route>
         <Route path={PATH.ERROR_PATH} element={<Error />} />

@@ -3,6 +3,7 @@ import {
   useMemo,
   useState
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Icons
 import { ListCheck, UserGroup } from '@assets/icons';
@@ -16,8 +17,8 @@ import {
 } from '@components';
 import { DrawerPosition } from '@components/Drawer';
 
-// Constant
-import { TYPES } from '@constants';
+// Constants
+import { PATH, TYPES } from '@constants';
 
 // Helpers
 import {
@@ -79,23 +80,24 @@ const generateRoleTableColumns = (
 };
 
 const RolePage = ({ position }: { position: DrawerPosition }) => {
+  // Context and State
   const { selectedRow, setSelectedRow, setDataItems } = useContext(Context);
-
-  const selectedRowData = selectedRow.data;
-
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
 
+  const navigate = useNavigate();
+  const selectedRowData = selectedRow.data;
   const isShowDetails = showCard && selectedRowData !== null;
-
   const columns = generateRoleTableColumns(keyword);
 
+  // Get the data from API
   const { data: users } = getUsers();
   const { data: rules } = getRules();
   const { data: roles, isValidating } = getRoles();
   const { data: userRoles } = getUserRoles();
   const { data: roleRules } = getRoleRules();
 
+  // Handles the data
   const rulesOfRole = getRulesOfRole(
     roleRules || [],
     rules || [],
@@ -134,6 +136,13 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   const handleTogglePanel = () =>
     setShowCard((prevShowPanel) => !prevShowPanel);
 
+  /**
+   * Handles the event when a row in the table is clicked.
+   * Updates the state of `selectedRow` with the index and data of the clicked row.
+   *
+   * @param {number} index - The index of the clicked row.
+   * @param {Role} role - The data of the user corresponding to the clicked row.
+   */
   const handleRowClick = (index: number, role: Role) => {
     if (selectedRow && selectedRow.index === index) {
       setSelectedRow({ index: -1, data: null });
@@ -162,6 +171,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     );
   }, [roles, keyword]);
 
+  // Interface and display detailed information
   const placements = {
     left: '10px 10px 10px 222px',
     right: '10px 222px 10px 10px',
@@ -172,6 +182,45 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   const contentWrapperStyle = {
     padding: placements[position],
     width: '100%',
+  };
+
+  /**
+   * Navigates to an item based on its ID and path.
+   *
+   * @param id - The ID of the item.
+   * @param path - The path to navigate to.
+   * @param findData - A function that finds the data item based on its ID.
+   */
+  const handleNavigateToItem = (
+    id: string,
+    path: string,
+    findData: (id: string) => any
+  ) => {
+    const dataItem = findData(id);
+    setSelectedRow({ index: selectedRow.index, data: dataItem });
+    navigate(path);
+  };
+
+  /**
+   * Handles the click event to navigate to the correspod rule
+   *
+   * @param ruleId - The ID of the rule.
+   */
+  const handleRuleClick = (ruleId: string) => {
+    handleNavigateToItem(ruleId, PATH.RULES_PATH, (id) =>
+      roleRules?.find((roleRule) => roleRule.id === id)
+    );
+  };
+
+  /**
+   * Handles the click event to navigate to the correspod user
+   *
+   * @param userId - The ID of the user.
+   */
+  const handleUserClick = (userId: string) => {
+    handleNavigateToItem(userId, PATH.HOME_PATH, (id) =>
+      users?.find((user) => user.id === id)
+    );
   };
 
   const roleDetailsInfo = [
@@ -189,16 +238,18 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           icon: ListCheck,
           label: `Rules assigned (${rulesOfRole.length})`,
           values: rulesOfRole.map((roleRule) => ({
+            id: roleRule?.id,
             text: roleRule?.name,
-            link: '/',
+            onClick: () => handleRuleClick(roleRule?.id!),
           })),
         },
         {
           icon: UserGroup,
           label: `Members assigned (${usersOfRole.length})`,
           values: usersOfRole.map((userRole) => ({
+            id: userRole?.id,
             text: userRole?.userName,
-            link: '/',
+            onClick: () => handleUserClick(userRole?.id!),
           })),
         },
       ],

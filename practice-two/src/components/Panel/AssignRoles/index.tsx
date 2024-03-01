@@ -28,7 +28,7 @@ import {
 // Helpers
 import {
   extractData,
-  findUserItemId,
+  findUserIdFromAssigned,
   getCorrespondingUserItems,
   isItemAssignedToUser,
   transformListViewInfo,
@@ -53,20 +53,15 @@ const AssignRoles = ({ roles, heading }: AssignRolesProps) => {
   const { data: userRules } = getUserRules();
   const { data: userRoles } = getUserRoles();
 
-  const isRoleAssignedToUser = (userId: string, roleId: string) =>
-    isItemAssignedToUser(userId, roleId, userRoles || [], 'roleId');
-
-  const findUserRoleId = (userId: string, roleId: string) =>
-    findUserItemId(userId, roleId, userRoles || []);
-
   const getCorrespondingUserRules = getCorrespondingUserItems(
-    userRules,
-    ruleData,
+    userRules || [],
+    ruleData || [],
     selectedRow.data.id
   );
+
   const getCorrespondingUserRoles = getCorrespondingUserItems(
-    userRoles,
-    roleData,
+    userRoles || [],
+    roleData || [],
     selectedRow.data.id
   );
 
@@ -78,10 +73,20 @@ const AssignRoles = ({ roles, heading }: AssignRolesProps) => {
     setIsShowProgress('processing');
 
     // Check if the current rule is already assigned to the user
-    const isCurrentlyAssigned = isRoleAssignedToUser(selectedRow.data.id, id);
+    const isCurrentlyAssigned = isItemAssignedToUser(
+      selectedRow.data.id,
+      id,
+      userRoles || [],
+      'roleId'
+    );
 
     // Find the userRoleId
-    const userRoleId = findUserRoleId(selectedRow.data.id, id);
+    const userRoleId = findUserIdFromAssigned(
+      selectedRow.data.id,
+      id,
+      userRoles || [],
+      'roleId'
+    );
 
     // Choose the appropriate action based on the current state of the item (assign or unassign rule)
     const action = isCurrentlyAssigned

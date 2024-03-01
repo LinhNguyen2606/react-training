@@ -23,11 +23,22 @@ import {
   dateFormat,
   extractData,
   generateRandomColor,
+  getCorrespondingRoleItems,
+  getCorrespondingUserItems,
   transformUserInfo,
+  transformListViewRoleInfo,
 } from '@helpers';
 
 // Services
-import { createUser, getUsers } from '@services';
+import {
+  createRole,
+  createUser,
+  getRoleRules,
+  getRoles,
+  getRules,
+  getUserRoles,
+  getUsers,
+} from '@services';
 
 // Store
 import { Context } from '@stores';
@@ -35,16 +46,34 @@ import { Context } from '@stores';
 const Layout = () => {
   const navigate = useNavigate();
 
-  const { data: users } = getUsers();
-
+  
   const {
+    selectedRow,
     setSelectedRow,
     isShowProgress,
     setIsShowProgress,
-    setDataItems
-  } =
-    useContext(Context);
+    setDataItems,
+  } = useContext(Context);
 
+  const { data: users } = getUsers();
+  const { data: rules } = getRules();
+  const { data: roles } = getRoles();
+  const { data: userRoles } = getUserRoles();
+  const { data: roleRules } = getRoleRules();
+
+  const getCorrespondingRoleRules = getCorrespondingRoleItems(
+    roleRules || [],
+    rules || [],
+    selectedRow.data?.id
+  );
+    
+
+  const getCorrespondingUserRoles = getCorrespondingUserItems(
+    userRoles || [],
+    roles || [],
+    selectedRow.data?.id
+  );
+    
   /**
    * Add a new user or new role.
    * @param {string} type - the type (user or role) you want to add.
@@ -69,7 +98,7 @@ const Layout = () => {
         registered: dateFormat(new Date().toString()),
         lastVisited: dateFormat(new Date().toString()),
         details: '',
-        bgColor: generateRandomColor()
+        bgColor: generateRandomColor(),
       });
 
       const data = extractData(res);
@@ -85,6 +114,34 @@ const Layout = () => {
         setDataItems([...transformUserInfo(data)]);
         setIsShowProgress('success');
       }
+    } else if (type === 'role') {
+      setIsShowProgress('processing');
+
+      const res = await createRole({
+        name: value,
+        avatar: '',
+        bgColor: generateRandomColor(),
+      });
+
+      const data = extractData(res);
+
+      if (!data) {
+        setIsShowProgress('failure');
+        return;
+      }
+
+      if (roles) {
+        mutate(`${API.BASE}/${API.ROLE}`, [...roles, data], false);
+        setSelectedRow({ index: roles.length, data });
+        setDataItems([
+          ...transformListViewRoleInfo(
+            getCorrespondingRoleRules,
+            getCorrespondingUserRoles
+          ),
+        ]);
+        setIsShowProgress('success');
+        navigate(PATH.ROLES_PATH);
+      }
     }
   };
 
@@ -92,25 +149,19 @@ const Layout = () => {
     {
       id: 1,
       label: 'Users',
-      action: () => {
-        navigate(PATH.HOME_PATH);
-      },
+      path: PATH.HOME_PATH,
       icon: <FontAwesomeIcon icon={faUserGroup} />,
     },
     {
       id: 2,
       label: 'Roles',
-      action: () => {
-        navigate(PATH.ROLES_PATH);
-      },
+      path: PATH.ROLES_PATH,
       icon: <FontAwesomeIcon icon={faShield} />,
     },
     {
       id: 3,
       label: 'Rules',
-      action: () => {
-        navigate(PATH.RULES_PATH);
-      },
+      path: PATH.RULES_PATH,
       icon: <FontAwesomeIcon icon={faListCheck} />,
     },
   ];

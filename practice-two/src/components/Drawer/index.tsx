@@ -23,7 +23,6 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
   const [type, setType] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [inputField, setInputField] = useState('');
-  const [itemActive, setItemActive] = useState(navigations[0].id);
   const [modalTitle, setModalTitle] = useState('');
 
   /**
@@ -68,14 +67,6 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
     },
   ];
 
-  const handleItemClick = (item: NavigationItem) => () => {
-    setItemActive(item.id);
-
-    if (typeof item.action === 'function') {
-      item.action(item);
-    }
-  };
-
   return (
     <>
       <aside className={`drawer drawer--${position}`}>
@@ -88,10 +79,7 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
         {navigations.map((navItem) => (
           <DrawerItem
             key={navItem.id}
-            additionalClass={`drawer__item ${
-              itemActive === navItem.id ? 'active' : ''
-            }`}
-            onClick={handleItemClick(navItem)}
+            path={navItem.path}
           >
             {navItem.icon}
             <span className="drawer__item--text">{navItem.label}</span>

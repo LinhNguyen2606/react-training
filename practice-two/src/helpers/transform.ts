@@ -1,7 +1,8 @@
 // Icons
 import {
   ListCheck,
-  Shield
+  Shield,
+  UserGroup
 } from '@assets/icons';
 
 // Constant
@@ -9,6 +10,7 @@ import { TYPES } from '@constants';
 
 // Interfaces
 import {
+  EnitityUserRoles,
   Role,
   Rule,
   User
@@ -71,10 +73,7 @@ export const transformUserInfo = (data: User) => [
   },
 ];
 
-export const transformListViewInfo = (
-  userRules: Rule[],
-  userRoles: Role[],
-) => {
+export const transformListViewInfo = (userRules: Rule[], userRoles: Role[]) => {
   return [
     {
       type: TYPES.LIST_VIEW,
@@ -92,6 +91,38 @@ export const transformListViewInfo = (
           label: `Rules (${userRules.length})`,
           values: userRules.map((rule) => ({
             text: rule?.description,
+            link: '/',
+          })),
+        },
+      ],
+    },
+  ];
+};
+
+export const transformListViewRoleInfo = <
+  T extends Rule,
+  U extends EnitityUserRoles
+>(
+  roleRules: T[],
+  userRoles: U[]
+) => {
+  return [
+    {
+      type: TYPES.LIST_VIEW,
+      values: [
+        {
+          icon: ListCheck,
+          label: `Rules assigned (${roleRules.length})`,
+          values: roleRules.map((roleRule) => ({
+            text: roleRule?.name,
+            link: '/',
+          })),
+        },
+        {
+          icon: UserGroup,
+          label: `Members assigned  (${userRoles.length})`,
+          values: userRoles.map((userRole) => ({
+            text: userRole?.userName,
             link: '/',
           })),
         },

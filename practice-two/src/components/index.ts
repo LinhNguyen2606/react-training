@@ -18,3 +18,4 @@ export { default as Sidebar } from '@components/Sidebar';
 export { default as Panel } from '@components/Panel';
 export { default as RadioField } from '@components/RadioField';
 export { default as TextView } from '@components/TextView';
+export { default as ColorField } from '@components/ColorField';

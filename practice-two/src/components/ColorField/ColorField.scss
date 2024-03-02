@@ -1,0 +1,22 @@
+.color-field {
+  &__wrapper {
+    position: absolute;
+    left    : 355px;
+    width   : 24px;
+    height  : 24px;
+    top     : 4px;
+  }
+
+  &--input {
+    @extend .common-input;
+    position     : relative;
+  }
+
+  &--label {
+    color         : $tertiary-color;
+    font-size     : $fs-x-small;
+    line-height   : calc(32/14);
+    font-weight   : $fw-medium;
+    letter-spacing: 0.2;
+  }
+}

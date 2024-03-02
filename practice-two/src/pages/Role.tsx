@@ -4,6 +4,7 @@ import {
   useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { mutate } from 'swr';
 
 // Icons
 import { ListCheck, UserGroup } from '@assets/icons';
@@ -11,29 +12,38 @@ import { ListCheck, UserGroup } from '@assets/icons';
 // Components
 import {
   Avatar,
+  Panel,
   SearchBar,
   Sidebar,
   Table
 } from '@components';
 import { DrawerPosition } from '@components/Drawer';
+import EditorRole from '@components/Panel/EditorRole';
 
 // Constants
-import { PATH, TYPES } from '@constants';
+import {
+  API,
+  PATH,
+  TYPES
+} from '@constants';
 
 // Helpers
 import {
+  extractData,
   getCorrespondingRoleItems,
   getCorrespondingUserItems,
   getRulesOfRole,
   getUsersOfRole,
   highlightKeyword,
   transformListViewRoleInfo,
+  transformRoleInfo,
 } from '@helpers';
 
 import { EnitityColumn, Role } from '@interfaces';
 
 // Services
 import {
+  deleteRole,
   getRoleRules,
   getRoles,
   getRules,
@@ -81,13 +91,20 @@ const generateRoleTableColumns = (
 
 const RolePage = ({ position }: { position: DrawerPosition }) => {
   // Context and State
-  const { selectedRow, setSelectedRow, setDataItems } = useContext(Context);
+  const {
+    selectedRow,
+    setSelectedRow,
+    dataItems,
+    setDataItems,
+    setIsShowProgress,
+  } = useContext(Context);
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
 
   const navigate = useNavigate();
   const selectedRowData = selectedRow.data;
   const isShowDetails = showCard && selectedRowData !== null;
+  const isShowEdit = !showCard && selectedRowData !== null;
   const columns = generateRoleTableColumns(keyword);
 
   // Get the data from API
@@ -156,6 +173,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
         getCorrespondingRoleRules,
         getCorrespondingUserRoles
       ),
+      ...transformRoleInfo(role),
     ]);
   };
 
@@ -256,6 +274,47 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     },
   ];
 
+  /**
+   * Handles the removal of a role.
+   * This function sets the progress state to 'processing',
+   * sends a request to delete the role with the specified ID,
+   * and updates the UI based on the response.
+   */
+  const handleRemove = async () => {
+    setIsShowProgress('processing');
+
+    const res = await deleteRole(selectedRowData?.id);
+
+    const data = extractData(res);
+
+    if (!data) {
+      setIsShowProgress('failure');
+      return;
+    }
+
+    mutate(`${API.BASE}/${API.ROLE}`);
+    setSelectedRow({ index: -1, data: null });
+    setIsShowProgress('success');
+  };
+
+  const handleUpdate = () => {};
+
+  const tabsContent = [
+    {
+      title: 'General',
+      content: (
+        <EditorRole
+          key={selectedRowData?.id}
+          id={selectedRowData?.id}
+          bgColor={selectedRowData?.bgColor}
+          dataItems={dataItems}
+          onRemove={handleRemove}
+          onSubmit={handleUpdate}
+        />
+      ),
+    },
+  ];
+
   return (
     <>
       <div style={contentWrapperStyle}>
@@ -275,6 +334,9 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           onShowPanel={handleTogglePanel}
           data={roleDetailsInfo}
         />
+      )}
+      {isShowEdit && (
+        <Panel tabs={tabsContent} onBackClick={handleTogglePanel} />
       )}
     </>
   );

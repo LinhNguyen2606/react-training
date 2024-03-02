@@ -6,7 +6,7 @@ import { ERROR_MESSAGE, REGEX } from '@constants';
  * @param {string} username - The username to be validated.
  * @returns {string|null} An error message if the username is invalid, or null if the username is valid.
  */
-export const validateUsername = (username: string) =>
+export const validateName = (username: string) =>
   username.trim() === '' ? ERROR_MESSAGE.EMPTY_INPUT : null;
 
 /**

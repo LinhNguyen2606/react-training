@@ -72,6 +72,10 @@
     }
   }
 
+  &__form-group {
+    position : relative;
+  }
+
   &__form-group,
   &__date-view {
     align-items  : center;
@@ -112,7 +116,7 @@
     }
 
     input:not([type="checkbox"]) {
-      flex-basis: 286px;
+      flex-basis: 236px;
     }
   }
 

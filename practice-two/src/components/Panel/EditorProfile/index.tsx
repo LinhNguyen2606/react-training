@@ -7,7 +7,7 @@ import { DataItems } from '@interfaces';
 import {
   dateFormat,
   validateEmail,
-  validateUsername
+  validateName
 } from '@helpers';
 
 // Components
@@ -65,7 +65,7 @@ const EditorProfile = ({
   }, [dataItems]);
 
   const validateInput = (key: string, value: string | boolean) => {
-    if (key === 'userName') return validateUsername(value as string) || null;
+    if (key === 'userName') return validateName(value as string) || null;
 
     if (key === 'email') return validateEmail(value as string) || null;
 

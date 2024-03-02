@@ -4,7 +4,7 @@ export { convertFileToBase64 } from '@helpers/convert';
 
 export { dateFormat } from '@helpers/date';
 
-export { validateUsername, validateEmail } from '@helpers/validate';
+export { validateName, validateEmail } from '@helpers/validate';
 
 export { highlightKeyword } from '@helpers/highlight';
 
@@ -24,6 +24,7 @@ export {
   transformUserInfo,
   transformListViewInfo,
   transformListViewRoleInfo,
+  transformRoleInfo
 } from '@helpers/transform';
 
 export { isItemAssignedToUser } from '@helpers/is';

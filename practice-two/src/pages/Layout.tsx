@@ -27,6 +27,7 @@ import {
   getCorrespondingUserItems,
   transformUserInfo,
   transformListViewRoleInfo,
+  transformRoleInfo,
 } from '@helpers';
 
 // Services
@@ -138,6 +139,7 @@ const Layout = () => {
           getCorrespondingRoleRules,
           getCorrespondingUserRoles
         ),
+        ...transformRoleInfo(data),
       ]);
       setIsShowProgress('success');
       navigate(PATH.ROLES_PATH);

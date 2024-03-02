@@ -73,6 +73,27 @@ export const transformUserInfo = (data: User) => [
   },
 ];
 
+/**
+ * Transforms role data into an array of transformed data items.
+ * @param {Role} data - The data to transform.
+ */
+export const transformRoleInfo = (data: Role) => [
+  {
+    id: 1,
+    type: TYPES.TEXT_FIELD,
+    label: 'Name',
+    key: 'roleName',
+    value: data.name,
+  },
+  {
+    id: 2,
+    type: TYPES.COLOR_FIELD,
+    label: 'Color',
+    key: 'color',
+    value: data.bgColor,
+  },
+];
+
 export const transformListViewInfo = (userRules: Rule[], userRoles: Role[]) => {
   return [
     {

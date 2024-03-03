@@ -82,14 +82,14 @@ export const transformRoleInfo = (data: Role) => [
     id: 1,
     type: TYPES.TEXT_FIELD,
     label: 'Name',
-    key: 'roleName',
+    key: 'name',
     value: data.name,
   },
   {
     id: 2,
     type: TYPES.COLOR_FIELD,
     label: 'Color',
-    key: 'color',
+    key: 'bgColor',
     value: data.bgColor,
   },
 ];

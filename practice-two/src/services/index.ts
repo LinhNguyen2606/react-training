@@ -19,6 +19,7 @@ export {
   getRoles,
   createRole,
   deleteRole,
+  editRole,
   assignRoleToUser,
   unAssignRoleFromUser,
 } from '@services/role';

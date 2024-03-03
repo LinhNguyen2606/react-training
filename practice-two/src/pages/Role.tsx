@@ -19,6 +19,7 @@ import {
 } from '@components';
 import { DrawerPosition } from '@components/Drawer';
 import EditorRole from '@components/Panel/EditorRole';
+import AssignRoleRules from '@components/Panel/AssignRoleRules';
 
 // Constants
 import {
@@ -39,7 +40,11 @@ import {
   transformRoleInfo,
 } from '@helpers';
 
-import { EnitityColumn, Role } from '@interfaces';
+import {
+  EnitityColumn,
+  Item,
+  Role
+} from '@interfaces';
 
 // Services
 import {
@@ -113,11 +118,11 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   const { data: rules } = getRules();
   const { data: roles, isValidating } = getRoles();
   const { data: userRoles } = getUserRoles();
-  const { data: roleRules } = getRoleRules();
+  const { data: roleRulesData } = getRoleRules();
 
   // Handles the data
   const rulesOfRole = getRulesOfRole(
-    roleRules || [],
+    roleRulesData || [],
     rules || [],
     selectedRowData?.id
   );
@@ -129,7 +134,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   );
 
   const getCorrespondingRoleRules = getCorrespondingRoleItems(
-    roleRules || [],
+    roleRulesData || [],
     rules || [],
     selectedRow.data?.id
   );
@@ -139,6 +144,22 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     roles || [],
     selectedRow.data?.id
   );
+
+  let roleRules: Item[] = [];
+
+  if (rules && roleRulesData) {
+    roleRules = rules.map((rule) => {
+      let isAssigned = roleRulesData.some(
+        (roleRule) =>
+          roleRule.roleId === selectedRowData?.id && roleRule.ruleId === rule.id
+      );
+
+      return {
+        ...rule,
+        isAssigned
+      }
+    })
+  }
 
   /**
    * Handles the search operation in the application.
@@ -209,8 +230,8 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    * @param ruleId - The ID of the rule.
    */
   const handleNavigateToRuleClick = (ruleId: string) => {
-    const rule = roleRules?.find((roleRule) => roleRule.id === ruleId);
-    const index = roleRules?.findIndex((roleRule) => roleRule.id === ruleId) ?? -1;
+    const rule = roleRulesData?.find((roleRule) => roleRule.id === ruleId);
+    const index = roleRulesData?.findIndex((roleRule) => roleRule.id === ruleId) ?? -1;
 
     setSelectedRow({ index, data: rule });
     navigate(PATH.RULES_PATH);
@@ -331,6 +352,16 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           dataItems={dataItems}
           onRemove={handleRemove}
           onSubmit={handleUpdate}
+        />
+      ),
+    },
+    {
+      title: 'Rules',
+      content: (
+        <AssignRoleRules
+          key={selectedRowData?.id}
+          heading={selectedRowData?.name}
+          items={roleRules}
         />
       ),
     },

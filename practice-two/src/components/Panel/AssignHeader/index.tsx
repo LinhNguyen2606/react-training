@@ -13,6 +13,7 @@ import { Item } from '@interfaces';
 
 export enum SingleOptionTypes {
   RolesAssigned = 'Roles assigned',
+  RoleRulesAssigned = 'Rules assigned'
 }
 
 interface AssignHeaderProps {

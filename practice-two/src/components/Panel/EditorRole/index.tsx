@@ -89,8 +89,8 @@ const EditorRole = ({
     setIsOpenModal((prevIsOpenModal) => !prevIsOpenModal);
 
   /**
-   * Handles the action of removing a user.
-   * Closes the modal and triggers the `onRemove` callback if the `id` is a number.
+   * Handles the action of removing a role.
+   * Closes the modal and triggers the `onRemove` callback.
    * @returns {void}
    */
   const handleOnRemove = () => {
@@ -100,7 +100,7 @@ const EditorRole = ({
   };
 
   /**
-   * Handles the action of update a user.
+   * Handles the action of update a role.
    * @returns {void}
    */
   const handleOnUpdate = () => {

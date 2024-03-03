@@ -31,7 +31,7 @@ const ColorField = ({ label, bgColor, onChange }: ColorField) => {
    */
   const handleChange = (color: any) => {
     setColor(color.hex);
-
+    
     if (onChange) onChange(color.hex);
   };
 

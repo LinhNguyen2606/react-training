@@ -44,6 +44,7 @@ import { EnitityColumn, Role } from '@interfaces';
 // Services
 import {
   deleteRole,
+  editRole,
   getRoleRules,
   getRoles,
   getRules,
@@ -297,7 +298,40 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     setIsShowProgress('success');
   };
 
-  const handleUpdate = () => {};
+  /**
+   * Edit a role.
+   * @param {string} roleData - The role's data after updated.
+   * @returns {Promise<void>} - Promise when finished processing.
+   */
+  const handleUpdate = async (roleData: Role) => {
+    setIsShowProgress('processing');
+    
+    const updatedRoleData = {
+      name: roleData.name,
+      avatar: '',
+      bgColor: roleData.bgColor,
+    };
+
+    const res = await editRole(selectedRowData?.id, updatedRoleData);
+
+    const data = extractData(res);
+    
+    if (!data) {
+      setIsShowProgress('failure');
+      return;
+    }
+
+    mutate(`${API.BASE}/${API.ROLE}`);
+    setSelectedRow({ index: selectedRow.index, data });
+    setDataItems([
+      ...transformListViewRoleInfo(
+        getCorrespondingRoleRules,
+        getCorrespondingUserRoles
+      ),
+      ...transformRoleInfo(data),
+    ]);
+    setIsShowProgress('success');
+  };
 
   const tabsContent = [
     {

@@ -204,31 +204,16 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   };
 
   /**
-   * Navigates to an item based on its ID and path.
-   *
-   * @param id - The ID of the item.
-   * @param path - The path to navigate to.
-   * @param findData - A function that finds the data item based on its ID.
-   */
-  const handleNavigateToItem = (
-    id: string,
-    path: string,
-    findData: (id: string) => any
-  ) => {
-    const dataItem = findData(id);
-    setSelectedRow({ index: selectedRow.index, data: dataItem });
-    navigate(path);
-  };
-
-  /**
    * Handles the click event to navigate to the correspod rule
    *
    * @param ruleId - The ID of the rule.
    */
-  const handleRuleClick = (ruleId: string) => {
-    handleNavigateToItem(ruleId, PATH.RULES_PATH, (id) =>
-      roleRules?.find((roleRule) => roleRule.id === id)
-    );
+  const handleNavigateToRuleClick = (ruleId: string) => {
+    const rule = roleRules?.find((roleRule) => roleRule.id === ruleId);
+    const index = roleRules?.findIndex((roleRule) => roleRule.id === ruleId) ?? -1;
+
+    setSelectedRow({ index, data: rule });
+    navigate(PATH.RULES_PATH);
   };
 
   /**
@@ -236,10 +221,12 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    *
    * @param userId - The ID of the user.
    */
-  const handleUserClick = (userId: string) => {
-    handleNavigateToItem(userId, PATH.HOME_PATH, (id) =>
-      users?.find((user) => user.id === id)
-    );
+  const handleNavigateToUserClick = (userId: string) => {
+    const user = users?.find((user) => user.id === userId)
+    const index = users?.findIndex((user) => user.id === userId) ?? -1;
+
+    setSelectedRow({ index, data: user });
+    navigate(PATH.HOME_PATH);
   };
 
   const roleDetailsInfo = [
@@ -259,7 +246,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           values: rulesOfRole.map((roleRule) => ({
             id: roleRule?.id,
             text: roleRule?.name,
-            onClick: () => handleRuleClick(roleRule?.id!),
+            onClick: () => handleNavigateToRuleClick(roleRule?.id!),
           })),
         },
         {
@@ -268,7 +255,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           values: usersOfRole.map((userRole) => ({
             id: userRole?.id,
             text: userRole?.userName,
-            onClick: () => handleUserClick(userRole?.id!),
+            onClick: () => handleNavigateToUserClick(userRole?.id!),
           })),
         },
       ],

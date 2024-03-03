@@ -5,11 +5,10 @@ import {
 } from 'react';
 import { mutate } from 'swr';
 
-// Components
+// Component
 import AssignItem from '@components/Panel/AssignItems';
-import { SingleOptionTypes } from '@components/Panel/AssignHeader';
 
-// Interfaces
+// Interface
 import { Item } from '@interfaces';
 
 // Context
@@ -17,12 +16,12 @@ import { Context } from '@stores';
 
 // Services
 import {
-  assignRoleToUser,
+  assignRuleToUser,
   getRoles,
   getRules,
   getUserRoles,
   getUserRules,
-  unAssignRoleFromUser,
+  unAssignRuleFromUser,
 } from '@services';
 
 // Helpers
@@ -38,27 +37,32 @@ import {
 // Constant
 import { API } from '@constants';
 
-interface AssignRolesProps {
-  roles: Item[];
+interface AssignRulesProps {
+  rules: Item[];
   heading: string;
 }
 
-const AssignRoles = ({ roles, heading }: AssignRolesProps) => {
-  const [roleState, setRoleState] = useState<Item[]>(roles);
+const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
+  // State and Context
+  const [ruleState, setRuleState] = useState<Item[]>(rules);
+  const {
+    setIsShowProgress,
+    selectedRow,
+    setDataItems
+  } = useContext(Context);
 
-  const { setIsShowProgress, selectedRow, setDataItems } = useContext(Context);
-
+  // Get the data from API
   const { data: ruleData } = getRules();
   const { data: roleData } = getRoles();
   const { data: userRules } = getUserRules();
   const { data: userRoles } = getUserRoles();
 
+  // Handles the data from API
   const getCorrespondingUserRules = getCorrespondingUserItems(
     userRules || [],
     ruleData || [],
     selectedRow.data.id
   );
-
   const getCorrespondingUserRoles = getCorrespondingUserItems(
     userRoles || [],
     roleData || [],
@@ -66,32 +70,32 @@ const AssignRoles = ({ roles, heading }: AssignRolesProps) => {
   );
 
   /**
-   * Handles the selection of role.
-   * @param id - The ID of the role.
+   * Handles the selection of an rule.
+   * @param id - The ID of the rule.
    */
-  const handleRoleAction = (id: string) => async () => {
+  const handleRuleAction = (id: string) => async () => {
     setIsShowProgress('processing');
 
     // Check if the current rule is already assigned to the user
     const isCurrentlyAssigned = isItemAssignedToUser(
       selectedRow.data.id,
       id,
-      userRoles || [],
-      'roleId'
+      userRules || [],
+      'ruleId'
     );
 
-    // Find the userRoleId
-    const userRoleId = findUserIdFromAssigned(
+    // Find the userRuleId
+    const userRuleId = findUserIdFromAssigned(
       selectedRow.data.id,
       id,
-      userRoles || [],
-      'roleId'
+      userRules || [],
+      'ruleId'
     );
 
     // Choose the appropriate action based on the current state of the item (assign or unassign rule)
     const action = isCurrentlyAssigned
-      ? () => unAssignRoleFromUser(userRoleId)
-      : () => assignRoleToUser(selectedRow.data.id, id);
+      ? () => unAssignRuleFromUser(userRuleId)
+      : () => assignRuleToUser(selectedRow.data.id, id);
 
     // Perform the action and retrieve the response
     const res = await action();
@@ -103,18 +107,18 @@ const AssignRoles = ({ roles, heading }: AssignRolesProps) => {
     }
 
     // Update the data in the cache or on the server
-    mutate(`${API.BASE}/${API.USER_ROLES}`);
+    mutate(`${API.BASE}/${API.USER_RULES}`);
 
-    // Create a new array with the updated assigned state for the selected role
-    const newRoles = roleState.map((role) => {
-      if (role.id === id) {
-        return { ...role, isAssigned: !isCurrentlyAssigned };
+    // Create a new array with the updated assigned state for the selected rule
+    const newRules = ruleState.map((rule) => {
+      if (rule.id === id) {
+        return { ...rule, isAssigned: !isCurrentlyAssigned };
       }
-      return role;
+      return rule;
     });
 
-    // Update the state of the list rule
-    setRoleState(newRoles);
+    // Update the state of the item list
+    setRuleState(newRules);
 
     // Update the display data list
     setDataItems([
@@ -130,13 +134,12 @@ const AssignRoles = ({ roles, heading }: AssignRolesProps) => {
 
   return (
     <AssignItem
-      items={roles}
+      items={rules}
       heading={heading}
-      singleOption={SingleOptionTypes.RolesAssigned}
-      optionName="role"
-      handleItemSelect={handleRoleAction}
+      optionName="rule"
+      handleItemSelect={handleRuleAction}
     />
   );
 };
 
-export default memo(AssignRoles);
+export default memo(AssignUserRules);

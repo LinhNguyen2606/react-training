@@ -1,9 +1,21 @@
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+
 // Components
 import { Icons } from '@components';
 import { AssignmentOptions } from '@components/Panel/AssignItems';
 
 // Icon
 import { Shield } from '@assets/icons';
+
+// Service
+import { getRoles } from '@services';
+
+// Constant
+import { PATH } from '@constants';
+
+// Context
+import { Context } from '@stores';
 
 interface AssignItemTextTagsProps {
   id: string;
@@ -29,6 +41,25 @@ const AssignItemTextTags = ({
   selectedType,
   handleItemSelect,
 }: AssignItemTextTagsProps) => {
+  // Context
+  const { selectedRow, setSelectedRow } = useContext(Context);
+
+  const navigate = useNavigate();
+
+  // Get the data from API
+  const { data: roles } = getRoles();
+
+  /**
+   * Handles the click event to navigate to the correspod role
+   *
+   * @param roleId - The ID of the role.
+   */
+  const handleNavigateToRoleClick = (roleId: string) => () => {
+    const role = roles?.find((role) => role.id === roleId);
+    setSelectedRow({ index: selectedRow.index, data: role });
+    navigate(PATH.ROLES_PATH);
+  };
+
   return (
     <>
       {selectedType === AssignmentOptions.AllAssignments ? (
@@ -58,14 +89,14 @@ const AssignItemTextTags = ({
               </span>
             )}
             {assignedTo?.map((role) => (
-              <a
+              <span
                 key={role.id}
-                href={`/roles/${role.id}`}
                 className="panel-assign__item-role"
+                onClick={handleNavigateToRoleClick(role.id!)}
               >
                 <Icons src={Shield} size="13" />
                 {role.name}
-              </a>
+              </span>
             ))}
           </div>
         </>

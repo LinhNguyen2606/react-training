@@ -3,12 +3,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 // Components
 import { Panel } from '@components';
 import EditorProfile from '@components/Panel/EditorProfile';
-import AssignRules from '@components/Panel/AssignRules';
-import AssignRoles from '@components/Panel/AssignRoles';
+import AssignUserRules from '@components/Panel/AssignUserRules';
+import AssignUserRoles from '@components/Panel/AssignUserRoles';
 
 // Helper
 import { generateRandomColor } from '@helpers';
-
 
 export default {
   title: 'Components/Panel',
@@ -97,29 +96,29 @@ export const Default: Story = {
       {
         title: 'Rules',
         content: (
-          <AssignRules
+          <AssignUserRules
             heading="Elly Soyer"
             rules={[
               {
-                id: "1",
+                id: '1',
                 name: 'CanAdminProjects',
                 description: 'Can create projects',
                 isAssigned: true,
                 isAssignedDirectly: true,
                 assignedTo: [
                   {
-                    id: "2",
+                    id: '2',
                     name: 'Admin',
                   },
                 ],
               },
               {
-                id: "2",
+                id: '2',
                 name: 'CanEditUsers',
                 description: 'Can modify user details and access levels',
                 isAssigned: false,
                 isAssignedDirectly: true,
-                assignedTo: [{ id: "1", name: 'Admin' }],
+                assignedTo: [{ id: '1', name: 'Admin' }],
               },
             ]}
           />
@@ -128,22 +127,22 @@ export const Default: Story = {
       {
         title: 'Roles',
         content: (
-          <AssignRoles
+          <AssignUserRoles
             heading="Elly Soyer"
             roles={[
               {
-                id: "1",
+                id: '1',
                 name: 'Admin',
                 bgColor: generateRandomColor(),
                 isAssigned: true,
-                assignedTo: [{ id: "2", name: 'Admin' }],
+                assignedTo: [{ id: '2', name: 'Admin' }],
               },
               {
-                id: "2",
+                id: '2',
                 name: 'Team Lead',
                 bgColor: generateRandomColor(),
                 isAssigned: false,
-                assignedTo: [{ id: "1", name: 'Admin' }],
+                assignedTo: [{ id: '1', name: 'Admin' }],
               },
             ]}
           />

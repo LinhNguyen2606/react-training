@@ -25,8 +25,8 @@ import {
 import { DrawerPosition } from '@components/Drawer';
 import { SidebarProps } from '@components/Sidebar/SidebarInfo';
 import EditorProfile from '@components/Panel/EditorProfile';
-import AssignRules from '@components/Panel/AssignRules';
-import AssignRoles from '@components/Panel/AssignRoles';
+import AssignUserRules from '@components/Panel/AssignUserRules';
+import AssignUserRoles from '@components/Panel/AssignUserRoles';
 
 // Helpers
 import {
@@ -268,32 +268,18 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     width: '100%',
   };
 
-  /**
-   * Navigates to an item based on its ID and path.
-   *
-   * @param id - The ID of the item.
-   * @param path - The path to navigate to.
-   * @param findData - A function that finds the data item based on its ID.
-   */
-  const handleNavigateToItem = (
-    id: string,
-    path: string,
-    findData: (id: string) => any
-  ) => {
-    const dataItem = findData(id);
-    setSelectedRow({ index: selectedRow.index, data: dataItem });
-    navigate(path);
-  };
 
   /**
    * Handles the click event to navigate to the correspod role
    *
    * @param roleId - The ID of the role.
    */
-  const handleRoleClick = (roleId: string) => {
-    handleNavigateToItem(roleId, PATH.ROLES_PATH, (id) =>
-      roleData?.find((role) => role.id === id)
-    );
+  const handleNavigateToRoleClick = (roleId: string) => {
+    const role = roleData?.find((role) => role.id === roleId)
+    const index = roleData?.findIndex((role) => role.id === roleId) ?? -1;
+
+    setSelectedRow({ index, data: role })
+    navigate(PATH.ROLES_PATH)
   };
 
   /**
@@ -301,10 +287,12 @@ const Home = ({ position }: { position: DrawerPosition }) => {
    *
    * @param ruleId - The ID of the rule.
    */
-  const handleRuleClick = (ruleId: string) => {
-    handleNavigateToItem(ruleId, PATH.RULES_PATH, (id) =>
-      ruleData?.find((rule) => rule.id === id)
-    );
+  const handleNavigateToRuleClick = (ruleId: string) => {
+    const rule = ruleData?.find((rule) => rule.id === ruleId);
+    const index = ruleData?.findIndex((rule) => rule.id === ruleId) ?? -1;
+
+    setSelectedRow({ index, data: rule });
+    navigate(PATH.RULES_PATH)
   };
 
   const userDetailsInfo = [
@@ -337,7 +325,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
             userRolesItem?.map((role) => ({
               id: role?.id,
               text: role?.name,
-              onClick: () => handleRoleClick(role?.id!),
+              onClick: () => handleNavigateToRoleClick(role?.id!),
             })) ?? [],
         },
         {
@@ -349,7 +337,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
             ? userRulesItem.map((rule) => ({
                 id: rule?.id,
                 text: rule?.description,
-                onClick: () => handleRuleClick(rule?.id!),
+                onClick: () => handleNavigateToRuleClick(rule?.id!),
               }))
             : [],
         },
@@ -432,7 +420,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     {
       title: 'Rules',
       content: (
-        <AssignRules
+        <AssignUserRules
           key={selectedRowData?.id}
           heading={selectedRowData?.userName}
           rules={userRules}
@@ -442,7 +430,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     {
       title: 'Roles',
       content: (
-        <AssignRoles
+        <AssignUserRoles
           key={selectedRowData?.id}
           heading={selectedRowData?.userName}
           roles={userRoles}
@@ -454,11 +442,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   return (
     <>
       <div style={contentWrapperStyle}>
-        <SearchBar
-          label="Users"
-          placeholder="Search"
-          onChange={handleSearch}
-        />
+        <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
         <Table
           rowData={filteredUsers}
           columns={columns}

@@ -20,10 +20,13 @@ export const getRoles = (): {
   data: Role[] | undefined;
   isValidating: boolean;
 } => {
-  const { data, isValidating } = useSWR<Role[]>(`${API.BASE}/${API.ROLE}`, fetcher);
+  const { data, isValidating } = useSWR<Role[]>(
+    `${API.BASE}/${API.ROLE}`,
+    fetcher
+  );
   return {
     data,
-    isValidating
+    isValidating,
   };
 };
 
@@ -41,6 +44,36 @@ export const createRole = (roleData: Role): Promise<ApiResponse<Role>> =>
     body: JSON.stringify(roleData),
   });
 
+/**
+ * Delete a role with corresponding id.
+ * @param {Role} roleId - The ID of the role to delete.
+ * @returns {Promise<APIResponse<Role>>} A promise that resolves to the API response containing the deleted role, or an error message.
+ */
+export const deleteRole = (roleId: string): Promise<ApiResponse<Role>> =>
+  handleAPIRequest(`${API.BASE}/${API.ROLE}/${roleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+/**
+ * Edit a role with corresponding data.
+ * @param {number} roleId - The id of role.
+ * @param {Role} roleData - The data for the role.
+ * @returns {Promise<APIResponse<Role>>} A promise that resolves to the API response containing the data to edit role, or an error message.
+ */
+export const editRole = (
+  roleId: string,
+  roleData: Role
+): Promise<ApiResponse<Role>> =>
+  handleAPIRequest(`${API.BASE}/${API.ROLE}/${roleId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(roleData),
+  });
 
 export const assignRoleToUser = (
   userId: string,

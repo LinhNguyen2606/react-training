@@ -12,7 +12,9 @@ export {
 export {
   getRules,
   assignRuleToUser,
-  unAssignRuleFromUser
+  unAssignRuleFromUser,
+  assignRuleToRole,
+  unAssignRuleFromRole
 } from '@services/rule';
 
 export {

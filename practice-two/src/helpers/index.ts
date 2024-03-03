@@ -27,6 +27,6 @@ export {
   transformRoleInfo
 } from '@helpers/transform';
 
-export { isItemAssignedToUser } from '@helpers/is';
+export { isItemAssignedToUser, isItemAssignedToRole } from '@helpers/is';
 
-export { findUserIdFromAssigned } from '@helpers/find';
+export { findUserIdFromAssigned, findRoleIdFromAssigned } from '@helpers/find';

@@ -7,6 +7,8 @@ export {
   getRoleRules,
   getUserRoles,
   getUserRules,
+  assignUserToRole,
+  unAssignUserFromRole
 } from '@services/user';
 
 export {

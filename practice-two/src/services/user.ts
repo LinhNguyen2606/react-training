@@ -9,10 +9,11 @@ import { fetcher } from '@helpers';
 // Interfaces
 import {
   ApiResponse,
+  Item,
   RoleRule,
   User,
   UserRole,
-  UserRule
+  UserRule,
 } from '@interfaces';
 
 /**
@@ -180,3 +181,41 @@ export const getRoleRules = (): {
     data,
   };
 };
+
+/**
+ * Assigns user(s) to a role.
+ *
+ * @param userId - The ID of the user to assign the user to.
+ * @param roleId - The ID of the role to be assigned.
+ * @returns A promise that resolves to the API response.
+ */
+export const assignUserToRole = (
+  userId: string,
+  roleId: string
+): Promise<ApiResponse<Item>> =>
+  handleAPIRequest(`${API.BASE}/${API.USER_ROLES}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId: userId,
+      roleId: roleId,
+    }),
+  });
+
+/**
+ * Unassigns user(s) from a role.
+ *
+ * @param userRolesId - The userRolesId to be unassigned.
+ * @returns A promise that resolves to the API response.
+ */
+export const unAssignUserFromRole = (
+  userRoleId: string | null
+): Promise<ApiResponse<Item>> =>
+  handleAPIRequest(`${API.BASE}/${API.USER_ROLES}/${userRoleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });

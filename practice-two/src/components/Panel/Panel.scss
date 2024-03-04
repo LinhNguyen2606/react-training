@@ -202,7 +202,8 @@
     }
 
     &__item {
-      padding: 5px 12px 10px 12px;
+      border-bottom: 1px solid #edeff0;
+      padding      : 5px 12px 10px 12px;
 
       &-name {
         color      : $text-primary;

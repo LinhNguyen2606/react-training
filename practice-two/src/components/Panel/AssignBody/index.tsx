@@ -7,7 +7,6 @@ import AssignItemTextTags from '@components/Panel/AssignBody/AssignItemTextTags'
 import { Item } from '@interfaces';
 
 interface AssignBodyProps {
-  src?: string;
   items: Item[];
   isModifying: boolean;
   selectedType: AssignmentOptions;
@@ -15,7 +14,6 @@ interface AssignBodyProps {
 }
 
 const AssignBody = ({
-  src,
   items,
   isModifying,
   selectedType,
@@ -28,22 +26,22 @@ const AssignBody = ({
     <ul style={{ backgroundColor: style }}>
       {items.map((item) => (
         <li key={item.id} className="panel-assign__item">
-          {src || item.bgColor ? (
+          {item.avatar || item.bgColor ? (
             <AssignItemAvatarText
-              id={item.id}
-              name={item.name}
-              bgColor={item.bgColor}
+              id={item.id!}
+              name={item.name! || item.userName!}
+              bgColor={item.bgColor!}
               isModifying={isModifying}
-              isAssigned={item.isAssigned}
+              isAssigned={item.isAssigned!}
               handleItemSelect={handleItemSelect}
-              src={src}
+              src={item.avatar!}
             />
           ) : (
             <AssignItemTextTags
-              id={item.id}
-              name={item.name}
+              id={item.id!}
+              name={item.name!}
               description={item.description}
-              isAssigned={item.isAssigned}
+              isAssigned={item.isAssigned!}
               isModifying={isModifying}
               assignedTo={item.assignedTo}
               selectedType={selectedType}

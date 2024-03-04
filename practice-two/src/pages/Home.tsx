@@ -82,7 +82,7 @@ const generateUserTableColumns = (
       render: (_, item) => (
         <Avatar
           src={item.avatar}
-          alt={item.userName}
+          alt={item.userName!}
           bgColor={item.bgColor}
           size="sm"
         />
@@ -94,7 +94,7 @@ const generateUserTableColumns = (
       render: (_, item) => (
         <span
           dangerouslySetInnerHTML={{
-            __html: highlightKeyword(item.userName, searchKeyword),
+            __html: highlightKeyword(item.userName!, searchKeyword),
           }}
         />
       ),
@@ -110,7 +110,7 @@ const generateUserTableColumns = (
       render: (_, item) => (
         <span
           dangerouslySetInnerHTML={{
-            __html: highlightKeyword(item.email, searchKeyword),
+            __html: highlightKeyword(item.email!, searchKeyword),
           }}
         />
       ),

@@ -1,12 +1,14 @@
+import React from 'react';
 import '@components/Avatar/Avatar.scss';
 
 export type AvatarSize = 'lg' | 'md' | 'sm' | 'x-sm';
 
 interface AvatarProps {
-  src?: string;
   alt: string;
+  src?: string;
   size: AvatarSize;
   bgColor?: string;
+  style?: React.CSSProperties;
 }
 
 const Avatar = ({
@@ -14,6 +16,7 @@ const Avatar = ({
   alt,
   bgColor,
   size = 'sm',
+  style
 }: AvatarProps) => {
   const initial = alt?.charAt(0).toUpperCase();
   const circleClass = size === 'sm' || size === 'x-sm' ? 'avatar--circle' : '';
@@ -21,7 +24,7 @@ const Avatar = ({
   return (
     <div
       className={`avatar avatar--${size} ${circleClass}`}
-      style={{ backgroundColor: bgColor }}
+      style={{backgroundColor: bgColor, ...style }}
     >
       {src ? (
         <img

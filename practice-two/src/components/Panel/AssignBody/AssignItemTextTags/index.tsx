@@ -42,7 +42,7 @@ const AssignItemTextTags = ({
   handleItemSelect,
 }: AssignItemTextTagsProps) => {
   // Context
-  const { selectedRow, setSelectedRow } = useContext(Context);
+  const { setSelectedRow } = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -56,7 +56,9 @@ const AssignItemTextTags = ({
    */
   const handleNavigateToRoleClick = (roleId: string) => () => {
     const role = roles?.find((role) => role.id === roleId);
-    setSelectedRow({ index: selectedRow.index, data: role });
+    const index = roles?.findIndex((role) => role.id === roleId) ?? -1;
+
+    setSelectedRow({ index, data: role });
     navigate(PATH.ROLES_PATH);
   };
 

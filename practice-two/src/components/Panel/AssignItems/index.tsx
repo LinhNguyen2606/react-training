@@ -31,7 +31,6 @@ interface AssignItemsProps {
 }
 
 const AssignItem = ({
-  src,
   items,
   heading,
   optionName,
@@ -72,7 +71,7 @@ const AssignItem = ({
    */
   const filteredItems = useMemo(() => {
     return items.filter((item) =>
-      item.name?.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      (item.name || item.userName)?.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     );
   }, [items, debouncedSearchTerm]);
 
@@ -100,7 +99,6 @@ const AssignItem = ({
       </div>
 
       <AssignBody
-        src={src}
         items={filteredItems}
         isModifying={isModifying}
         selectedType={selectedType}

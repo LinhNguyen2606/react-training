@@ -73,7 +73,7 @@
   }
 
   &__form-group {
-    position : relative;
+    position: relative;
   }
 
   &__form-group,
@@ -192,7 +192,7 @@
     &__avatar-text {
       align-items: center;
       display    : flex;
-      gap        : 15px;
+      gap        : 20px;
 
       &--name {
         color      : $text-primary;

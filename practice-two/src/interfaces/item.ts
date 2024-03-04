@@ -1,10 +1,10 @@
-export interface Item {
+import { User } from "@interfaces";
+
+export interface Item extends User{
   id?: string;
-  name: string;
-  bgColor?: string;
+  name?: string;
   description?: string;
-  isAssigned: boolean;
-  isAssignedDirectly?: boolean;
+  isAssigned?: boolean;
   assignedTo?: {
     id?: string;
     name?: string;

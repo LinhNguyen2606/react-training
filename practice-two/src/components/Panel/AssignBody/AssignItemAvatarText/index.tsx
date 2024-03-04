@@ -3,9 +3,9 @@ import { Avatar } from '@components';
 
 interface AssignItemAvatarTextProps {
   id: string;
-  src?: string;
+  src: string;
   name: string;
-  bgColor?: string;
+  bgColor: string;
   isModifying: boolean;
   isAssigned: boolean;
   handleItemSelect: (id: string) => () => void;
@@ -20,6 +20,7 @@ const AssignItemAvatarText = ({
   isAssigned,
   handleItemSelect,
 }: AssignItemAvatarTextProps) => {
+
   return (
     <div className="panel-assign__avatar-text">
       {isModifying && (

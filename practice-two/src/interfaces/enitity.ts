@@ -8,6 +8,6 @@ export interface EnitityColumn<T> {
 export interface EnitityUserRoles {
   id?: string;
   userName?: string;
-  avatar: string;
-  bgColor: string;
+  avatar?: string;
+  bgColor?: string;
 }

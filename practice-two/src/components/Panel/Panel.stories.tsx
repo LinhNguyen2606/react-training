@@ -104,7 +104,6 @@ export const Default: Story = {
                 name: 'CanAdminProjects',
                 description: 'Can create projects',
                 isAssigned: true,
-                isAssignedDirectly: true,
                 assignedTo: [
                   {
                     id: '2',
@@ -117,7 +116,6 @@ export const Default: Story = {
                 name: 'CanEditUsers',
                 description: 'Can modify user details and access levels',
                 isAssigned: false,
-                isAssignedDirectly: true,
                 assignedTo: [{ id: '1', name: 'Admin' }],
               },
             ]}

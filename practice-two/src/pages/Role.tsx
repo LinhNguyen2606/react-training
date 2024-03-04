@@ -20,6 +20,7 @@ import {
 import { DrawerPosition } from '@components/Drawer';
 import EditorRole from '@components/Panel/EditorRole';
 import AssignRoleRules from '@components/Panel/AssignRoleRules';
+import AssignRoleMembers from '@components/Panel/AssignRoleMembers';
 
 // Constants
 import {
@@ -156,6 +157,21 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
 
       return {
         ...rule,
+        isAssigned
+      }
+    })
+  } 
+
+  let roleMembers: Item[]  = [];
+
+  if (users && userRoles) {
+    roleMembers = users.map((user) => {
+      let isAssigned = userRoles.some((userRole) => 
+        userRole.roleId === selectedRowData?.id && userRole.userId === user.id
+      );
+
+      return {
+        ...user,
         isAssigned
       }
     })
@@ -362,6 +378,16 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           key={selectedRowData?.id}
           heading={selectedRowData?.name}
           items={roleRules}
+        />
+      ),
+    },
+    {
+      title: 'Members',
+      content: (
+        <AssignRoleMembers
+          key={selectedRowData?.id}
+          heading={selectedRowData?.name}
+          items={roleMembers}
         />
       ),
     },

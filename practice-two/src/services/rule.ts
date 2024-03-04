@@ -21,10 +21,17 @@ import { handleAPIRequest } from '@services';
  *
  * @returns An object containing the rules data.
  */
-export const getRules = (): { data: Rule[] | undefined } => {
-  const { data } = useSWR<Rule[]>(`${API.BASE}/${API.RULE}`, fetcher);
+export const getRules = (): {
+  data: Rule[] | undefined;
+  isValidating: boolean;
+} => {
+  const { data, isValidating } = useSWR<Rule[]>(
+    `${API.BASE}/${API.RULE}`,
+    fetcher
+  );
   return {
     data,
+    isValidating,
   };
 };
 

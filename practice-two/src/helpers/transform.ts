@@ -1,20 +1,11 @@
 // Icons
-import {
-  ListCheck,
-  Shield,
-  UserGroup
-} from '@assets/icons';
+import { ListCheck, Shield, UserGroup } from '@assets/icons';
 
 // Constant
 import { TYPES } from '@constants';
 
 // Interfaces
-import {
-  EnitityUserRoles,
-  Role,
-  Rule,
-  User
-} from '@interfaces';
+import { EnitityUserRoles, Role, Rule, User } from '@interfaces';
 
 /**
  * Transforms user data into an array of transformed data items.
@@ -94,6 +85,13 @@ export const transformRoleInfo = (data: Role) => [
   },
 ];
 
+/**
+ * Transforms user rules and user roles into a list view info object.
+ *
+ * @param userRules - The user rules to transform.
+ * @param userRoles - The user roles to transform.
+ * @returns A list view info object.
+ */
 export const transformListViewInfo = (userRules: Rule[], userRoles: Role[]) => {
   return [
     {
@@ -120,6 +118,15 @@ export const transformListViewInfo = (userRules: Rule[], userRoles: Role[]) => {
   ];
 };
 
+/**
+ * Transforms role rules and user roles into a list view role info object.
+ *
+ * @template T - A type that extends Rule.
+ * @template U - A type that extends EnitityUserRoles.
+ * @param roleRules - The role rules to transform.
+ * @param userRoles - The user roles to transform.
+ * @returns A list view role info object.
+ */
 export const transformListViewRoleInfo = <
   T extends Rule,
   U extends EnitityUserRoles

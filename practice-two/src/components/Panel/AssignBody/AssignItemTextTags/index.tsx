@@ -1,12 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShield } from '@fortawesome/free-solid-svg-icons';
 
-// Components
-import { Icons } from '@components';
+// Component
 import { AssignmentOptions } from '@components/Panel/AssignItems';
-
-// Icon
-import { Shield } from '@assets/icons';
 
 // Service
 import { getRoles } from '@services';
@@ -17,16 +15,11 @@ import { PATH } from '@constants';
 // Context
 import { Context } from '@stores';
 
-interface AssignItemTextTagsProps {
-  id: string;
-  name: string;
-  description?: string;
-  isAssigned: boolean;
+// Interface
+import { Item } from '@interfaces';
+
+interface AssignItemTextTagsProps extends Item {
   isModifying: boolean;
-  assignedTo?: {
-    id?: string;
-    name?: string;
-  }[];
   selectedType: AssignmentOptions;
   handleItemSelect: (id: string) => () => void;
 }
@@ -66,7 +59,7 @@ const AssignItemTextTags = ({
     <>
       {selectedType === AssignmentOptions.AllAssignments ? (
         <>
-          <div className="panel-assign__item-details">
+          <div className="panel-assign__item-details" key={id}>
             <span
               className="panel-assign__item-name"
               style={{ fontWeight: '500' }}
@@ -96,7 +89,9 @@ const AssignItemTextTags = ({
                 className="panel-assign__item-role"
                 onClick={handleNavigateToRoleClick(role.id!)}
               >
-                <Icons src={Shield} size="13" />
+                <div style={{ color: role.bgColor }}>
+                  <FontAwesomeIcon icon={faShield} />
+                </div>
                 {role.name}
               </span>
             ))}
@@ -114,7 +109,7 @@ const AssignItemTextTags = ({
             <input
               type="checkbox"
               checked={isAssigned}
-              onChange={handleItemSelect(id)}
+              onChange={handleItemSelect(id!)}
               className="panel-assign--input"
             />
           )}

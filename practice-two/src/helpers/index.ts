@@ -15,7 +15,9 @@ export { extractData } from '@helpers/extract';
 export {
   getUserRolesAndRules,
   getUsersOfRole,
+  getUsersOfRule,
   getRulesOfRole,
+  getRolesOfRule,
   getCorrespondingUserItems,
   getCorrespondingRoleItems,
 } from '@helpers/get';

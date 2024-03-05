@@ -54,6 +54,14 @@ export const getUserRolesAndRules = (
   return { userRolesItem, userRulesItem };
 };
 
+/**
+ * Returns an array of users who are assigned to a specific role.
+ *
+ * @param userRoles - An array of user-role relationships.
+ * @param users - An array of users.
+ * @param roleId - The ID of the role.
+ * @returns An array of users who are assigned to the role.
+ */
 export const getUsersOfRole = (
   userRoles: UserRole[],
   users: User[],
@@ -70,6 +78,38 @@ export const getUsersOfRole = (
   return usersOfRole;
 };
 
+/**
+ * Returns an array of users who are assigned to a specific rule.
+ *
+ * @param userRules - An array of user-rule relationships.
+ * @param users - An array of users.
+ * @param ruleId - The ID of the rule.
+ * @returns An array of users who are assigned to the rule.
+ */
+export const getUsersOfRule = (
+  userRules: UserRule[],
+  users: User[],
+  ruleId: string
+) => {
+  const userRuleRelations = userRules.filter(
+    (userRule) => userRule.ruleId === ruleId
+  );
+
+  const userOfRule = userRuleRelations
+    .map((userRule) => users.find((user) => user.id === userRule.userId))
+    .filter((user) => user !== undefined);
+
+  return userOfRule;
+};
+
+/**
+ * Returns an array of rules that are assigned to a specific role.
+ *
+ * @param roleRules - An array of role-rule relationships.
+ * @param rules - An array of rules.
+ * @param roleId - The ID of the role.
+ * @returns An array of rules that are assigned to the role.
+ */
 export const getRulesOfRole = (
   roleRules: RoleRule[],
   rules: Rule[],
@@ -84,6 +124,30 @@ export const getRulesOfRole = (
     .filter((rule) => rule !== undefined);
 
   return rulesOfRole;
+};
+
+/**
+ * Returns an array of roles that are assigned to a specific rule.
+ *
+ * @param roleRules - An array of role-rule relationships.
+ * @param roles - An array of roles.
+ * @param ruleId - The ID of the rule.
+ * @returns An array of roles that are assigned to the rule.
+ */
+export const getRolesOfRule = (
+  roleRules: RoleRule[],
+  roles: Role[],
+  ruleId: string
+) => {
+  const roleRulesRelations = roleRules.filter(
+    (roleRule) => roleRule.ruleId === ruleId
+  );
+
+  const rolesOfRule = roleRulesRelations
+    .map((roleRule) => roles.find((role) => role.id === roleRule.roleId))
+    .filter((role) => role !== undefined);
+
+  return rolesOfRule;
 };
 
 /**
@@ -112,6 +176,16 @@ export const getCorrespondingUserItems = <
     : [];
 };
 
+/**
+ * Returns an array of role items that correspond to a specific role ID.
+ *
+ * @template T - A type that extends RoleRule.
+ * @template U - A type that extends Rule.
+ * @param roleRules - An array of role-rule relationships.
+ * @param ruleData - An array of rules.
+ * @param roleId - The ID of the role.
+ * @returns An array of role items that correspond to the role ID. If `roleRules` is not an array, returns an empty array.
+ */
 export const getCorrespondingRoleItems = <T extends RoleRule, U extends Rule>(
   roleRules: T[],
   ruleData: U[],

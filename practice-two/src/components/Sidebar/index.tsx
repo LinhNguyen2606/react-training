@@ -8,6 +8,7 @@ import SidebarInfo, { SidebarProps } from '@components/Sidebar/SidebarInfo';
 interface ViewDetailsProps {
   title: string;
   isActive?: boolean;
+  isShowIcon?: boolean;
   onShowPanel?: () => void;
   data: SidebarProps['data'];
 }
@@ -15,6 +16,7 @@ interface ViewDetailsProps {
 const Sidebar = ({
   title,
   isActive,
+  isShowIcon,
   onShowPanel,
   data,
 }: ViewDetailsProps) => {
@@ -24,6 +26,7 @@ const Sidebar = ({
         title={title}
         isActive={isActive}
         onShowPanel={onShowPanel}
+        isShowIcon={isShowIcon!}
       />
       <SidebarInfo data={data} />
     </div>

@@ -63,12 +63,12 @@ export const Default: Story = {
     ],
     columns: [
       {
-        key: 'avatar',
+        key: '',
         title: '',
         render: (_, item: User) => (
           <Avatar
             src={item.avatar}
-            alt={item.userName}
+            alt={item.userName!}
             bgColor={item.bgColor}
             size="sm"
           />

@@ -207,7 +207,7 @@ export const assignUserToRole = (
 /**
  * Unassigns user(s) from a role.
  *
- * @param userRolesId - The userRolesId to be unassigned.
+ * @param userRoleId - The userRolesId to be unassigned.
  * @returns A promise that resolves to the API response.
  */
 export const unAssignUserFromRole = (

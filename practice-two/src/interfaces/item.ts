@@ -8,5 +8,6 @@ export interface Item extends User{
   assignedTo?: {
     id?: string;
     name?: string;
+    bgColor?: string;
   }[];
 }

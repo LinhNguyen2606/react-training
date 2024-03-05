@@ -1,4 +1,3 @@
-export type { State } from '@interfaces/state';
 export type { NavigationItem } from '@interfaces/navigate';
 export type { User, UserItem } from '@interfaces/user';
 export type { DataItems } from '@interfaces/data';

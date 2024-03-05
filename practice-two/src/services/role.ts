@@ -16,6 +16,13 @@ import {
 // Service
 import { handleAPIRequest } from '@services';
 
+/**
+ * Retrieves a list of roles from the API.
+ * @returns {{
+ *   data: Role[] | undefined; - The array of Role objects or undefined.
+ *   isValidating: boolean; - Indicates whether the request is currently being validated.
+ * }}
+ */
 export const getRoles = (): {
   data: Role[] | undefined;
   isValidating: boolean;
@@ -75,6 +82,13 @@ export const editRole = (
     body: JSON.stringify(roleData),
   });
 
+/**
+ * Assigns Role(s) to a user.
+ *
+ * @param userId - The ID of the user to assign the user to.
+ * @param roleId - The ID of the role to be assigned.
+ * @returns A promise that resolves to the API response.
+ */
 export const assignRoleToUser = (
   userId: string,
   roleId: string
@@ -90,6 +104,12 @@ export const assignRoleToUser = (
     }),
   });
 
+/**
+ * Unassigns role(s) from a user.
+ *
+ * @param userRoleId - The userRoleId to be unassigned.
+ * @returns A promise that resolves to the API response.
+ */
 export const unAssignRoleFromUser = (
   userRoleId: string | null
 ): Promise<ApiResponse<Item>> =>

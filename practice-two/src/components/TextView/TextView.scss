@@ -1,13 +1,13 @@
 .text-view {
   &--icon {
-    align-items  : center;
-    display      : flex;
-    gap          : 10px;
-    margin-bottom: 10px;
+    align-items    : center;
+    margin         : 10px 0;
+    display        : flex;
+    gap            : 10px;
 
     span {
-      font-size: $fs-x-small;
       color    : $tertiary-color;
+      font-size: $fs-x-small;
     }
   }
 

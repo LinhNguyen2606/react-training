@@ -39,7 +39,8 @@
       text-align    : left;
 
       &:first-child {
-        width: 70px;
+        width       : 70px;
+        padding-left: 12px;
       }
 
       &:nth-child(2) {

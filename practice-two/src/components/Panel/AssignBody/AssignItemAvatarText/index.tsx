@@ -1,13 +1,13 @@
 // Component
 import { Avatar } from '@components';
 
-interface AssignItemAvatarTextProps {
-  id: string;
+// Interface
+import { Item } from '@interfaces';
+
+interface AssignItemAvatarTextProps extends Item{
   src: string;
-  name: string;
   bgColor: string;
   isModifying: boolean;
-  isAssigned: boolean;
   handleItemSelect: (id: string) => () => void;
 }
 
@@ -27,7 +27,7 @@ const AssignItemAvatarText = ({
         <input
           type="checkbox"
           checked={isAssigned}
-          onChange={handleItemSelect(id)}
+          onChange={handleItemSelect(id!)}
           className="panel-assign--input"
         />
       )}
@@ -35,7 +35,7 @@ const AssignItemAvatarText = ({
         <>
           <Avatar
             src={src}
-            alt={name}
+            alt={name!}
             size="x-sm"
             bgColor={bgColor}
           />

@@ -5,6 +5,7 @@ export interface Item extends User{
   name?: string;
   description?: string;
   isAssigned?: boolean;
+  isRoleAssigned?: boolean;
   assignedTo?: {
     id?: string;
     name?: string;

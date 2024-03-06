@@ -36,7 +36,7 @@ const Table = <T,>({
             <td colSpan={columns.length}>
               <Spin
                 isProcessing={true}
-                size={40}
+                size={30}
                 style={{ justifyContent: 'center', margin: '40px 0' }}
               />
             </td>

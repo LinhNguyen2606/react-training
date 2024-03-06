@@ -23,15 +23,15 @@ import { handleAPIRequest } from '@services';
  */
 export const getRules = (): {
   data: Rule[] | undefined;
-  isValidating: boolean;
+  isLoading: boolean;
 } => {
-  const { data, isValidating } = useSWR<Rule[]>(
+  const { data, isLoading } = useSWR<Rule[]>(
     `${API.BASE}/${API.RULE}`,
     fetcher
   );
   return {
     data,
-    isValidating,
+    isLoading,
   };
 };
 

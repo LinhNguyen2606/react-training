@@ -20,20 +20,20 @@ import { handleAPIRequest } from '@services';
  * Retrieves a list of roles from the API.
  * @returns {{
  *   data: Role[] | undefined; - The array of Role objects or undefined.
- *   isValidating: boolean; - Indicates whether the request is currently being validated.
+ *   isLoading: boolean; - Indicates whether the request is currently being validated.
  * }}
  */
 export const getRoles = (): {
   data: Role[] | undefined;
-  isValidating: boolean;
+  isLoading: boolean;
 } => {
-  const { data, isValidating } = useSWR<Role[]>(
+  const { data, isLoading } = useSWR<Role[]>(
     `${API.BASE}/${API.ROLE}`,
     fetcher
   );
   return {
     data,
-    isValidating,
+    isLoading,
   };
 };
 

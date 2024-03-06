@@ -4,7 +4,7 @@
   display        : flex;
 
   &--icon {
-    background     : url('/icons/spinner-solid.svg') no-repeat;
+    background     : url('/icons/compass-solid.svg') no-repeat;
     animation      : spin-anim 3s linear infinite;
   }
 }

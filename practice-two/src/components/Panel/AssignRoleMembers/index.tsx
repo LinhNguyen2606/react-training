@@ -1,4 +1,8 @@
-import { useContext, useState } from 'react';
+import {
+  memo,
+  useContext,
+  useState
+} from 'react';
 import { mutate } from 'swr';
 
 // Interface
@@ -43,8 +47,14 @@ interface AssignRoleMembersProps {
 const AssignRoleMembers = ({ items, heading }: AssignRoleMembersProps) => {
   // State and Context
   const [users, setUsers] = useState<Item[]>(items);
-  const { setIsShowProgress, selectedRow, setDataItems } = useContext(Context);
+  const [isAssigning, setIsAssigning] = useState(false);
 
+  const {
+    dispatchToast,
+    selectedRow,
+    setDataItems
+  } = useContext(Context);
+    
   // Get the data from API
   const { data: ruleData } = getRules();
   const { data: roleData } = getRoles();
@@ -69,7 +79,8 @@ const AssignRoleMembers = ({ items, heading }: AssignRoleMembersProps) => {
    * @param id - The ID of the roleRule.
    */
   const handleAssignAction = (id: string) => async () => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
+    setIsAssigning(true);
 
     // Check if the current rule is already assigned to the role
     const isCurrentlyAssigned = isItemAssignedToRole(
@@ -97,7 +108,7 @@ const AssignRoleMembers = ({ items, heading }: AssignRoleMembersProps) => {
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
@@ -124,7 +135,8 @@ const AssignRoleMembers = ({ items, heading }: AssignRoleMembersProps) => {
       ...transformRoleInfo(selectedRow.data),
     ]);
 
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
+    setIsAssigning(false);
   };
 
   return (
@@ -134,8 +146,9 @@ const AssignRoleMembers = ({ items, heading }: AssignRoleMembersProps) => {
       singleOption={SingleOptionTypes.MemberAssigned}
       optionName="roleMembers"
       handleItemSelect={handleAssignAction}
+      isAssigning={isAssigning}
     />
   );
 };
 
-export default AssignRoleMembers;
+export default memo(AssignRoleMembers);

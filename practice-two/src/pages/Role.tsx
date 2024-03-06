@@ -99,11 +99,11 @@ const generateRoleTableColumns = (
 const RolePage = ({ position }: { position: DrawerPosition }) => {
   // Context and State
   const {
+    dispatchToast,
     selectedRow,
     setSelectedRow,
     dataItems,
     setDataItems,
-    setIsShowProgress,
   } = useContext(Context);
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
@@ -117,7 +117,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   // Get the data from API
   const { data: users } = getUsers();
   const { data: rules } = getRules();
-  const { data: roles } = getRoles();
+  const { data: roles, isLoading } = getRoles();
   const { data: userRoles } = getUserRoles();
   const { data: roleRulesData } = getRoleRules();
 
@@ -157,24 +157,25 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
 
       return {
         ...rule,
-        isAssigned
-      }
-    })
-  } 
+        isAssigned,
+      };
+    });
+  }
 
-  let roleMembers: Item[]  = [];
+  let roleMembers: Item[] = [];
 
   if (users && userRoles) {
     roleMembers = users.map((user) => {
-      let isAssigned = userRoles.some((userRole) => 
-        userRole.roleId === selectedRowData?.id && userRole.userId === user.id
+      let isAssigned = userRoles.some(
+        (userRole) =>
+          userRole.roleId === selectedRowData?.id && userRole.userId === user.id
       );
 
       return {
         ...user,
-        isAssigned
-      }
-    })
+        isAssigned,
+      };
+    });
   }
 
   /**
@@ -247,7 +248,8 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    */
   const handleNavigateToRuleClick = (ruleId: string) => {
     const rule = roleRulesData?.find((roleRule) => roleRule.id === ruleId);
-    const index = roleRulesData?.findIndex((roleRule) => roleRule.id === ruleId) ?? -1;
+    const index =
+      roleRulesData?.findIndex((roleRule) => roleRule.id === ruleId) ?? -1;
 
     setSelectedRow({ index, data: rule });
     navigate(PATH.RULES_PATH);
@@ -259,7 +261,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    * @param userId - The ID of the user.
    */
   const handleNavigateToUserClick = (userId: string) => {
-    const user = users?.find((user) => user.id === userId)
+    const user = users?.find((user) => user.id === userId);
     const index = users?.findIndex((user) => user.id === userId) ?? -1;
 
     setSelectedRow({ index, data: user });
@@ -306,20 +308,20 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    * and updates the UI based on the response.
    */
   const handleRemove = async () => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
 
     const res = await deleteRole(selectedRowData?.id);
 
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
     mutate(`${API.BASE}/${API.ROLE}`);
     setSelectedRow({ index: -1, data: null });
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
   };
 
   /**
@@ -328,8 +330,8 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleUpdate = async (roleData: Role) => {
-    setIsShowProgress('processing');
-    
+    dispatchToast({ type: 'PROCESSING' });
+
     const updatedRoleData = {
       name: roleData.name,
       avatar: '',
@@ -339,9 +341,9 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     const res = await editRole(selectedRowData?.id, updatedRoleData);
 
     const data = extractData(res);
-    
+
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
@@ -354,7 +356,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
       ),
       ...transformRoleInfo(data),
     ]);
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
   };
 
   const tabsContent = [
@@ -396,12 +398,17 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   return (
     <>
       <div style={contentWrapperStyle}>
-        <SearchBar label="Roles" placeholder="Search" onChange={handleSearch} />
+        <SearchBar
+          label="Roles"
+          placeholder="Search"
+          onChange={handleSearch}
+        />
         <Table
           rowData={filteredRoles}
           columns={columns}
           onRowClick={handleRowClick}
           selectedRow={selectedRow}
+          isLoading={isLoading}
         />
       </div>
       {isShowDetails && (

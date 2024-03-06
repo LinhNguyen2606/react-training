@@ -46,8 +46,10 @@ interface AssignRolesProps {
 const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
   // State and Context
   const [roleState, setRoleState] = useState<Item[]>(roles);
+  const [isAssigning, setIsAssigning] = useState(false);
+
   const {
-    setIsShowProgress,
+    dispatchToast,
     selectedRow,
     setDataItems
   } = useContext(Context);
@@ -76,7 +78,8 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
    * @param id - The ID of the role.
    */
   const handleRoleAction = (id: string) => async () => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
+    setIsAssigning(true);
 
     // Check if the current rule is already assigned to the user
     const isCurrentlyAssigned = isItemAssignedToUser(
@@ -104,7 +107,7 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
@@ -131,7 +134,8 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
       ...transformUserInfo(selectedRow.data),
     ]);
 
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
+    setIsAssigning(true);
   };
 
   return (
@@ -141,6 +145,7 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
       singleOption={SingleOptionTypes.RolesAssigned}
       optionName="role"
       handleItemSelect={handleRoleAction}
+      isAssigning={isAssigning}
     />
   );
 };

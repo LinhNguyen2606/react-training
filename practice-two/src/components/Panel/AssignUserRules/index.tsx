@@ -45,8 +45,10 @@ interface AssignRulesProps {
 const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
   // State and Context
   const [ruleState, setRuleState] = useState<Item[]>(rules);
+  const [isAssigning, setIsAssigning] = useState(false);
+
   const {
-    setIsShowProgress,
+    dispatchToast,
     selectedRow,
     setDataItems
   } = useContext(Context);
@@ -74,7 +76,8 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
    * @param id - The ID of the rule.
    */
   const handleRuleAction = (id: string) => async () => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
+    setIsAssigning(true);
 
     // Check if the current rule is already assigned to the user
     const isCurrentlyAssigned = isItemAssignedToUser(
@@ -102,7 +105,7 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
@@ -129,7 +132,8 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
       ...transformUserInfo(selectedRow.data),
     ]);
 
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
+    setIsAssigning(false);
   };
 
   return (
@@ -138,6 +142,7 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
       heading={heading}
       optionName="rule"
       handleItemSelect={handleRuleAction}
+      isAssigning={isAssigning}
     />
   );
 };

@@ -47,10 +47,10 @@ import { Context } from '@stores';
 const Layout = () => {
   // Context
   const {
+    toast,
+    dispatchToast,
     selectedRow,
     setSelectedRow,
-    isShowProgress,
-    setIsShowProgress,
     setDataItems,
   } = useContext(Context);
 
@@ -82,7 +82,7 @@ const Layout = () => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleAddUser = async (value: string): Promise<void> => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
 
     const res = await createUser({
       userName: value,
@@ -98,7 +98,7 @@ const Layout = () => {
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
@@ -106,7 +106,7 @@ const Layout = () => {
       mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
       setSelectedRow({ index: users.length, data });
       setDataItems([...transformUserInfo(data)]);
-      setIsShowProgress('success');
+      dispatchToast({ type: 'SUCCESS' });
     }
   };
 
@@ -116,7 +116,7 @@ const Layout = () => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleAddRole = async (value: string): Promise<void> => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
 
     const res = await createRole({
       name: value,
@@ -127,7 +127,7 @@ const Layout = () => {
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
@@ -141,7 +141,7 @@ const Layout = () => {
         ),
         ...transformRoleInfo(data),
       ]);
-      setIsShowProgress('success');
+      dispatchToast({ type: 'SUCCESS' });
       navigate(PATH.ROLES_PATH);
     }
   };
@@ -205,12 +205,12 @@ const Layout = () => {
     <>
       <header className="header">
         <h1 className="header__heading text--primary">User Manager</h1>
-        {isShowProgress === 'processing' ? (
-          <Spin isProcessing={true} delay={1000} />
+        {toast === 'processing' ? (
+          <Spin isProcessing={true} delay={2000} />
         ) : (
           <Toast
-            status={isShowProgress}
-            delay={2000}
+            status={toast}
+            delay={3000}
             size={16}
           />
         )}

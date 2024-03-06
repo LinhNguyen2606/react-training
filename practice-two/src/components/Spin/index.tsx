@@ -21,13 +21,15 @@ const Spin = ({
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isProcessing) {
+    if (!isProcessing) {
       setShowSpin(false);
-      timer = setTimeout(() => {
-        setShowSpin(true);
-      }, delay);
+      return;
     }
-    setShowSpin(false);
+
+    setShowSpin(true);
+    timer = setTimeout(() => {
+      setShowSpin(false);
+    }, delay);
 
     return () => {
       clearTimeout(timer);

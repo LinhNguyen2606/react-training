@@ -26,6 +26,7 @@ interface AssignItemsProps {
   items: Item[];
   heading: string;
   optionName: string;
+  isAssigning: boolean;
   singleOption?: SingleOptionTypes;
   handleItemSelect: (id: string) => () => void;
 }
@@ -34,6 +35,7 @@ const AssignItem = ({
   items,
   heading,
   optionName,
+  isAssigning,
   singleOption,
   handleItemSelect,
 }: AssignItemsProps) => {
@@ -103,6 +105,7 @@ const AssignItem = ({
         isModifying={isModifying}
         selectedType={selectedType}
         handleItemSelect={handleItemSelect}
+        isAssigning={isAssigning}
       />
     </section>
   );

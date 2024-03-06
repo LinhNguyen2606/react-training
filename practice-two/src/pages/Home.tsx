@@ -121,9 +121,9 @@ const generateUserTableColumns = (
 const Home = ({ position }: { position: DrawerPosition }) => {
   // Context and State
   const {
+    dispatchToast,
     selectedRow,
     setSelectedRow,
-    setIsShowProgress,
     dataItems,
     setDataItems,
   } = useContext(Context);
@@ -137,7 +137,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   const columns = generateUserTableColumns(keyword);
 
   // Get the data from API
-  const { data: users, isValidating } = getUsers();
+  const { data: users, isLoading } = getUsers();
   const { data: roleData } = getRoles();
   const { data: ruleData } = getRules();
   const { data: userRolesData } = getUserRoles();
@@ -185,11 +185,8 @@ const Home = ({ position }: { position: DrawerPosition }) => {
         ?.filter((roleRule) => roleRule.ruleId === rule.id)
         .map((roleRule) => {
           let role = roleData?.find((role) => role.id === roleRule.roleId);
-          return role ? { id: role.id, name: role.name } : undefined;
-        })
-        .filter(
-          (role): role is { id: string; name: string } => role !== undefined
-        );
+          return { id: role?.id, name: role?.name, bgColor: role?.bgColor };
+        });
 
       // Check if the current user is assigned roles corresponding to this rule
       if (assignedTo) {
@@ -202,10 +199,13 @@ const Home = ({ position }: { position: DrawerPosition }) => {
         );
       }
 
+      let isRoleAssigned = assignedTo?.length! > 0 && !isAssigned;
+
       // Returns a new rule with the isAssigned and assignedTo properties set
       return {
         ...rule,
-        isAssigned: isAssigned,
+        isAssigned: isAssigned || isRoleAssigned,
+        isRoleAssigned: isRoleAssigned,
         assignedTo: assignedTo,
       };
     });
@@ -268,18 +268,17 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     width: '100%',
   };
 
-
   /**
    * Handles the click event to navigate to the correspod role
    *
    * @param roleId - The ID of the role.
    */
   const handleNavigateToRoleClick = (roleId: string) => {
-    const role = roleData?.find((role) => role.id === roleId)
+    const role = roleData?.find((role) => role.id === roleId);
     const index = roleData?.findIndex((role) => role.id === roleId) ?? -1;
 
-    setSelectedRow({ index, data: role })
-    navigate(PATH.ROLES_PATH)
+    setSelectedRow({ index, data: role });
+    navigate(PATH.ROLES_PATH);
   };
 
   /**
@@ -292,7 +291,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     const index = ruleData?.findIndex((rule) => rule.id === ruleId) ?? -1;
 
     setSelectedRow({ index, data: rule });
-    navigate(PATH.RULES_PATH)
+    navigate(PATH.RULES_PATH);
   };
 
   const userDetailsInfo = [
@@ -352,21 +351,21 @@ const Home = ({ position }: { position: DrawerPosition }) => {
    * and updates the UI based on the response.
    */
   const handleRemove = async () => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
 
     const res = await deleteUser(selectedRowData?.id!);
 
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
     mutate(`${API.BASE}/${API.USER}`);
     setSelectedRow({ index: -1, data: null });
     setDataItems([...transformUserInfo(data)]);
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
   };
 
   /**
@@ -375,7 +374,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleUpdate = async (userData: User) => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
 
     const updatedUserData = {
       userName: userData.userName,
@@ -393,14 +392,14 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
     mutate(`${API.BASE}/${API.USER}`);
     setSelectedRow({ index: selectedRow.index, data });
     setDataItems([...transformUserInfo(data)]);
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
   };
 
   const tabsContent = [
@@ -442,13 +441,17 @@ const Home = ({ position }: { position: DrawerPosition }) => {
   return (
     <>
       <div style={contentWrapperStyle}>
-        <SearchBar label="Users" placeholder="Search" onChange={handleSearch} />
+        <SearchBar
+          label="Users"
+          placeholder="Search"
+          onChange={handleSearch}
+        />
         <Table
           rowData={filteredUsers}
           columns={columns}
           onRowClick={handleRowClick}
           selectedRow={selectedRow}
-          isLoading={isValidating}
+          isLoading={isLoading}
         />
       </div>
       {isShowDetails && (

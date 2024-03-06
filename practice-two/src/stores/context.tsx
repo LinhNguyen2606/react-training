@@ -2,16 +2,15 @@ import React, { createContext } from 'react';
 
 // Interface
 import { DataItems } from '@interfaces';
+import { ToastAction, ToastState } from './reducer';
 
-type ContextProps = {
+interface ContextProps {
   selectedRow: { index: any; data: any | null };
   setSelectedRow: (selectedRow: { index: any; data: any | null }) => void;
   dataItems: DataItems[];
   setDataItems: React.Dispatch<React.SetStateAction<any>>;
-  isShowProgress: 'idle' | 'processing' | 'success' | 'failure';
-  setIsShowProgress: React.Dispatch<
-    React.SetStateAction<'idle' | 'processing' | 'success' | 'failure'>
-  >;
+  toast: ToastState;
+  dispatchToast: React.Dispatch<ToastAction>;
 };
 
 const Context = createContext<ContextProps>({
@@ -19,8 +18,8 @@ const Context = createContext<ContextProps>({
   setSelectedRow: () => {},
   dataItems: [],
   setDataItems: () => {},
-  isShowProgress: 'idle',
-  setIsShowProgress: () => {},
+  toast: 'idle',
+  dispatchToast: () => {},
 });
 
 export default Context;

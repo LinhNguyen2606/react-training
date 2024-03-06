@@ -200,3 +200,36 @@ export const getCorrespondingRoleItems = <T extends RoleRule, U extends Rule>(
         )
     : [];
 };
+
+/**
+ * Retrieves user rules for a specific user.
+ * @param userRules - An array of user rules.
+ * @param userId - The ID of the user.
+ * @returns An array of user rules associated with the specified user.
+ */
+export const getUserRulesForUser = (
+  userRules: UserRule[] | undefined,
+  userId: string
+) => userRules?.filter((userRule) => userRule.userId === userId);
+
+/**
+ * Retrieves user roles for a specific user.
+ * @param userRoles - An array of user roles.
+ * @param userId - The ID of the user.
+ * @returns An array of user roles associated with the specified user.
+ */
+export const getUserRolesForUser = (
+  userRoles: UserRole[] | undefined,
+  userId: string
+) => userRoles?.filter((userRole) => userRole.userId === userId);
+
+/**
+ * Retrieves role rules for a specific role.
+ * @param roleRules - An array of role rules.
+ * @param roleId - The ID of the role.
+ * @returns An array of role rules associated with the specified role.
+ */
+export const getRoleRulesForRole = (
+  roleRules: RoleRule[] | undefined,
+  roleId: string
+) => roleRules?.filter((roleRule) => roleRule.roleId === roleId);

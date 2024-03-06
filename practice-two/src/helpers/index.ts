@@ -18,6 +18,9 @@ export {
   getUsersOfRule,
   getRulesOfRole,
   getRolesOfRule,
+  getRoleRulesForRole,
+  getUserRolesForUser,
+  getUserRulesForUser,
   getCorrespondingUserItems,
   getCorrespondingRoleItems,
 } from '@helpers/get';

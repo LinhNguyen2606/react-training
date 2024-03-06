@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TwitterPicker } from 'react-color';
+import { CompactPicker } from 'react-color';
 
 // SCSS
 import '@components/ColorField/ColorField.scss';
@@ -53,7 +53,7 @@ const ColorField = ({ label, bgColor, onChange }: ColorField) => {
       />
       {displayColorPicker ? (
         <div style={{ marginLeft: '150px' }} onClick={handleClose}>
-          <TwitterPicker color={color} onChange={handleChange} />
+          <CompactPicker color={color} onChange={handleChange} />
         </div>
       ) : null}
     </>

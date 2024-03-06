@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext } from 'react';
 
 // Components
 import {
@@ -11,10 +11,27 @@ import { AssignmentOptions } from '@components/Panel/AssignItems';
 // Interface
 import { Item } from '@interfaces';
 
+// Services
+import {
+  getRoleRules,
+  getUserRoles,
+  getUserRules
+} from '@services';
+
+// Context
+import { Context } from '@stores';
+
+// Helpers
+import {
+  getRoleRulesForRole,
+  getUserRolesForUser,
+  getUserRulesForUser
+} from '@helpers';
+
 export enum SingleOptionTypes {
   RolesAssigned = 'Roles assigned',
   RoleRulesAssigned = 'Rules assigned',
-  MemberAssigned = 'Members assigned'
+  MemberAssigned = 'Members assigned',
 }
 
 interface AssignHeaderProps {
@@ -38,16 +55,39 @@ const AssignHeader = ({
   singleOption,
   onTypeChange,
 }: AssignHeaderProps) => {
+  // Context
+  const { selectedRow } = useContext(Context);
+
+  // Get data from API
+  const { data: userRoles } = getUserRoles();
+  const { data: userRules } = getUserRules();
+  const { data: roleRules } = getRoleRules();
+
   /**
    * The number of items that are directly assigned.
    */
   const directlyAssignedCount =
     items.filter((item) => item.isAssigned).length || 0;
+  
+  const userRulesForUser = getUserRulesForUser(userRules, selectedRow.data.id);
+  const userRolesForUser = getUserRolesForUser(userRoles, selectedRow.data.id);
 
-  /**
-   * The total number of assignments.
-   */
-  const allAssignmentsCount = items.length || 0;
+  // Create a Set to store unique 'ruleIds' 
+  const ruleIds = new Set();
+
+  // Add all 'ruleId' from 'userRules' to Set
+  userRulesForUser?.forEach((userRule) => ruleIds.add(userRule.ruleId));
+
+  userRolesForUser?.forEach((userRole) => {
+    // Tìm tất cả 'roleRules' cho mỗi 'roleId'
+    const roleRulesForRole = getRoleRulesForRole(roleRules, userRole.roleId);
+
+    // Add all 'ruleId' from 'roleRules' to Set
+    roleRulesForRole?.forEach((roleRule) => ruleIds.add(roleRule.ruleId));
+  });
+
+  // The number 'allAssignments' is the number of unique elements in the Set
+  let allAssignmentsCount = ruleIds.size;
 
   /**
    * Data for the radio fields or text view.

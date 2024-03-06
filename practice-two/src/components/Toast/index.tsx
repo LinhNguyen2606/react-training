@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // SCSS
 import '@components/Toast/Toast.scss';
 
-type ToastProps = {
+interface ToastProps {
   delay: number;
   size?: number;
   status: 'idle' | 'success' | 'failure';

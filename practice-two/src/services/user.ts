@@ -72,20 +72,20 @@ export const handleAPIRequest = async <T>(
  * Retrieves a list of users from the API.
  * @returns {{
  *   data: User[] | undefined; - The array of User objects or undefined.
- *   isValidating: boolean; - Indicates whether the request is currently being validated.
+ *   isLoading: boolean; - Indicates whether the request is currently being validated.
  * }}
  */
 export const getUsers = (): {
   data: User[] | undefined;
-  isValidating: boolean;
+  isLoading: boolean;
 } => {
-  const { data, isValidating } = useSWR<User[]>(
+  const { data, isLoading } = useSWR<User[]>(
     `${API.BASE}/${API.USER}`,
     fetcher
   );
   return {
     data,
-    isValidating,
+    isLoading,
   };
 };
 
@@ -144,7 +144,10 @@ export const editUser = (
 export const getUserRoles = (): {
   data: UserRole[] | undefined;
 } => {
-  const { data } = useSWR<UserRole[]>(`${API.BASE}/${API.USER_ROLES}`, fetcher);
+  const { data } = useSWR<UserRole[]>(
+    `${API.BASE}/${API.USER_ROLES}/`,
+    fetcher
+  );
   return {
     data,
   };
@@ -160,7 +163,10 @@ export const getUserRoles = (): {
 export const getUserRules = (): {
   data: UserRule[] | undefined;
 } => {
-  const { data } = useSWR<UserRule[]>(`${API.BASE}/${API.USER_RULES}`, fetcher);
+  const { data } = useSWR<UserRule[]>(
+    `${API.BASE}/${API.USER_RULES}/`,
+    fetcher
+  );
   return {
     data,
   };

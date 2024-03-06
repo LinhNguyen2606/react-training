@@ -9,6 +9,7 @@ import { Item } from '@interfaces';
 interface AssignBodyProps {
   items: Item[];
   isModifying: boolean;
+  isAssigning: boolean;
   selectedType: AssignmentOptions;
   handleItemSelect: (id: string) => () => void;
 }
@@ -16,6 +17,7 @@ interface AssignBodyProps {
 const AssignBody = ({
   items,
   isModifying,
+  isAssigning,
   selectedType,
   handleItemSelect,
 }: AssignBodyProps) => {
@@ -26,13 +28,14 @@ const AssignBody = ({
     <ul style={{ backgroundColor: style }}>
       {items.map(
         (item) =>
-        (isModifying || item.isAssigned) && (
+          (isModifying || item.isAssigned) && (
             <li key={item.id} className="panel-assign__item">
               {item.avatar || item.bgColor ? (
                 <AssignItemAvatarText
                   id={item.id!}
                   name={item.name! || item.userName!}
                   bgColor={item.bgColor!}
+                  isAssigning={isAssigning}
                   isModifying={isModifying}
                   isAssigned={item.isAssigned!}
                   handleItemSelect={handleItemSelect}
@@ -43,6 +46,8 @@ const AssignBody = ({
                   id={item.id!}
                   name={item.name!}
                   description={item.description}
+                  isAssigning={isAssigning}
+                  isRoleAssigned={item.isRoleAssigned!}
                   isAssigned={item.isAssigned!}
                   isModifying={isModifying}
                   assignedTo={item.assignedTo}

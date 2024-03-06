@@ -8,6 +8,7 @@ interface AssignItemAvatarTextProps extends Item{
   src: string;
   bgColor: string;
   isModifying: boolean;
+  isAssigning: boolean;
   handleItemSelect: (id: string) => () => void;
 }
 
@@ -17,6 +18,7 @@ const AssignItemAvatarText = ({
   name,
   bgColor,
   isModifying,
+  isAssigning,
   isAssigned,
   handleItemSelect,
 }: AssignItemAvatarTextProps) => {
@@ -28,7 +30,8 @@ const AssignItemAvatarText = ({
           type="checkbox"
           checked={isAssigned}
           onChange={handleItemSelect(id!)}
-          className="panel-assign--input"
+          className={`panel-assign--input ${isAssigning ? "disabled" : ""}`}
+          disabled={isAssigning}
         />
       )}
       {isModifying || isAssigned ? (

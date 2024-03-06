@@ -1,4 +1,8 @@
-import { useContext, useState } from 'react';
+import {
+  memo,
+  useContext,
+  useState
+} from 'react';
 import { mutate } from 'swr';
 
 // Interface
@@ -43,7 +47,13 @@ interface AssignRoleRulesProps {
 const AssignRoleRules = ({ heading, items }: AssignRoleRulesProps) => {
   // State and Context
   const [rules, setRules] = useState<Item[]>(items);
-  const { setIsShowProgress, selectedRow, setDataItems } = useContext(Context);
+  const [isAssigning, setIsAssigning] = useState(false);
+
+  const {
+    dispatchToast,
+    selectedRow,
+    setDataItems
+  } = useContext(Context);
 
   // Get the data from API
   const { data: ruleData } = getRules();
@@ -69,7 +79,8 @@ const AssignRoleRules = ({ heading, items }: AssignRoleRulesProps) => {
    * @param id - The ID of the roleRule.
    */
   const handleAssignAction = (id: string) => async () => {
-    setIsShowProgress('processing');
+    dispatchToast({ type: 'PROCESSING' });
+    setIsAssigning(true);
 
     // Check if the current rule is already assigned to the role
     const isCurrentlyAssigned = isItemAssignedToRole(
@@ -86,7 +97,7 @@ const AssignRoleRules = ({ heading, items }: AssignRoleRulesProps) => {
       roleRules || [],
       'ruleId'
     );
-          
+
     // Choose the appropriate action based on the current state of the item (assign or unassign rule)
     const action = isCurrentlyAssigned
       ? () => unAssignRuleFromRole(roleRuleId)
@@ -97,7 +108,7 @@ const AssignRoleRules = ({ heading, items }: AssignRoleRulesProps) => {
     const data = extractData(res);
 
     if (!data) {
-      setIsShowProgress('failure');
+      dispatchToast({ type: 'FAILURE' });
       return;
     }
 
@@ -124,7 +135,8 @@ const AssignRoleRules = ({ heading, items }: AssignRoleRulesProps) => {
       ...transformRoleInfo(selectedRow.data),
     ]);
 
-    setIsShowProgress('success');
+    dispatchToast({ type: 'SUCCESS' });
+    setIsAssigning(false);
   };
 
   return (
@@ -134,8 +146,9 @@ const AssignRoleRules = ({ heading, items }: AssignRoleRulesProps) => {
       singleOption={SingleOptionTypes.RoleRulesAssigned}
       optionName="roleRules"
       handleItemSelect={handleAssignAction}
+      isAssigning={isAssigning}
     />
   );
 };
 
-export default AssignRoleRules;
+export default memo(AssignRoleRules);

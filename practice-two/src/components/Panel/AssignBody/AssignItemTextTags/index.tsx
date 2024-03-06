@@ -20,6 +20,8 @@ import { Item } from '@interfaces';
 
 interface AssignItemTextTagsProps extends Item {
   isModifying: boolean;
+  isAssigning: boolean;
+  isRoleAssigned: boolean;
   selectedType: AssignmentOptions;
   handleItemSelect: (id: string) => () => void;
 }
@@ -28,6 +30,8 @@ const AssignItemTextTags = ({
   id,
   name,
   description,
+  isAssigning,
+  isRoleAssigned,
   isAssigned,
   isModifying,
   assignedTo,
@@ -78,7 +82,7 @@ const AssignItemTextTags = ({
           </div>
 
           <div className="panel-assign__item-details">
-            {isAssigned && (
+            {isAssigned && !isRoleAssigned && (
               <span className="panel-assign__item-direcly-assigned">
                 Assigned directly
               </span>
@@ -111,6 +115,7 @@ const AssignItemTextTags = ({
               checked={isAssigned}
               onChange={handleItemSelect(id!)}
               className="panel-assign--input"
+              disabled={isAssigning}
             />
           )}
 

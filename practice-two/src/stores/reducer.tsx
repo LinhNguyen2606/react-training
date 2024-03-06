@@ -10,7 +10,7 @@ export type ToastAction =
 
 export const initialState: ToastState = 'idle'
 
-const Reducer = (state: ToastState, action: ToastAction): ToastState => {
+const Reducer = (_state: ToastState, action: ToastAction): ToastState => {
   switch (action.type) {
     case TYPES.PROCESSING:
       return 'processing'

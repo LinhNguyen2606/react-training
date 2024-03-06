@@ -145,7 +145,7 @@ export const getUserRoles = (): {
   data: UserRole[] | undefined;
 } => {
   const { data } = useSWR<UserRole[]>(
-    `${API.BASE}/${API.USER_ROLES}/`,
+    `${API.BASE}/${API.USER_ROLES}`,
     fetcher
   );
   return {
@@ -164,7 +164,7 @@ export const getUserRules = (): {
   data: UserRule[] | undefined;
 } => {
   const { data } = useSWR<UserRule[]>(
-    `${API.BASE}/${API.USER_RULES}/`,
+    `${API.BASE}/${API.USER_RULES}`,
     fetcher
   );
   return {

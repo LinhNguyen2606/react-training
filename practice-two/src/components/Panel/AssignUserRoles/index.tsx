@@ -135,7 +135,7 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
     ]);
 
     dispatchToast({ type: 'SUCCESS' });
-    setIsAssigning(true);
+    setIsAssigning(false);
   };
 
   return (

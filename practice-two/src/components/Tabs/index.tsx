@@ -1,5 +1,8 @@
 import { ReactNode } from 'react';
 
+// SCSS
+import '@components/Tabs/Tabs.scss';
+
 interface TabsProps {
   index: number;
   isActive: boolean;
@@ -18,7 +21,7 @@ const Tabs = ({
   return (
     <button
       type="button"
-      className={`panel__header--tab ${isActive ? 'active' : ''}`}
+      className={`tab ${isActive ? 'active' : ''}`}
       onClick={handleOnClick}
     >
       {children}

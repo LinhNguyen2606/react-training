@@ -1,5 +1,8 @@
 import { ReactNode } from 'react';
 
+// SCSS
+import '@components/FormGroup/FormGroup.scss';
+
 // Interface
 import { DataItems } from '@interfaces';
 
@@ -10,8 +13,8 @@ interface FormGroupProps {
 
 const FormGroup = ({ item, children }: FormGroupProps) => {
   return (
-    <div className="panel__form-group">
-      <label className="panel__form-group--label">{item.label}</label>
+    <div className="form-group">
+      <label className="form-group--label">{item.label}</label>
       {children}
     </div>
   );

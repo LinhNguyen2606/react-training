@@ -5,9 +5,9 @@ import {
   Button,
   ColorField,
   Modal,
-  TextField
+  TextField,
+  FormGroup,
 } from '@components';
-import FormGroup from '@components/Panel/FormGroup';
 
 // Constant
 import { TYPES } from '@constants';

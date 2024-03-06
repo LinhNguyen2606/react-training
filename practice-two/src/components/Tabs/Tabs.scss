@@ -1,0 +1,25 @@
+.tab {
+  background    : $secondary-color;
+  color         : $primary-color;
+  font-weight   : $fw-semi-bold;
+  line-height   : calc(42/16);
+  font-size     : $fs-small;
+  width         : 235px;
+  height        : 42px;
+  margin-left   : 15px;
+  padding-bottom: 30px;
+  border        : none;
+
+  &:hover {
+    background-color: $bg-tertiary-color;
+  }
+
+  &.active {
+    box-shadow: inset 0 -2px $primary-color;
+    color     : #17839d;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+}

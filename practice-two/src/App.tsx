@@ -1,7 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// Routes
-import { AppRoutes } from '@routes';
+// Route
+import AppRoutes from '@routes';
 
 // Store
 import { Provider } from '@stores';

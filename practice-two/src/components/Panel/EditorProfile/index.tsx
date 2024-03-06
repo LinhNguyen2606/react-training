@@ -19,9 +19,9 @@ import {
   TextArea,
   TextField,
   UploadImage,
+  FormGroup,
+  DateView,
 } from '@components';
-import FormGroup from '@components/Panel/FormGroup';
-import DateView from '@components/Panel/DateView';
 
 // Constant
 import { TYPES } from '@constants';

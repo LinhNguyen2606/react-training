@@ -1,0 +1,43 @@
+.form-group {
+  position     : relative;
+  align-items  : center;
+  display      : flex;
+  flex-wrap    : wrap;
+  margin-bottom: 10px;
+
+  &--label {
+    color       : $tertiary-color;
+    font-size   : $fs-x-small;
+    font-weight : $fw-medium;
+    flex        : 0 0 130px;
+    text-align  : right;
+    margin-right: 20px;
+  }
+
+  &--text {
+    color      : $tertiary-color;
+    font-size  : $fs-x-small;
+    line-height: calc(32/14);
+    font-weight: $fw-normal;
+  }
+
+  input[type="text"] {
+    border       : 1px solid #ccc;
+    cursor       : auto;
+    padding      : 5px;
+    border-radius: 4px;
+
+    &:focus {
+      border : 1px solid $turquoise-blue;
+      outline: $turquoise-blue;
+    }
+  }
+
+  input[type="checkbox"] {
+    margin: 0 20px 0 0;
+  }
+
+  input:not([type="checkbox"]) {
+    flex-basis: 236px;
+  }
+}

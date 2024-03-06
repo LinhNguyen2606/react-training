@@ -11,32 +11,6 @@
     display      : flex;
     margin-bottom: 20px;
     padding-left : 12px;
-
-    &--tab {
-      background    : $secondary-color;
-      color         : $primary-color;
-      font-weight   : $fw-semi-bold;
-      line-height   : calc(42/16);
-      font-size     : $fs-small;
-      width         : 235px;
-      height        : 42px;
-      margin-left   : 15px;
-      padding-bottom: 30px;
-      border        : none;
-
-      &:hover {
-        background-color: $bg-tertiary-color;
-      }
-
-      &.active {
-        box-shadow: inset 0 -2px $primary-color;
-        color     : #17839d;
-
-        &:hover {
-          background-color: $secondary-color;
-        }
-      }
-    }
   }
 
   &__actions-btn {
@@ -50,54 +24,6 @@
     flex-direction: column;
     display       : flex;
     gap           : 20px;
-  }
-
-  &__form-group {
-    position: relative;
-  }
-
-  &__form-group,
-  &__date-view {
-    align-items  : center;
-    display      : flex;
-    flex-wrap    : wrap;
-    margin-bottom: 10px;
-
-    &--label {
-      color       : $tertiary-color;
-      font-size   : $fs-x-small;
-      font-weight : $fw-medium;
-      flex        : 0 0 130px;
-      text-align  : right;
-      margin-right: 20px;
-    }
-
-    &--text {
-      color      : $tertiary-color;
-      font-size  : $fs-x-small;
-      line-height: calc(32/14);
-      font-weight: $fw-normal;
-    }
-
-    input[type="text"] {
-      border       : 1px solid #ccc;
-      cursor       : auto;
-      padding      : 5px;
-      border-radius: 4px;
-
-      &:focus {
-        border : 1px solid $turquoise-blue;
-        outline: $turquoise-blue;
-      }
-    }
-
-    input[type="checkbox"] {
-      margin: 0 20px 0 0;
-    }
-
-    input:not([type="checkbox"]) {
-      flex-basis: 236px;
-    }
   }
 
   &__error {

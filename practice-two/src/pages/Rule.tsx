@@ -46,7 +46,7 @@ import { Shield, UserGroup } from '@assets/icons';
  * @param {string} searchKeyword The keyword rule for highlighting in the table.
  * @returns {Array<EnitityColumn<Rule>>} The array of column configurations.
  */
-const generateRuleableColumns = (
+const generateRuleTableColumns = (
   searchKeyword: string
 ): EnitityColumn<Rule>[] => {
   return [
@@ -92,7 +92,7 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
   const navigate = useNavigate();
   const selectedRowData = selectedRow.data;
   const isShowDetails = showCard && selectedRowData !== null;
-  const columns = generateRuleableColumns(keyword);
+  const columns = generateRuleTableColumns(keyword);
 
   // Get the data from API
   const { data: users } = getUsers();
@@ -120,7 +120,19 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
    *
    * @param {string} keyword - The search keyword.
    */
-  const handleSearch = () => setKeyword(keyword);
+  const handleSearch = (keyword: string) => setKeyword(keyword);
+
+  /**
+   * Filters the rules based on the search keyword.
+   * @param rules - The array of rules to filter.
+   * @param keyword - The search keyword.
+   * @returns The filtered array of rules.
+   */
+  const filteredRules = useMemo(() => {
+    return (rules || []).filter((rule: Rule) =>
+      rule.name?.toLowerCase().includes(keyword.toLowerCase())
+    );
+  }, [rules, keyword]);
 
   /**
    * Handle events to show the panel and hide the panel
@@ -142,18 +154,6 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
 
     setSelectedRow({ index, data: rule });
   };
-
-  /**
-   * Filters the rules based on the search keyword.
-   * @param rules - The array of rules to filter.
-   * @param keyword - The search keyword.
-   * @returns The filtered array of rules.
-   */
-  const filteredRules = useMemo(() => {
-    return (rules || []).filter((rule: Rule) =>
-      rule.name?.toLowerCase().includes(keyword.toLowerCase())
-    );
-  }, [rules, keyword]);
 
   // Interface and display detailed information
   const placements = {
@@ -228,7 +228,11 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
   return (
     <>
       <div style={contentWrapperStyle}>
-        <SearchBar label="Rules" placeholder="Search" onChange={handleSearch} />
+        <SearchBar
+          label="Rules"
+          placeholder="Search"
+          onChange={handleSearch}
+        />
         <Table
           rowData={filteredRules}
           columns={columns}

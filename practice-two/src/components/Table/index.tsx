@@ -11,7 +11,7 @@ import '@components/Table/Table.scss';
 
 type TableProps<T> = {
   rowData: T[];
-  isLoading: boolean;
+  isLoading?: boolean;
   columns: EnitityColumn<T>[];
   onRowClick: (index: number, item: T) => void;
   selectedRow: { index: number; data: T | null };

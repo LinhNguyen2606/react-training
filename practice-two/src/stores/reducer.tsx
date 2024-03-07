@@ -1,25 +1,29 @@
-import { TYPES } from "@constants";
+// Constant
+import { TYPES } from '@constants';
 
-export type ToastState = 'idle' | 'processing' | 'success' | 'failure';
+export interface State {
+  toast: 'idle' | 'processing' | 'success' | 'failure';
+}
 
-export type ToastAction = 
-  | { type: 'PROCESSING' }
-  | { type: 'SUCCESS' }
-  | { type: 'FAILURE' }
-  | { type: 'IDLE' };
+export interface Action<T> {
+  type: keyof typeof TYPES;
+  payload?: T;
+}
 
-export const initialState: ToastState = 'idle'
+export const initialState: State = {
+  toast: 'idle',
+};
 
-const Reducer = (_state: ToastState, action: ToastAction): ToastState => {
+const Reducer = <T,>(state: State, action: Action<T>): State => {
   switch (action.type) {
     case TYPES.PROCESSING:
-      return 'processing'
+      return { ...state, toast: 'processing' };
     case TYPES.SUCCESS:
-      return 'success'
+      return { ...state, toast: 'success' };
     case TYPES.FAILURE:
-      return 'failure'
+      return { ...state, toast: 'failure' };
     case TYPES.IDLE:
-      return 'idle'
+      return { ...state, toast: 'idle' };
     default:
       throw new Error('Invalid action');
   }

@@ -16,7 +16,11 @@ import {
 } from '@components';
 
 // Constants
-import { API, PATH } from '@constants';
+import {
+  API,
+  PATH,
+  TYPES
+} from '@constants';
 
 // Helpers
 import {
@@ -47,12 +51,13 @@ import { Context } from '@stores';
 const Layout = () => {
   // Context
   const {
-    toast,
-    dispatchToast,
+    state,
+    dispatch,
     selectedRow,
     setSelectedRow,
     setDataItems,
   } = useContext(Context);
+  const { toast } = state 
 
   const navigate = useNavigate();
 
@@ -82,7 +87,7 @@ const Layout = () => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleAddUser = async (value: string): Promise<void> => {
-    dispatchToast({ type: 'PROCESSING' });
+    dispatch({ type: TYPES.PROCESSING });
 
     const res = await createUser({
       userName: value,
@@ -98,7 +103,7 @@ const Layout = () => {
     const data = extractData(res);
 
     if (!data) {
-      dispatchToast({ type: 'FAILURE' });
+      dispatch({ type: TYPES.FAILURE });
       return;
     }
 
@@ -106,7 +111,7 @@ const Layout = () => {
       mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
       setSelectedRow({ index: users.length, data });
       setDataItems([...transformUserInfo(data)]);
-      dispatchToast({ type: 'SUCCESS' });
+      dispatch({ type: TYPES.SUCCESS });
     }
   };
 
@@ -116,7 +121,7 @@ const Layout = () => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleAddRole = async (value: string): Promise<void> => {
-    dispatchToast({ type: 'PROCESSING' });
+    dispatch({ type: TYPES.PROCESSING });
 
     const res = await createRole({
       name: value,
@@ -127,7 +132,7 @@ const Layout = () => {
     const data = extractData(res);
 
     if (!data) {
-      dispatchToast({ type: 'FAILURE' });
+      dispatch({ type: TYPES.FAILURE });
       return;
     }
 
@@ -141,7 +146,7 @@ const Layout = () => {
         ),
         ...transformRoleInfo(data),
       ]);
-      dispatchToast({ type: 'SUCCESS' });
+      dispatch({ type: TYPES.SUCCESS });
       navigate(PATH.ROLES_PATH);
     }
   };

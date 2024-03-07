@@ -99,7 +99,7 @@ const generateRoleTableColumns = (
 const RolePage = ({ position }: { position: DrawerPosition }) => {
   // Context and State
   const {
-    dispatchToast,
+    dispatch,
     selectedRow,
     setSelectedRow,
     dataItems,
@@ -308,20 +308,20 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    * and updates the UI based on the response.
    */
   const handleRemove = async () => {
-    dispatchToast({ type: 'PROCESSING' });
+    dispatch({ type: TYPES.PROCESSING });
 
     const res = await deleteRole(selectedRowData?.id);
 
     const data = extractData(res);
 
     if (!data) {
-      dispatchToast({ type: 'FAILURE' });
+      dispatch({ type: TYPES.FAILURE });
       return;
     }
 
     mutate(`${API.BASE}/${API.ROLE}`);
     setSelectedRow({ index: -1, data: null });
-    dispatchToast({ type: 'SUCCESS' });
+    dispatch({ type: TYPES.SUCCESS });
   };
 
   /**
@@ -330,7 +330,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleUpdate = async (roleData: Role) => {
-    dispatchToast({ type: 'PROCESSING' });
+    dispatch({ types: TYPES.PROCESSING });
 
     const updatedRoleData = {
       name: roleData.name,
@@ -343,7 +343,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     const data = extractData(res);
 
     if (!data) {
-      dispatchToast({ type: 'FAILURE' });
+      dispatch({ types: TYPES.FAILURE });
       return;
     }
 
@@ -356,7 +356,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
       ),
       ...transformRoleInfo(data),
     ]);
-    dispatchToast({ type: 'SUCCESS' });
+    dispatch({ type: TYPES.SUCCESS });
   };
 
   const tabsContent = [

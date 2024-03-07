@@ -1,8 +1,4 @@
-import {
-  memo,
-  useContext,
-  useState
-} from 'react';
+import { useContext, useState } from 'react';
 import { mutate } from 'swr';
 
 // Component
@@ -35,7 +31,7 @@ import {
 } from '@helpers';
 
 // Constant
-import { API } from '@constants';
+import { API, TYPES } from '@constants';
 
 interface AssignRulesProps {
   rules: Item[];
@@ -47,11 +43,7 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
   const [ruleState, setRuleState] = useState<Item[]>(rules);
   const [isAssigning, setIsAssigning] = useState(false);
 
-  const {
-    dispatchToast,
-    selectedRow,
-    setDataItems
-  } = useContext(Context);
+  const { dispatch, selectedRow, setDataItems } = useContext(Context);
 
   // Get the data from API
   const { data: ruleData } = getRules();
@@ -76,7 +68,7 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
    * @param id - The ID of the rule.
    */
   const handleRuleAction = (id: string) => async () => {
-    dispatchToast({ type: 'PROCESSING' });
+    dispatch({ type: TYPES.PROCESSING });
     setIsAssigning(true);
 
     // Check if the current rule is already assigned to the user
@@ -105,7 +97,7 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
     const data = extractData(res);
 
     if (!data) {
-      dispatchToast({ type: 'FAILURE' });
+      dispatch({ type: TYPES.FAILURE });
       return;
     }
 
@@ -132,7 +124,7 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
       ...transformUserInfo(selectedRow.data),
     ]);
 
-    dispatchToast({ type: 'SUCCESS' });
+    dispatch({ type: TYPES.SUCCESS });
     setIsAssigning(false);
   };
 
@@ -147,4 +139,4 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
   );
 };
 
-export default memo(AssignUserRules);
+export default AssignUserRules;

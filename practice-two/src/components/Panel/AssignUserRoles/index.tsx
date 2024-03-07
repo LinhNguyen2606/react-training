@@ -1,8 +1,4 @@
-import {
-  memo,
-  useContext,
-  useState
-} from 'react';
+import { useContext, useState } from 'react';
 import { mutate } from 'swr';
 
 // Components
@@ -36,7 +32,7 @@ import {
 } from '@helpers';
 
 // Constant
-import { API } from '@constants';
+import { API, TYPES } from '@constants';
 
 interface AssignRolesProps {
   roles: Item[];
@@ -48,11 +44,7 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
   const [roleState, setRoleState] = useState<Item[]>(roles);
   const [isAssigning, setIsAssigning] = useState(false);
 
-  const {
-    dispatchToast,
-    selectedRow,
-    setDataItems
-  } = useContext(Context);
+  const { dispatch, selectedRow, setDataItems } = useContext(Context);
 
   // Get the data from API
   const { data: ruleData } = getRules();
@@ -78,7 +70,7 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
    * @param id - The ID of the role.
    */
   const handleRoleAction = (id: string) => async () => {
-    dispatchToast({ type: 'PROCESSING' });
+    dispatch({ type: TYPES.PROCESSING });
     setIsAssigning(true);
 
     // Check if the current rule is already assigned to the user
@@ -107,7 +99,7 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
     const data = extractData(res);
 
     if (!data) {
-      dispatchToast({ type: 'FAILURE' });
+      dispatch({ type: TYPES.FAILURE });
       return;
     }
 
@@ -134,7 +126,7 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
       ...transformUserInfo(selectedRow.data),
     ]);
 
-    dispatchToast({ type: 'SUCCESS' });
+    dispatch({ type: TYPES.SUCCESS });
     setIsAssigning(false);
   };
 
@@ -150,4 +142,4 @@ const AssignUserRoles = ({ roles, heading }: AssignRolesProps) => {
   );
 };
 
-export default memo(AssignUserRoles);
+export default AssignUserRoles;

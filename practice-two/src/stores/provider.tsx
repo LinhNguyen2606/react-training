@@ -1,33 +1,41 @@
 import {
   ReactNode,
+  Reducer,
   useReducer,
   useState
 } from 'react';
 
 // Stores
 import { Context, reducer } from '@stores';
+import {
+  Action,
+  initialState,
+  State
+} from '@stores/reducer';
 
-// Interface
+// Interfaces
 import { DataItems, User } from '@interfaces';
 
 interface ProviderProps {
   children: ReactNode;
-};
+}
 
 const Provider: React.FC<ProviderProps> = ({ children }) => {
-  const [toast, dispatchToast] = useReducer(reducer, 'idle');
+  const [state, dispatch] = useReducer<
+    Reducer<State, Action<'idle' | 'processing' | 'success' | 'failure'>>
+  >(reducer, initialState);
 
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
     data: User | null;
   }>({ index: -1, data: null });
   const [dataItems, setDataItems] = useState<DataItems[]>([]);
-  
+
   return (
     <Context.Provider
       value={{
-        toast,
-        dispatchToast,
+        state,
+        dispatch,
         selectedRow,
         setSelectedRow,
         dataItems,

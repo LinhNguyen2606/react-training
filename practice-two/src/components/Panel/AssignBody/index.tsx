@@ -3,11 +3,12 @@ import { AssignmentOptions } from '@components/Panel/AssignItems';
 import AssignItemAvatarText from '@components/Panel/AssignBody/AssignItemAvatarText';
 import AssignItemTextTags from '@components/Panel/AssignBody/AssignItemTextTags';
 
-// Interface
-import { Item } from '@interfaces';
+// Interfaces
+import { Item, Role } from '@interfaces';
 
 interface AssignBodyProps {
   items: Item[];
+  roles: Role[];
   isModifying: boolean;
   isAssigning: boolean;
   selectedType: AssignmentOptions;
@@ -16,6 +17,7 @@ interface AssignBodyProps {
 
 const AssignBody = ({
   items,
+  roles,
   isModifying,
   isAssigning,
   selectedType,
@@ -44,6 +46,7 @@ const AssignBody = ({
               ) : (
                 <AssignItemTextTags
                   id={item.id!}
+                  roles={roles}
                   name={item.name!}
                   description={item.description}
                   isAssigning={isAssigning}

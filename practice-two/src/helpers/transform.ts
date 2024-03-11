@@ -1,11 +1,20 @@
 // Icons
-import { ListCheck, Shield, UserGroup } from '@assets/icons';
+import {
+  ListCheck,
+  Shield,
+  UserGroup
+} from '@assets/icons';
 
 // Constant
 import { TYPES } from '@constants';
 
 // Interfaces
-import { EnitityUserRoles, Role, Rule, User } from '@interfaces';
+import {
+  EnitityUserRoles,
+  Role,
+  Rule,
+  User
+} from '@interfaces';
 
 /**
  * Transforms user data into an array of transformed data items.

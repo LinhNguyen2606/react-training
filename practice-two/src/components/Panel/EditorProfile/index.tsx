@@ -4,11 +4,7 @@ import { useEffect, useState } from 'react';
 import { DataItems } from '@interfaces';
 
 // Helpers
-import {
-  dateFormat,
-  validateEmail,
-  validateName
-} from '@helpers';
+import { validateEmail, validateName } from '@helpers';
 
 // Components
 import {
@@ -207,11 +203,7 @@ const EditorProfile = ({
                 <DateView
                   key={item.key}
                   label={item.label}
-                  value={
-                    item.key === 'lastVisited'
-                      ? dateFormat(new Date().toString())
-                      : (dataChanged[item.key] as string)
-                  }
+                  value={dataChanged[item.key] as string}
                 />
               );
             case TYPES.DETAILS_FIELD:

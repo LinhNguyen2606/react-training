@@ -1,24 +1,15 @@
-import { DataItems } from '@interfaces';
 import React, { createContext } from 'react';
 
-import { initialState, State } from './reducer';
+import { initialState, State } from '@stores/reducer';
 
-interface ContextProps {
-  state: State;
+interface ContextProps<T> {
+  state: State<T>;
   dispatch: React.Dispatch<any>;
-  selectedRow: { index: any; data: any | null };
-  setSelectedRow: (selectedRow: { index: any; data: any | null }) => void;
-  dataItems: DataItems[];
-  setDataItems: React.Dispatch<React.SetStateAction<any>>;
-};
+}
 
-const Context = createContext<ContextProps>({
+const Context = createContext<ContextProps<any>>({
   state: initialState,
-  dispatch: () => { },
-  selectedRow: { index: -1, data: null },
-  setSelectedRow: () => {},
-  dataItems: [],
-  setDataItems: () => {},
+  dispatch: () => {},
 });
 
 export default Context;

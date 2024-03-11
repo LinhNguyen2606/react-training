@@ -13,8 +13,14 @@ import AssignBody from '@components/Panel/AssignBody';
 // Custom hook
 import { useDebounce } from '@hooks';
 
-// Interface
-import { Item } from '@interfaces';
+// Interfaces
+import {
+  Item,
+  Role,
+  RoleRule,
+  UserRole,
+  UserRule
+} from '@interfaces';
 
 export enum AssignmentOptions {
   AssignedDirectly = 'Assigned directly',
@@ -27,6 +33,10 @@ interface AssignItemsProps {
   heading: string;
   optionName: string;
   isAssigning: boolean;
+  roles?: Role[];
+  userRules?: UserRule[];
+  userRoles?: UserRole[];
+  roleRules?: RoleRule[];
   singleOption?: SingleOptionTypes;
   handleItemSelect: (id: string) => () => void;
 }
@@ -36,6 +46,10 @@ const AssignItem = ({
   heading,
   optionName,
   isAssigning,
+  roles,
+  userRules,
+  userRoles,
+  roleRules,
   singleOption,
   handleItemSelect,
 }: AssignItemsProps) => {
@@ -83,6 +97,9 @@ const AssignItem = ({
         items={items}
         heading={heading}
         isModifying={isModifying}
+        userRules={userRules}
+        userRoles={userRoles}
+        roleRules={roleRules}
         onModifyClick={handleModifyClick}
         selectedType={selectedType}
         onTypeChange={handleTypeChange}
@@ -106,6 +123,7 @@ const AssignItem = ({
         selectedType={selectedType}
         handleItemSelect={handleItemSelect}
         isAssigning={isAssigning}
+        roles={roles!}
       />
     </section>
   );

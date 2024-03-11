@@ -4,21 +4,21 @@ import { mutate } from 'swr';
 // Component
 import AssignItem from '@components/Panel/AssignItems';
 
-// Interface
-import { Item } from '@interfaces';
+// Interfaces
+import {
+  Item,
+  Role,
+  RoleRule,
+  Rule,
+  UserRole,
+  UserRule
+} from '@interfaces';
 
 // Context
 import { Context } from '@stores';
 
 // Services
-import {
-  assignRuleToUser,
-  getRoles,
-  getRules,
-  getUserRoles,
-  getUserRules,
-  unAssignRuleFromUser,
-} from '@services';
+import { assignRuleToUser, unAssignRuleFromUser } from '@services';
 
 // Helpers
 import {
@@ -35,21 +35,29 @@ import { API, TYPES } from '@constants';
 
 interface AssignRulesProps {
   rules: Item[];
-  heading: string;
+  roles?: Role[];
+  heading?: string;
+  ruleData?: Rule[];
+  userRules?: UserRule[];
+  userRoles?: UserRole[];
+  roleRules?: RoleRule[];
 }
 
-const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
+const AssignUserRules = ({
+  rules,
+  roles,
+  heading,
+  ruleData,
+  userRules,
+  userRoles,
+  roleRules
+}: AssignRulesProps) => {
   // State and Context
   const [ruleState, setRuleState] = useState<Item[]>(rules);
   const [isAssigning, setIsAssigning] = useState(false);
 
-  const { dispatch, selectedRow, setDataItems } = useContext(Context);
-
-  // Get the data from API
-  const { data: ruleData } = getRules();
-  const { data: roleData } = getRoles();
-  const { data: userRules } = getUserRules();
-  const { data: userRoles } = getUserRoles();
+  const { dispatch, state } = useContext(Context);
+  const { selectedRow } = state;
 
   // Handles the data from API
   const getCorrespondingUserRules = getCorrespondingUserItems(
@@ -59,7 +67,7 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
   );
   const getCorrespondingUserRoles = getCorrespondingUserItems(
     userRoles || [],
-    roleData || [],
+    roles || [],
     selectedRow.data.id
   );
 
@@ -116,25 +124,33 @@ const AssignUserRules = ({ rules, heading }: AssignRulesProps) => {
     setRuleState(newRules);
 
     // Update the display data list
-    setDataItems([
-      ...transformListViewInfo(
-        getCorrespondingUserRules,
-        getCorrespondingUserRoles
-      ),
-      ...transformUserInfo(selectedRow.data),
-    ]);
+    dispatch({
+      type: TYPES.DATA_ITEMS,
+      payload: [
+        ...transformListViewInfo(
+          getCorrespondingUserRules,
+          getCorrespondingUserRoles
+        ),
+        ...transformUserInfo(selectedRow.data),
+      ],
+    });
 
     dispatch({ type: TYPES.SUCCESS });
+    
     setIsAssigning(false);
   };
 
   return (
     <AssignItem
       items={rules}
-      heading={heading}
+      heading={heading!}
       optionName="rule"
       handleItemSelect={handleRuleAction}
       isAssigning={isAssigning}
+      roles={roles}
+      userRules={userRules}
+      userRoles={userRoles}
+      roleRules={roleRules}
     />
   );
 };

@@ -11,13 +11,14 @@ import {
   Sidebar,
   Table
 } from '@components';
-import { DrawerPosition } from '@components/Drawer';
 
 // Helpers
 import {
   getRolesOfRule,
   getUsersOfRule,
-  highlightKeyword
+  highlightKeyword,
+  transformRoleInfo,
+  transformUserInfo
 } from '@helpers';
 
 // Interfaces
@@ -83,11 +84,12 @@ const generateRuleTableColumns = (
   ];
 };
 
-const RulePage = ({ position }: { position: DrawerPosition }) => {
+const RulePage = () => {
   // Context and State
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
-  const { selectedRow, setSelectedRow } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { selectedRow } = state;
 
   const navigate = useNavigate();
   const selectedRowData = selectedRow.data;
@@ -102,16 +104,14 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
   const { data: roleRulesData } = getRoleRules();
 
   // Handles the data
-  const rolesOfRule = getRolesOfRule(
-    roleRulesData || [],
-    roles || [],
-    selectedRowData?.id
+  const rolesOfRule = useMemo(
+    () => getRolesOfRule(roleRulesData || [], roles || [], selectedRowData?.id),
+    [roleRulesData, roles, selectedRowData]
   );
 
-  const usersOfRule = getUsersOfRule(
-    userRules || [],
-    users || [],
-    selectedRowData?.id
+  const usersOfRule = useMemo(
+    () => getUsersOfRule(userRules || [], users || [], selectedRowData?.id),
+    [userRules, users, selectedRowData]
   );
 
   /**
@@ -148,24 +148,17 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
    */
   const handleRowClick = (index: number, rule: Rule) => {
     if (selectedRow && selectedRow.index === index) {
-      setSelectedRow({ index: -1, data: null });
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: -1, data: null },
+      });
       return;
     }
 
-    setSelectedRow({ index, data: rule });
-  };
-
-  // Interface and display detailed information
-  const placements = {
-    left: '10px 10px 10px 222px',
-    right: '10px 222px 10px 10px',
-    top: '222px 10px 10px 10px',
-    bottom: '10px 10px 222px',
-  };
-
-  const contentWrapperStyle = {
-    padding: placements[position],
-    width: '100%',
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: rule },
+    });
   };
 
   /**
@@ -177,7 +170,18 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
     const role = roles?.find((role) => role.id === roleId);
     const index = roles?.findIndex((role) => role.id === roleId) ?? -1;
 
-    setSelectedRow({ index, data: role });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: role },
+    });
+
+    dispatch({
+      type: TYPES.DATA_ITEMS,
+      payload: [
+        ...transformRoleInfo(role!),
+      ],
+    });
+
     navigate(PATH.ROLES_PATH);
   };
 
@@ -190,7 +194,13 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
     const user = users?.find((user) => user.id === userId);
     const index = users?.findIndex((user) => user.id === userId) ?? -1;
 
-    setSelectedRow({ index, data: user });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: user },
+    });
+
+    dispatch({ type: TYPES.DATA_ITEMS, payload: [...transformUserInfo(user!)] });
+
     navigate(PATH.HOME_PATH);
   };
 
@@ -227,7 +237,7 @@ const RulePage = ({ position }: { position: DrawerPosition }) => {
 
   return (
     <>
-      <div style={contentWrapperStyle}>
+      <div className="content__wrapper">
         <SearchBar
           label="Rules"
           placeholder="Search"

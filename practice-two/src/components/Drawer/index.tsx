@@ -11,15 +11,12 @@ import '@components/Drawer/Drawer.scss';
 // Interface
 import { NavigationItem } from '@interfaces';
 
-export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
-
 interface DrawerProps {
-  position: DrawerPosition;
   onSubmit: (value: { type: string; value: string }) => void;
   navigations: NavigationItem[];
 }
 
-const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
+const Drawer = ({ onSubmit, navigations }: DrawerProps) => {
   const [type, setType] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [inputField, setInputField] = useState('');
@@ -69,7 +66,7 @@ const Drawer = ({ position = 'left', onSubmit, navigations }: DrawerProps) => {
 
   return (
     <>
-      <aside className={`drawer drawer--${position}`}>
+      <aside className="drawer">
         <Popover
           content={popoverContent}
           buttonText="New"

@@ -1,38 +1,8 @@
 .drawer {
   background-color: #4a4e58;
   border-color    : #4a4e58;
-  position        : absolute;
   min-width       : 212px;
   height          : 100%;
-
-  &--left,
-  &--right {
-    top: 0;
-
-  }
-
-  &--left {
-    left: 0;
-  }
-
-  &--right {
-    right: 0;
-  }
-
-  &--top,
-  &--bottom {
-    height: 212px;
-    width : 100%;
-    left  : 0;
-  }
-
-  &--top {
-    top: 0;
-  }
-
-  &--bottom {
-    bottom: 0;
-  }
 
   &__item {
     color       : $secondary-color;

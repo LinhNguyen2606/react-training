@@ -17,7 +17,6 @@ import {
   Sidebar,
   Table
 } from '@components';
-import { DrawerPosition } from '@components/Drawer';
 import EditorRole from '@components/Panel/EditorRole';
 import AssignRoleRules from '@components/Panel/AssignRoleRules';
 import AssignRoleMembers from '@components/Panel/AssignRoleMembers';
@@ -31,6 +30,7 @@ import {
 
 // Helpers
 import {
+  assignItems,
   extractData,
   getCorrespondingRoleItems,
   getCorrespondingUserItems,
@@ -39,13 +39,10 @@ import {
   highlightKeyword,
   transformListViewRoleInfo,
   transformRoleInfo,
+  transformUserInfo,
 } from '@helpers';
 
-import {
-  EnitityColumn,
-  Item,
-  Role
-} from '@interfaces';
+import { EnitityColumn, Role } from '@interfaces';
 
 // Services
 import {
@@ -76,7 +73,7 @@ const generateRoleTableColumns = (
       render: (_, item) => (
         <Avatar
           src={item.avatar}
-          alt={item.name}
+          alt={item.name!}
           bgColor={item.bgColor}
           size="sm"
         />
@@ -88,7 +85,7 @@ const generateRoleTableColumns = (
       render: (_, item) => (
         <span
           dangerouslySetInnerHTML={{
-            __html: highlightKeyword(item.name, searchKeyword),
+            __html: highlightKeyword(item.name!, searchKeyword),
           }}
         />
       ),
@@ -96,15 +93,10 @@ const generateRoleTableColumns = (
   ];
 };
 
-const RolePage = ({ position }: { position: DrawerPosition }) => {
+const RolePage = () => {
   // Context and State
-  const {
-    dispatch,
-    selectedRow,
-    setSelectedRow,
-    dataItems,
-    setDataItems,
-  } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { selectedRow, dataItems } = state;
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
 
@@ -125,58 +117,44 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   const rulesOfRole = getRulesOfRole(
     roleRulesData || [],
     rules || [],
-    selectedRowData?.id
+    selectedRowData?.id!
   );
 
   const usersOfRole = getUsersOfRole(
     userRoles || [],
     users || [],
-    selectedRowData?.id
+    selectedRowData?.id!
   );
 
   const getCorrespondingRoleRules = getCorrespondingRoleItems(
     roleRulesData || [],
     rules || [],
-    selectedRow.data?.id
+    selectedRow.data?.id!
   );
 
   const getCorrespondingUserRoles = getCorrespondingUserItems(
     userRoles || [],
     roles || [],
-    selectedRow.data?.id
+    selectedRow.data?.id!
   );
 
-  let roleRules: Item[] = [];
+  const roleRules = useMemo(
+    () =>
+      assignItems(
+        rules!,
+        roleRulesData!,
+        selectedRowData?.id,
+        'roleId',
+        'ruleId'
+      ),
+    [rules, roleRulesData, selectedRowData]
+  );
 
-  if (rules && roleRulesData) {
-    roleRules = rules.map((rule) => {
-      let isAssigned = roleRulesData.some(
-        (roleRule) =>
-          roleRule.roleId === selectedRowData?.id && roleRule.ruleId === rule.id
-      );
-
-      return {
-        ...rule,
-        isAssigned,
-      };
-    });
-  }
-
-  let roleMembers: Item[] = [];
-
-  if (users && userRoles) {
-    roleMembers = users.map((user) => {
-      let isAssigned = userRoles.some(
-        (userRole) =>
-          userRole.roleId === selectedRowData?.id && userRole.userId === user.id
-      );
-
-      return {
-        ...user,
-        isAssigned,
-      };
-    });
-  }
+  const roleMembers = useMemo(
+    () =>
+      assignItems(users!, userRoles!, selectedRowData?.id, 'roleId', 'userId'),
+    [users, userRoles, selectedRowData]
+  );
 
   /**
    * Handles the search operation in the application.
@@ -201,19 +179,30 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    */
   const handleRowClick = (index: number, role: Role) => {
     if (selectedRow && selectedRow.index === index) {
-      setSelectedRow({ index: -1, data: null });
-      setDataItems([]);
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: -1, data: null },
+      });
+
+      dispatch({ type: TYPES.DATA_ITEMS, payload: [] });
       return;
     }
 
-    setSelectedRow({ index, data: role });
-    setDataItems([
-      ...transformListViewRoleInfo(
-        getCorrespondingRoleRules,
-        getCorrespondingUserRoles
-      ),
-      ...transformRoleInfo(role),
-    ]);
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: role },
+    });
+
+    dispatch({
+      type: TYPES.DATA_ITEMS,
+      payload: [
+        ...transformListViewRoleInfo(
+          getCorrespondingRoleRules,
+          getCorrespondingUserRoles
+        ),
+        ...transformRoleInfo(role),
+      ],
+    });
   };
 
   /**
@@ -228,30 +217,21 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     );
   }, [roles, keyword]);
 
-  // Interface and display detailed information
-  const placements = {
-    left: '10px 10px 10px 222px',
-    right: '10px 222px 10px 10px',
-    top: '222px 10px 10px 10px',
-    bottom: '10px 10px 222px',
-  };
-
-  const contentWrapperStyle = {
-    padding: placements[position],
-    width: '100%',
-  };
-
   /**
    * Handles the click event to navigate to the correspod rule
    *
    * @param ruleId - The ID of the rule.
    */
   const handleNavigateToRuleClick = (ruleId: string) => {
-    const rule = roleRulesData?.find((roleRule) => roleRule.id === ruleId);
+    const rule = rules?.find((rule) => rule.id === ruleId);
     const index =
       roleRulesData?.findIndex((roleRule) => roleRule.id === ruleId) ?? -1;
 
-    setSelectedRow({ index, data: rule });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: rule },
+    });
+
     navigate(PATH.RULES_PATH);
   };
 
@@ -264,7 +244,13 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     const user = users?.find((user) => user.id === userId);
     const index = users?.findIndex((user) => user.id === userId) ?? -1;
 
-    setSelectedRow({ index, data: user });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: user },
+    });
+
+    dispatch({ type: TYPES.DATA_ITEMS, payload: [...transformUserInfo(user!)] });
+
     navigate(PATH.HOME_PATH);
   };
 
@@ -310,7 +296,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
   const handleRemove = async () => {
     dispatch({ type: TYPES.PROCESSING });
 
-    const res = await deleteRole(selectedRowData?.id);
+    const res = await deleteRole(selectedRowData?.id!);
 
     const data = extractData(res);
 
@@ -320,7 +306,12 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
     }
 
     mutate(`${API.BASE}/${API.ROLE}`);
-    setSelectedRow({ index: -1, data: null });
+
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: -1, data: null },
+    });
+
     dispatch({ type: TYPES.SUCCESS });
   };
 
@@ -330,7 +321,7 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
    * @returns {Promise<void>} - Promise when finished processing.
    */
   const handleUpdate = async (roleData: Role) => {
-    dispatch({ types: TYPES.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     const updatedRoleData = {
       name: roleData.name,
@@ -338,24 +329,32 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
       bgColor: roleData.bgColor,
     };
 
-    const res = await editRole(selectedRowData?.id, updatedRoleData);
+    const res = await editRole(selectedRowData?.id!, updatedRoleData);
 
     const data = extractData(res);
 
     if (!data) {
-      dispatch({ types: TYPES.FAILURE });
+      dispatch({ type: TYPES.FAILURE });
       return;
     }
 
     mutate(`${API.BASE}/${API.ROLE}`);
-    setSelectedRow({ index: selectedRow.index, data });
-    setDataItems([
-      ...transformListViewRoleInfo(
-        getCorrespondingRoleRules,
-        getCorrespondingUserRoles
-      ),
-      ...transformRoleInfo(data),
-    ]);
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: selectedRow.index, data },
+    });
+
+    dispatch({
+      type: TYPES.DATA_ITEMS,
+      payload: [
+        ...transformListViewRoleInfo(
+          getCorrespondingRoleRules,
+          getCorrespondingUserRoles
+        ),
+        ...transformRoleInfo(data),
+      ],
+    });
+
     dispatch({ type: TYPES.SUCCESS });
   };
 
@@ -380,6 +379,10 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           key={selectedRowData?.id}
           heading={selectedRowData?.name}
           items={roleRules}
+          ruleData={rules}
+          roles={roles}
+          roleRules={roleRulesData}
+          userRoles={userRoles}
         />
       ),
     },
@@ -390,6 +393,10 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
           key={selectedRowData?.id}
           heading={selectedRowData?.name}
           items={roleMembers}
+          rules={rules}
+          roles={roles}
+          roleRules={roleRulesData}
+          userRoles={userRoles}
         />
       ),
     },
@@ -397,12 +404,8 @@ const RolePage = ({ position }: { position: DrawerPosition }) => {
 
   return (
     <>
-      <div style={contentWrapperStyle}>
-        <SearchBar
-          label="Roles"
-          placeholder="Search"
-          onChange={handleSearch}
-        />
+      <div className="content__wrapper">
+        <SearchBar label="Roles" placeholder="Search" onChange={handleSearch} />
         <Table
           rowData={filteredRoles}
           columns={columns}

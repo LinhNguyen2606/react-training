@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useContext,
   useMemo,
   useState
@@ -7,11 +8,7 @@ import { mutate } from 'swr';
 import { useNavigate } from 'react-router-dom';
 
 // Interfaces
-import {
-  EnitityColumn,
-  Item,
-  User
-} from '@interfaces';
+import { EnitityColumn, User } from '@interfaces';
 
 // Components
 import {
@@ -22,7 +19,6 @@ import {
   Status,
   Table
 } from '@components';
-import { DrawerPosition } from '@components/Drawer';
 import { SidebarProps } from '@components/Sidebar/SidebarInfo';
 import EditorProfile from '@components/Panel/EditorProfile';
 import AssignUserRules from '@components/Panel/AssignUserRules';
@@ -30,10 +26,13 @@ import AssignUserRoles from '@components/Panel/AssignUserRoles';
 
 // Helpers
 import {
+  assignItems,
+  assignUserRules,
   dateFormat,
   extractData,
   getUserRolesAndRules,
   highlightKeyword,
+  transformRoleInfo,
   transformUserInfo,
 } from '@helpers';
 
@@ -118,15 +117,10 @@ const generateUserTableColumns = (
   ];
 };
 
-const Home = ({ position }: { position: DrawerPosition }) => {
+const Home = () => {
   // Context and State
-  const {
-    dispatch,
-    selectedRow,
-    setSelectedRow,
-    dataItems,
-    setDataItems,
-  } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { selectedRow, dataItems } = state;
   const [keyword, setKeyword] = useState('');
   const [showCard, setShowCard] = useState(true);
 
@@ -152,64 +146,44 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     userRolesData!,
     userRulesData!
   );
+  
+  const userRoles = useMemo(
+    () =>
+      assignItems(
+        roleData!,
+        userRolesData!,
+        selectedRowData?.id,
+        'userId',
+        'roleId'
+      ),
+    [roleData, userRolesData, selectedRowData]
+  );
 
-  let userRoles: Item[] = [];
+  const assignUserRulesCallback = useCallback(assignUserRules, []);
 
-  if (roleData && userRolesData) {
-    userRoles = roleData.map((role) => {
-      // Check if the current user is assigned this role or not
-      let isAssigned = userRolesData.some(
-        (userRole) =>
-          userRole.userId === selectedRowData?.id && userRole.roleId === role.id
-      );
-
-      return {
-        ...role,
-        isAssigned,
-      };
-    });
-  }
-
-  let userRules: Item[] = [];
-
-  if (ruleData && userRulesData) {
-    userRules = ruleData.map((rule) => {
-      // Check if the current user is assigned this rule or not
-      let isAssigned = userRulesData.some(
-        (userRule) =>
-          userRule.userId === selectedRowData?.id && userRule.ruleId === rule.id
-      );
-
-      // Find all roles assigned to this rule
-      let assignedTo = roleRulesData
-        ?.filter((roleRule) => roleRule.ruleId === rule.id)
-        .map((roleRule) => {
-          let role = roleData?.find((role) => role.id === roleRule.roleId);
-          return { id: role?.id, name: role?.name, bgColor: role?.bgColor };
-        });
-
-      // Check if the current user is assigned roles corresponding to this rule
-      if (assignedTo) {
-        assignedTo = assignedTo.filter((role) =>
-          userRolesData?.some(
-            (userRole) =>
-              userRole.userId === selectedRowData?.id &&
-              userRole.roleId === role.id
-          )
-        );
-      }
-
-      let isRoleAssigned = assignedTo?.length! > 0 && !isAssigned;
-
-      // Returns a new rule with the isAssigned and assignedTo properties set
-      return {
-        ...rule,
-        isAssigned: isAssigned || isRoleAssigned,
-        isRoleAssigned: isRoleAssigned,
-        assignedTo: assignedTo,
-      };
-    });
-  }
+  const userRules = useMemo(
+    () =>
+      assignUserRulesCallback(
+        ruleData!,
+        userRulesData!,
+        roleRulesData!,
+        roleData!,
+        userRolesData!,
+        selectedRowData!,
+        'userId',
+        'ruleId',
+        'roleId'
+      ),
+    [
+      ruleData,
+      userRulesData,
+      roleRulesData,
+      roleData,
+      userRolesData,
+      selectedRowData,
+      assignUserRulesCallback,
+    ]
+  );
 
   /**
    * Handles the search operation in the application.
@@ -240,13 +214,20 @@ const Home = ({ position }: { position: DrawerPosition }) => {
    */
   const handleRowClick = (index: number, user: User) => {
     if (selectedRow && selectedRow.index === index) {
-      setSelectedRow({ index: -1, data: null });
-      setDataItems([]);
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: -1, data: null },
+      });
+      dispatch({ type: TYPES.DATA_ITEMS, payload: [] });
       return;
     }
 
-    setSelectedRow({ index, data: user });
-    setDataItems([...transformUserInfo(user)]);
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: index, data: user },
+    });
+
+    dispatch({ type: TYPES.DATA_ITEMS, payload: [...transformUserInfo(user)] });
   };
 
   /**
@@ -254,19 +235,6 @@ const Home = ({ position }: { position: DrawerPosition }) => {
    */
   const handleTogglePanel = () =>
     setShowCard((prevShowPanel) => !prevShowPanel);
-
-  // Interface and display detailed information
-  const placements = {
-    left: '10px 10px 10px 222px',
-    right: '10px 222px 10px 10px',
-    top: '222px 10px 10px 10px',
-    bottom: '10px 10px 222px',
-  };
-
-  const contentWrapperStyle = {
-    padding: placements[position],
-    width: '100%',
-  };
 
   /**
    * Handles the click event to navigate to the correspod role
@@ -277,7 +245,18 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     const role = roleData?.find((role) => role.id === roleId);
     const index = roleData?.findIndex((role) => role.id === roleId) ?? -1;
 
-    setSelectedRow({ index, data: role });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: role },
+    });
+
+    dispatch({
+      type: TYPES.DATA_ITEMS,
+      payload: [
+        ...transformRoleInfo(role!),
+      ],
+    });
+
     navigate(PATH.ROLES_PATH);
   };
 
@@ -290,7 +269,11 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     const rule = ruleData?.find((rule) => rule.id === ruleId);
     const index = ruleData?.findIndex((rule) => rule.id === ruleId) ?? -1;
 
-    setSelectedRow({ index, data: rule });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: rule },
+    });
+    
     navigate(PATH.RULES_PATH);
   };
 
@@ -351,7 +334,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
    * and updates the UI based on the response.
    */
   const handleRemove = async () => {
-    dispatch({ type: TYPES.PROCESSING});
+    dispatch({ type: TYPES.PROCESSING });
 
     const res = await deleteUser(selectedRowData?.id!);
 
@@ -363,8 +346,12 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     }
 
     mutate(`${API.BASE}/${API.USER}`);
-    setSelectedRow({ index: -1, data: null });
-    setDataItems([...transformUserInfo(data)]);
+
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: -1, data: null },
+    });
+
     dispatch({ type: TYPES.SUCCESS });
   };
 
@@ -397,8 +384,17 @@ const Home = ({ position }: { position: DrawerPosition }) => {
     }
 
     mutate(`${API.BASE}/${API.USER}`);
-    setSelectedRow({ index: selectedRow.index, data });
-    setDataItems([...transformUserInfo(data)]);
+
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: selectedRow.index, data },
+    });
+
+    dispatch({
+      type: TYPES.DATA_ITEMS,
+      payload: [...transformUserInfo(data)],
+    });
+
     dispatch({ type: TYPES.SUCCESS });
   };
 
@@ -421,8 +417,13 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       content: (
         <AssignUserRules
           key={selectedRowData?.id}
-          heading={selectedRowData?.userName}
           rules={userRules}
+          roles={roleData}
+          heading={selectedRowData?.userName}
+          ruleData={ruleData}
+          userRules={userRulesData}
+          userRoles={userRolesData}
+          roleRules={roleRulesData}
         />
       ),
     },
@@ -431,8 +432,12 @@ const Home = ({ position }: { position: DrawerPosition }) => {
       content: (
         <AssignUserRoles
           key={selectedRowData?.id}
-          heading={selectedRowData?.userName}
           roles={userRoles}
+          rules={ruleData}
+          heading={selectedRowData?.userName}
+          roleData={roleData}
+          userRules={userRulesData}
+          userRoles={userRolesData}
         />
       ),
     },
@@ -440,7 +445,7 @@ const Home = ({ position }: { position: DrawerPosition }) => {
 
   return (
     <>
-      <div style={contentWrapperStyle}>
+      <div className="content__wrapper">
         <SearchBar
           label="Users"
           placeholder="Search"

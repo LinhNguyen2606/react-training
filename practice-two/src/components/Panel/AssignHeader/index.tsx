@@ -8,15 +8,13 @@ import {
 } from '@components';
 import { AssignmentOptions } from '@components/Panel/AssignItems';
 
-// Interface
-import { Item } from '@interfaces';
-
-// Services
+// Interfaces
 import {
-  getRoleRules,
-  getUserRoles,
-  getUserRules
-} from '@services';
+  Item,
+  RoleRule,
+  UserRole,
+  UserRule
+} from '@interfaces';
 
 // Context
 import { Context } from '@stores';
@@ -25,7 +23,7 @@ import { Context } from '@stores';
 import {
   getRoleRulesForRole,
   getUserRolesForUser,
-  getUserRulesForUser
+  getUserRulesForUser,
 } from '@helpers';
 
 export enum SingleOptionTypes {
@@ -39,6 +37,9 @@ interface AssignHeaderProps {
   heading: string;
   optionName: string;
   isModifying: boolean;
+  userRules?: UserRule[];
+  userRoles?: UserRole[];
+  roleRules?: RoleRule[];
   onModifyClick: () => void;
   selectedType: AssignmentOptions;
   singleOption?: SingleOptionTypes;
@@ -50,29 +51,28 @@ const AssignHeader = ({
   optionName,
   heading,
   isModifying,
+  userRules,
+  userRoles,
+  roleRules,
   onModifyClick,
   selectedType,
   singleOption,
   onTypeChange,
 }: AssignHeaderProps) => {
   // Context
-  const { selectedRow } = useContext(Context);
-
-  // Get data from API
-  const { data: userRoles } = getUserRoles();
-  const { data: userRules } = getUserRules();
-  const { data: roleRules } = getRoleRules();
+  const { state } = useContext(Context);
+  const { selectedRow } = state;
 
   /**
    * The number of items that are directly assigned.
    */
   const directlyAssignedCount =
     items.filter((item) => item.isAssigned).length || 0;
-  
+
   const userRulesForUser = getUserRulesForUser(userRules, selectedRow.data.id);
   const userRolesForUser = getUserRolesForUser(userRoles, selectedRow.data.id);
 
-  // Create a Set to store unique 'ruleIds' 
+  // Create a Set to store unique 'ruleIds'
   const ruleIds = new Set();
 
   // Add all 'ruleId' from 'userRules' to Set
@@ -83,7 +83,7 @@ const AssignHeader = ({
     const roleRulesForRole = getRoleRulesForRole(roleRules, userRole.roleId);
 
     // Add all 'ruleId' from 'roleRules' to Set
-    roleRulesForRole?.forEach((roleRule) => ruleIds.add(roleRule.ruleId));
+  roleRulesForRole?.forEach((roleRule) => ruleIds.add(roleRule.ruleId));
   });
 
   // The number 'allAssignments' is the number of unique elements in the Set

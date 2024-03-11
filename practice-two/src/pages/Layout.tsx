@@ -50,14 +50,8 @@ import { Context } from '@stores';
 
 const Layout = () => {
   // Context
-  const {
-    state,
-    dispatch,
-    selectedRow,
-    setSelectedRow,
-    setDataItems,
-  } = useContext(Context);
-  const { toast } = state 
+  const { state, dispatch } = useContext(Context);
+  const { toast, selectedRow } = state;
 
   const navigate = useNavigate();
 
@@ -109,8 +103,17 @@ const Layout = () => {
 
     if (users) {
       mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
-      setSelectedRow({ index: users.length, data });
-      setDataItems([...transformUserInfo(data)]);
+
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: users.length, data },
+      });
+
+      dispatch({
+        type: TYPES.DATA_ITEMS,
+        payload: [...transformUserInfo(data)],
+      });
+
       dispatch({ type: TYPES.SUCCESS });
     }
   };
@@ -138,14 +141,23 @@ const Layout = () => {
 
     if (roles) {
       mutate(`${API.BASE}/${API.ROLE}`, [...roles, data], false);
-      setSelectedRow({ index: roles.length, data });
-      setDataItems([
-        ...transformListViewRoleInfo(
-          getCorrespondingRoleRules,
-          getCorrespondingUserRoles
-        ),
-        ...transformRoleInfo(data),
-      ]);
+
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: roles.length, data },
+      });
+
+      dispatch({
+        type: TYPES.DATA_ITEMS,
+        payload: [
+          ...transformListViewRoleInfo(
+            getCorrespondingRoleRules,
+            getCorrespondingUserRoles
+          ),
+          ...transformRoleInfo(data),
+        ],
+      });
+
       dispatch({ type: TYPES.SUCCESS });
       navigate(PATH.ROLES_PATH);
     }
@@ -180,7 +192,10 @@ const Layout = () => {
    * Resets the selected row by setting its index to -1 and data to null.
    */
   const handleResetSelectedRow = () =>
-    setSelectedRow({ index: -1, data: null });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: -1, data: null },
+    });
 
   const navigations = [
     {
@@ -222,7 +237,6 @@ const Layout = () => {
       </header>
       <main className="main">
         <Drawer
-          position="left"
           onSubmit={handleAdd}
           navigations={navigations}
         />

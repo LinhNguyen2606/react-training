@@ -6,19 +6,20 @@ import { faShield } from '@fortawesome/free-solid-svg-icons';
 // Component
 import { AssignmentOptions } from '@components/Panel/AssignItems';
 
-// Service
-import { getRoles } from '@services';
-
-// Constant
-import { PATH } from '@constants';
+// Constants
+import { PATH, TYPES } from '@constants';
 
 // Context
 import { Context } from '@stores';
 
-// Interface
-import { Item } from '@interfaces';
+// Interfaces
+import { Item, Role } from '@interfaces';
+
+// Helper
+import { transformRoleInfo } from '@helpers';
 
 interface AssignItemTextTagsProps extends Item {
+  roles: Role[];
   isModifying: boolean;
   isAssigning: boolean;
   isRoleAssigned: boolean;
@@ -33,18 +34,16 @@ const AssignItemTextTags = ({
   isAssigning,
   isRoleAssigned,
   isAssigned,
+  roles,
   isModifying,
   assignedTo,
   selectedType,
   handleItemSelect,
 }: AssignItemTextTagsProps) => {
   // Context
-  const { setSelectedRow } = useContext(Context);
+  const { dispatch } = useContext(Context);
 
   const navigate = useNavigate();
-
-  // Get the data from API
-  const { data: roles } = getRoles();
 
   /**
    * Handles the click event to navigate to the correspod role
@@ -55,7 +54,18 @@ const AssignItemTextTags = ({
     const role = roles?.find((role) => role.id === roleId);
     const index = roles?.findIndex((role) => role.id === roleId) ?? -1;
 
-    setSelectedRow({ index, data: role });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: role},
+    });
+
+    dispatch({
+      type: TYPES.DATA_ITEMS,
+      payload: [
+        ...transformRoleInfo(role!),
+      ],
+    });
+
     navigate(PATH.ROLES_PATH);
   };
 
@@ -93,9 +103,9 @@ const AssignItemTextTags = ({
                 className="panel-assign__item-role"
                 onClick={handleNavigateToRoleClick(role.id!)}
               >
-                <div style={{ color: role.bgColor }}>
+                <span style={{ color: role.bgColor }}>
                   <FontAwesomeIcon icon={faShield} />
-                </div>
+                </span>
                 {role.name}
               </span>
             ))}

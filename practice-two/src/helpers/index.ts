@@ -29,9 +29,11 @@ export {
   transformUserInfo,
   transformListViewInfo,
   transformListViewRoleInfo,
-  transformRoleInfo
+  transformRoleInfo,
 } from '@helpers/transform';
 
 export { isItemAssignedToUser, isItemAssignedToRole } from '@helpers/is';
 
 export { findUserIdFromAssigned, findRoleIdFromAssigned } from '@helpers/find';
+
+export { assignItems, assignUserRules } from '@helpers/assign';

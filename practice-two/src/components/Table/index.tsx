@@ -9,7 +9,7 @@ import { Spin } from '@components';
 // SCSS
 import '@components/Table/Table.scss';
 
-type TableProps<T> = {
+interface TableProps<T> {
   rowData: T[];
   isLoading?: boolean;
   columns: EnitityColumn<T>[];
@@ -35,7 +35,8 @@ const Table = <T,>({
           <tr>
             <td colSpan={columns.length}>
               <Spin
-                isProcessing={true}
+                isProcessing={isLoading}
+                delay={3000}
                 size={30}
                 style={{ justifyContent: 'center', margin: '40px 0' }}
               />

@@ -72,20 +72,20 @@ export const handleAPIRequest = async <T>(
  * Retrieves a list of users from the API.
  * @returns {{
  *   data: User[] | undefined; - The array of User objects or undefined.
- *   isLoading: boolean; - Indicates whether the request is currently being validated.
+ *   isValidating: boolean; - Indicates whether the request is currently being validated.
  * }}
  */
 export const getUsers = (): {
   data: User[] | undefined;
-  isLoading: boolean;
+  isValidating: boolean;
 } => {
-  const { data, isLoading } = useSWR<User[]>(
+  const { data, isValidating } = useSWR<User[]>(
     `${API.BASE}/${API.USER}`,
     fetcher
   );
   return {
     data,
-    isLoading,
+    isValidating,
   };
 };
 

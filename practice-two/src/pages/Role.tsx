@@ -109,7 +109,7 @@ const RolePage = () => {
   // Get the data from API
   const { data: users } = getUsers();
   const { data: rules } = getRules();
-  const { data: roles, isLoading } = getRoles();
+  const { data: roles, isValidating } = getRoles();
   const { data: userRoles } = getUserRoles();
   const { data: roleRulesData } = getRoleRules();
 
@@ -411,7 +411,7 @@ const RolePage = () => {
           columns={columns}
           onRowClick={handleRowClick}
           selectedRow={selectedRow}
-          isLoading={isLoading}
+          isLoading={isValidating}
         />
       </div>
       {isShowDetails && (

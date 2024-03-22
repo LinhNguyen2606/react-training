@@ -131,7 +131,7 @@ const Home = () => {
   const columns = generateUserTableColumns(keyword);
 
   // Get the data from API
-  const { data: users, isLoading } = getUsers();
+  const { data: users, isValidating } = getUsers();
   const { data: roleData } = getRoles();
   const { data: ruleData } = getRules();
   const { data: userRolesData } = getUserRoles();
@@ -456,7 +456,7 @@ const Home = () => {
           columns={columns}
           onRowClick={handleRowClick}
           selectedRow={selectedRow}
-          isLoading={isLoading}
+          isLoading={isValidating}
         />
       </div>
       {isShowDetails && (

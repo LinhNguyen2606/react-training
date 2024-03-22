@@ -101,12 +101,11 @@ const Layout = () => {
       return;
     }
 
-    if (users) {
-      mutate(`${API.BASE}/${API.USER}`, [...users, data], false);
+      mutate(`${API.BASE}/${API.USER}`, [...users!, data], false);
 
       dispatch({
         type: TYPES.SELECTED_ROW,
-        payload: { index: users.length, data },
+        payload: { index: users?.length, data },
       });
 
       dispatch({
@@ -115,7 +114,7 @@ const Layout = () => {
       });
 
       dispatch({ type: TYPES.SUCCESS });
-    }
+    
   };
 
   /**
@@ -139,12 +138,11 @@ const Layout = () => {
       return;
     }
 
-    if (roles) {
-      mutate(`${API.BASE}/${API.ROLE}`, [...roles, data], false);
+      mutate(`${API.BASE}/${API.ROLE}`, [...roles!, data], false);
 
       dispatch({
         type: TYPES.SELECTED_ROW,
-        payload: { index: roles.length, data },
+        payload: { index: roles?.length, data },
       });
 
       dispatch({
@@ -160,7 +158,6 @@ const Layout = () => {
 
       dispatch({ type: TYPES.SUCCESS });
       navigate(PATH.ROLES_PATH);
-    }
   };
 
   /**

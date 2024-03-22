@@ -24,6 +24,7 @@ const Table = <T,>({
   onRowClick,
   selectedRow,
 }: TableProps<T>) => {
+
   return (
     <table className="table">
       <thead className="table__head">
@@ -36,7 +37,7 @@ const Table = <T,>({
             <td colSpan={columns.length}>
               <Spin
                 isProcessing={isLoading}
-                delay={3000}
+                delay={10000}
                 size={30}
                 style={{ justifyContent: 'center', margin: '40px 0' }}
               />
